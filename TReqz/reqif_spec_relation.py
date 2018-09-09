@@ -1,0 +1,45 @@
+from  xml.etree.ElementTree import Element
+import TReqz
+
+class reqif_spec_relation(TReqz.reqif_identifiable):
+    values:list() # reqif_attribute_value, optional
+    source:TReqz.reqif_object # local_ref, required
+    target:TReqz.reqif_object # local_ref, required
+    type:TReqz.reqif_spec_relation_type# local_ref, required
+
+    def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
+        super().decode(content, id_dict)
+        namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
+
+        typeList = {"ATTRIBUTE-VALUE-BOOLEAN": "reqif_attribute_value_boolean",
+                    "ATTRIBUTE-VALUE-DATE": "reqif_attribute_value_date",
+                    "ATTRIBUTE-VALUE-ENUMERATION": "reqif_attribute_value_enumeration",
+                    "ATTRIBUTE-VALUE-INTEGER": "reqif_attribute_value_integer",
+                    "ATTRIBUTE-VALUE-REAL": "reqif_attribute_value_real",
+                    "ATTRIBUTE-VALUE-STRING": "reqif_attribute_value_string",
+                    "ATTRIBUTE-VALUE-XHTML": "reqif_attribute_value_xhtml"}
+        self.values = TReqz.reqif_utils.generate_object_list_by_element_class(content, id_dict, "./{0}VALUES".format(namespace), typeList)
+        
+        self.source = TReqz.reqif_utils.get_local_ref_from_element_text(content, id_dict, "./SOURCE")
+        self.target = TReqz.reqif_utils.get_local_ref_from_element_text(content, id_dict, "./TARGET")
+        self.type = TReqz.reqif_utils.get_local_ref_from_element_text(content, id_dict, "./TYPE")
+
+    def encode(self):
+        elem = super().encode()
+        elem.tag = "SPEC-RELATION"
+
+        if len(self.values)>0:
+            valuesElement = TReqz.reqif_utils.addRequiredSubElement(elem, "VALUES")
+            for value in self.values:
+                TReqz.reqif_utils.addEncodedSubElement(valuesElement, value)
+
+        typeElement = TReqz.reqif_utils.addRequiredSubElement(elem, "TYPE")
+        TReqz.reqif_utils.addRequiredSubElement(typeElement, "SPEC-RELATION-TYPE-REF", self.type.identifier)
+        
+        sourceElement = TReqz.reqif_utils.addRequiredSubElement(elem, "SOURCE")
+        TReqz.reqif_utils.addRequiredSubElement(sourceElement, "SPEC-OBJECT-REF", self.source.identifier)
+        
+        targetElement = TReqz.reqif_utils.addRequiredSubElement(elem, "TARGET")
+        TReqz.reqif_utils.addRequiredSubElement(targetElement, "SPEC-OBJECT-REF", self.target.identifier)
+
+        return elem
