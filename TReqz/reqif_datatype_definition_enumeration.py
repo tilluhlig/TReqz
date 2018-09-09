@@ -4,6 +4,10 @@ from  xml.etree.ElementTree import Element
 class reqif_datatype_definition_enumeration(TReqz.reqif_datatype_definition):
     specified_values:list = list() # reqif_enum_value, element, optional
 
+    def __init__(self, content:Element = None, id_dict={}):
+        self.name = "DATATYPE-DEFINITION-ENUMERATION"
+        super(reqif_datatype_definition_enumeration, self).__init__(content, id_dict)
+
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)
         namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
@@ -18,7 +22,7 @@ class reqif_datatype_definition_enumeration(TReqz.reqif_datatype_definition):
 
     def encode(self):
         elem = super().encode()
-        elem.tag = "DATATYPE-DEFINITION-ENUMERATION"
+        elem.tag = self.name
         if len(self.specified_values)>0:
             valuesElement = TReqz.reqif_utils.addRequiredSubElement(elem, "SPECIFIED-VALUES")
             for value in self.specified_values:

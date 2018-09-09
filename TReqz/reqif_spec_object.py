@@ -5,6 +5,10 @@ class reqif_spec_object(TReqz.reqif_identifiable):
     values:list=list() # reqif_attribute_value, optional
     type:TReqz.reqif_spec_object_type=None # local ref, required
 
+    def __init__(self, content:Element = None, id_dict={}):
+        self.name = "SPEC-OBJECT"
+        super(reqif_spec_object, self).__init__(content, id_dict)
+
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)
         namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)  
@@ -22,7 +26,7 @@ class reqif_spec_object(TReqz.reqif_identifiable):
 
     def encode(self):
         elem = super().encode()
-        elem.tag = "SPEC-OBJECT"
+        elem.tag = self.name
 
         if len(self.values)>0:
             valuesElement = TReqz.reqif_utils.addRequiredSubElement(elem, "VALUES")

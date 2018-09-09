@@ -1,21 +1,21 @@
 from  xml.etree.ElementTree import Element
 import TReqz
 
-class reqif_spec_relation_type(TReqz.reqif_identifiable):
-    spec_attributes:list() # reqif_attribute_definition, optional
+class reqif_relation_group_type(TReqz.reqif_identifiable):
+    spec_attributes:list=list() # reqif_attribute_definition, optional
 
     def __init__(self, content:Element = None, id_dict={}):
-        self.name = "SPEC-RELATION-TYPE"
-        super(reqif_spec_relation_type, self).__init__(content, id_dict)
+        self.name = "RELATION-GROUP-TYPE"
+        super(reqif_relation_group_type, self).__init__(content, id_dict)
 
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
-        super().decode(content, id_dict)
-        namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
+        super().decode(content, id_dict)  
+        namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)    
 
         typeList = {"ATTRIBUTE-DEFINITION-BOOLEAN": "reqif_attribute_definition_boolean",
                     "ATTRIBUTE-DEFINITION-DATE": "reqif_attribute_definition_date",
-                    "ATTRIBUTE-DEFINITION-ENUMERATION": "reqif_attribute_definition_enumeration",
                     "ATTRIBUTE-DEFINITION-INTEGER": "reqif_attribute_definition_integer",
+                    "ATTRIBUTE-DEFINITION-ENUMERATION": "reqif_attribute_definition_enumeration",
                     "ATTRIBUTE-DEFINITION-REAL": "reqif_attribute_definition_real",
                     "ATTRIBUTE-DEFINITION-STRING": "reqif_attribute_definition_string",
                     "ATTRIBUTE-DEFINITION-XHTML": "reqif_attribute_definition_xhtml"}
@@ -31,3 +31,5 @@ class reqif_spec_relation_type(TReqz.reqif_identifiable):
                 TReqz.reqif_utils.addEncodedSubElement(specattributesElement, spec)
 
         return elem
+
+

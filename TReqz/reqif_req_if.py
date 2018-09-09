@@ -5,6 +5,15 @@ class reqif_req_if(TReqz.reqif_object):
     req_if_header:TReqz.reqif_req_if_header=None # required
     req_if_content:TReqz.reqif_req_if_content=None # required
     lang:str=None # attribute, optional
+    reqif_dict:TReqz.reqif_id_dict=None
+
+    def __init__(self, content:Element = None, id_dict=None):
+        self.name = "REQ-IF"
+        if id_dict == None:
+            self.reqif_dict = TReqz.reqif_id_dict()
+        else:
+            self.reqif_dict=id_dict
+        super(reqif_req_if, self).__init__(content, self.reqif_dict)
 
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)
@@ -16,14 +25,7 @@ class reqif_req_if(TReqz.reqif_object):
     
     def encode(self):
         elem = super().encode()
-        elem.tag = "REQ-IF"
-        # xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
-        # xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        # xsi:schemaLocation="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd reqif.xsd"
-        # xmlns:reqif="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd"
-        # xmlns:reqif-xhtml="http://www.w3.org/1999/xhtml"
-        # xmlns:rm-reqif="http://www.ibm.com/rm/reqif"
-        # xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        elem.tag = self.name
         TReqz.reqif_utils.setElementAttribute(elem, "xmlns", "http://www.omg.org/spec/ReqIF/20110401/reqif.xsd")
         TReqz.reqif_utils.setElementAttribute(elem, "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance")
         TReqz.reqif_utils.setElementAttribute(elem, "xsi:schemaLocation", "http://www.omg.org/spec/ReqIF/20110401/reqif.xsd reqif.xsd")

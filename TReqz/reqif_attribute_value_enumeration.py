@@ -5,6 +5,13 @@ class reqif_attribute_value_enumeration(TReqz.reqif_attribute_value):
     definition:TReqz.reqif_datatype_definition_enumeration = None # localRef, required
     values:list=list() # localRef, reqif_enum_value, element, optional
 
+    def __init__(self, content:Element = None, id_dict={}):
+        self.name = "ATTRIBUTE-VALUE-ENUMERATION"
+        super(reqif_attribute_value_enumeration, self).__init__(content, id_dict)
+
+    def getValues(self):
+        return self.values
+
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)
         namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
@@ -13,7 +20,7 @@ class reqif_attribute_value_enumeration(TReqz.reqif_attribute_value):
 
     def encode(self):
         elem = super().encode()
-        elem.tag = "ATTRIBUTE-VALUE-ENUMERATION"
+        elem.tag = self.name
 
         valuesElement = TReqz.reqif_utils.addOptionalSubElement(elem, "VALUES")
         if valuesElement != None and len(self.values)>0:

@@ -7,6 +7,10 @@ class reqif_spec_relation(TReqz.reqif_identifiable):
     target:TReqz.reqif_object # local_ref, required
     type:TReqz.reqif_spec_relation_type# local_ref, required
 
+    def __init__(self, content:Element = None, id_dict={}):
+        self.name = "SPEC-RELATION"
+        super(reqif_spec_relation, self).__init__(content, id_dict)
+
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)
         namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
@@ -20,13 +24,13 @@ class reqif_spec_relation(TReqz.reqif_identifiable):
                     "ATTRIBUTE-VALUE-XHTML": "reqif_attribute_value_xhtml"}
         self.values = TReqz.reqif_utils.generate_object_list_by_element_class(content, id_dict, "./{0}VALUES".format(namespace), typeList)
         
-        self.source = TReqz.reqif_utils.get_local_ref_from_element_text(content, id_dict, "./SOURCE")
-        self.target = TReqz.reqif_utils.get_local_ref_from_element_text(content, id_dict, "./TARGET")
-        self.type = TReqz.reqif_utils.get_local_ref_from_element_text(content, id_dict, "./TYPE")
+        self.source = TReqz.reqif_utils.get_local_ref_from_element_text(content, id_dict, "./{0}SOURCE")
+        self.target = TReqz.reqif_utils.get_local_ref_from_element_text(content, id_dict, "./{0}TARGET")
+        self.type = TReqz.reqif_utils.get_local_ref_from_element_text(content, id_dict, "./{0}TYPE")
 
     def encode(self):
         elem = super().encode()
-        elem.tag = "SPEC-RELATION"
+        elem.tag = self.name
 
         if len(self.values)>0:
             valuesElement = TReqz.reqif_utils.addRequiredSubElement(elem, "VALUES")

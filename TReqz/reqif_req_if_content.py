@@ -9,6 +9,10 @@ class reqif_req_if_content(TReqz.reqif_object):
     specifications:list = list() # reqif_specification, optional
     spec_relation_groups:list = list() # reqif_relation_group, optional
 
+    def __init__(self, content:Element = None, id_dict={}):
+        self.name = "REQ-IF-CONTENT"
+        super(reqif_req_if_content, self).__init__(content, id_dict)
+
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)
         namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
@@ -22,7 +26,7 @@ class reqif_req_if_content(TReqz.reqif_object):
                     "DATATYPE-DEFINITION-XHTML": "reqif_datatype_definition_xhtml"}
         self.datatypes = TReqz.reqif_utils.generate_object_list_by_element_class(content, id_dict, "./{0}DATATYPES".format(namespace), typeList)
 
-        typeList = {#"RELATION-GROUP-TYPE": "reqif_relation_group_type",
+        typeList = {"RELATION-GROUP-TYPE": "reqif_relation_group_type",
                     "SPECIFICATION-TYPE": "reqif_specification_type",
                     "SPEC-RELATION-TYPE": "reqif_spec_relation_type",
                     "SPEC-OBJECT-TYPE": "reqif_spec_object_type"}
@@ -38,11 +42,11 @@ class reqif_req_if_content(TReqz.reqif_object):
         self.specifications = TReqz.reqif_utils.generate_object_list_by_element_class(content, id_dict, "./{0}SPECIFICATIONS".format(namespace), typeList)
 
         typeList = {"RELATION-GROUP": "reqif_relation_group"}
-        ####self.spec_relation_groups = TReqz.reqif_utils.generate_object_list_by_element_class(content, id_dict, "./{0}SPEC-RELATION-GROUPS".format(namespace), typeList)    
+        self.spec_relation_groups = TReqz.reqif_utils.generate_object_list_by_element_class(content, id_dict, "./{0}SPEC-RELATION-GROUPS".format(namespace), typeList)    
     
     def encode(self):
         elem = super().encode()
-        elem.tag = "REQ-IF-CONTENT"
+        elem.tag = self.name
         if len(self.datatypes)>0:
             datatypesElement = TReqz.reqif_utils.addRequiredSubElement(elem, "DATATYPES")
             for element in self.datatypes:

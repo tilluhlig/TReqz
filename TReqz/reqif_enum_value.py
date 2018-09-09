@@ -4,6 +4,10 @@ from  xml.etree.ElementTree import Element
 class reqif_enum_value(TReqz.reqif_identifiable):
     embedded_value:TReqz.reqif_embeded_value=None # element, required
 
+    def __init__(self, content:Element = None, id_dict={}):
+        self.name = "ENUM-VALUE"
+        super(reqif_enum_value, self).__init__(content, id_dict)
+
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)
         namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
@@ -14,7 +18,7 @@ class reqif_enum_value(TReqz.reqif_identifiable):
 
     def encode(self):
         elem = super().encode()
-        elem.tag = "ENUM-VALUE"
+        elem.tag = self.name
         valueElement = TReqz.reqif_utils.addRequiredSubElement(elem, "PROPERTIES")
         TReqz.reqif_utils.addEncodedSubElement(valueElement, self.embedded_value)
         return elem

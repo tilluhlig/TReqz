@@ -11,12 +11,12 @@ from .reqif_spec_relation_type import reqif_spec_relation_type
 from .reqif_spec_relation import reqif_spec_relation
 from .reqif_specification_type import reqif_specification_type
 from .reqif_specification import reqif_specification
-####from .reqif_relation_group import reqif_relation_group
+from .reqif_relation_group_type import reqif_relation_group_type
+from .reqif_relation_group import reqif_relation_group
 from .reqif_spec_object_type import reqif_spec_object_type
 from .reqif_datatype_definition import reqif_datatype_definition
 from .reqif_attribute_value import reqif_attribute_value
 from .reqif_attribute_definition import reqif_attribute_definition
-####from .reqif_relation_group_type import reqif_relation_group_type
 from .reqif_datatype_definition_real import reqif_datatype_definition_real
 from .reqif_datatype_definition_integer import reqif_datatype_definition_integer
 from .reqif_datatype_definition_xhtml import reqif_datatype_definition_xhtml
@@ -44,4 +44,4 @@ from .reqif_req_if import reqif_req_if
 from .reqif_req_if_header import reqif_req_if_header
 from .reqif_req_if_content import reqif_req_if_content
 from .reqif_enum_value import reqif_enum_value
-
+from .utils import utils

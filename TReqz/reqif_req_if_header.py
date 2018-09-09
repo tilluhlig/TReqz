@@ -11,6 +11,10 @@ class reqif_req_if_header(TReqz.reqif_object):
     title:str=None # element, required
     identifier:str=None # attribute, required
 
+    def __init__(self, content:Element = None, id_dict={}):
+        self.name = "REQ-IF-HEADER"
+        super(reqif_req_if_header, self).__init__(content, id_dict)
+
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)
         namespace =TReqz.reqif_utils.get_tag_namespace(content.tag)
@@ -28,7 +32,7 @@ class reqif_req_if_header(TReqz.reqif_object):
 
     def encode(self):
         elem = super().encode()
-        elem.tag = "REQ-IF-HEADER"
+        elem.tag = self.name
         TReqz.reqif_utils.setElementAttribute(elem, "IDENTIFIER", self.identifier)
         TReqz.reqif_utils.addOptionalSubElement(elem, "COMMENT", self.comment)
         TReqz.reqif_utils.addOptionalSubElement(elem, "CREATION-TIME", self.creation_time)

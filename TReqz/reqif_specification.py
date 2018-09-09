@@ -6,6 +6,10 @@ class reqif_specification(TReqz.reqif_identifiable):
     children:list=list() # reqif_spec_hierarchy
     type:TReqz.reqif_specification_type=None # localRef, required
 
+    def __init__(self, content:Element = None, id_dict={}):
+        self.name = "SPECIFICATION"
+        super(reqif_specification, self).__init__(content, id_dict)
+
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)
         namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)       
@@ -26,7 +30,7 @@ class reqif_specification(TReqz.reqif_identifiable):
 
     def encode(self):
         elem = super().encode()
-        elem.tag = "SPECIFICATION"
+        elem.tag = self.name
 
         if len(self.values)>0:
             valuesElement = TReqz.reqif_utils.addRequiredSubElement(elem, "VALUES")

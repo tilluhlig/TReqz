@@ -3,6 +3,10 @@ import TReqz
 
 class reqif_attribute_definition_date(TReqz.reqif_attribute_definition):
 
+    def __init__(self, content:Element = None, id_dict={}):
+        self.name = "ATTRIBUTE-DEFINITION-DATE"
+        super(reqif_attribute_definition_date, self).__init__(content, id_dict)
+
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)
         namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
@@ -13,7 +17,7 @@ class reqif_attribute_definition_date(TReqz.reqif_attribute_definition):
 
     def encode(self):
         elem = super().encode()
-        elem.tag = "ATTRIBUTE-DEFINITION-DATE"
+        elem.tag = self.name
         if self.default_value != None:
             defaultElement = TReqz.reqif_utils.addRequiredSubElement(elem, "DEFAULT-VALUE")
             TReqz.reqif_utils.addEncodedSubElement(defaultElement, self.default_value)

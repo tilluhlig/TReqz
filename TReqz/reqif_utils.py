@@ -185,7 +185,7 @@ class reqif_utils:
 
    @staticmethod
    def generateNextLocalId(id_dict:TReqz.reqif_id_dict):
-       currentId = int(len(id_dict)+len(id_dict)/2)
+       currentId = len(id_dict)
        currentReqifIdentifier = None
        while currentReqifIdentifier == None or id_dict.get(currentReqifIdentifier) != None:
             currentId = currentId + 1

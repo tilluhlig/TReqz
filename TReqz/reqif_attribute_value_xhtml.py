@@ -5,9 +5,12 @@ import re
 
 class reqif_attribute_value_xhtml(TReqz.reqif_attribute_value):
     definition:TReqz.reqif_datatype_definition_xhtml = None # localRef, required
-    the_value:str=None # element, required
     the_original_value:str=None # element, optional
     is_simplified:str=None # attribute, optional
+
+    def __init__(self, content:Element = None, id_dict={}):
+        self.name = "ATTRIBUTE-VALUE-XHTML"
+        super(reqif_attribute_value_xhtml, self).__init__(content, id_dict)
 
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)
@@ -35,7 +38,7 @@ class reqif_attribute_value_xhtml(TReqz.reqif_attribute_value):
 
     def encode(self):
         elem = super().encode()
-        elem.tag = "ATTRIBUTE-VALUE-XHTML"
+        elem.tag = self.name
         TReqz.reqif_utils.setElementAttribute(elem, "IS-SIMPLIFIED", self.is_simplified)
         
         TReqz.reqif_utils.addRequiredSubElement(elem, "THE-ORIGINAL-VALUE", self.the_original_value)

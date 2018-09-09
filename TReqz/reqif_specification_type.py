@@ -4,6 +4,10 @@ import TReqz
 class reqif_specification_type(TReqz.reqif_identifiable):
     spec_attributes:list=list() # reqif_attribute_definition, optional
 
+    def __init__(self, content:Element = None, id_dict={}):
+        self.name = "SPECIFICATION-TYPE"
+        super(reqif_specification_type, self).__init__(content, id_dict)
+
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)  
         namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)    
@@ -19,7 +23,7 @@ class reqif_specification_type(TReqz.reqif_identifiable):
 
     def encode(self):
         elem = super().encode()
-        elem.tag = "SPECIFICATION-TYPE"
+        elem.tag = self.name
 
         if len(self.spec_attributes)>0:
             specattributesElement = TReqz.reqif_utils.addRequiredSubElement(elem, "SPEC-ATTRIBUTES")

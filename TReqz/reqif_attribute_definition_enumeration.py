@@ -4,6 +4,10 @@ import TReqz
 class reqif_attribute_definition_enumeration(TReqz.reqif_attribute_definition):
     multi_valued:str=None # attribute, required
 
+    def __init__(self, content:Element = None, id_dict={}):
+        self.name = "ATTRIBUTE-DEFINITION-ENUMERATION"
+        super(reqif_attribute_definition_enumeration, self).__init__(content, id_dict)
+
     def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
         super().decode(content, id_dict)
         namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
@@ -11,13 +15,13 @@ class reqif_attribute_definition_enumeration(TReqz.reqif_attribute_definition):
         typeList = {"ATTRIBUTE-VALUE-ENUMERATION": "reqif_attribute_value_enumeration"}
         self.default_value = TReqz.reqif_utils.generate_object_list_by_element_class(content, id_dict, "./{0}DEFAULT-VALUE".format(namespace), typeList)
         
-        self.multi_valued = content.get("MULTI_VALUED")
+        self.multi_valued = content.get("MULTI-VALUED")
         self.type = TReqz.reqif_utils.get_local_ref_from_element_text(content, id_dict, "./{0}TYPE/{0}DATATYPE-DEFINITION-ENUMERATION-REF".format(namespace))
 
     def encode(self):
         elem = super().encode()
-        elem.tag = "ATTRIBUTE-DEFINITION-ENUMERATION"
-        TReqz.reqif_utils.setElementAttribute(elem, "MULTI_VALUED", self.multi_valued)
+        elem.tag = self.name
+        TReqz.reqif_utils.setElementAttribute(elem, "MULTI-VALUED", self.multi_valued)
 
         defaultElement = TReqz.reqif_utils.addRequiredSubElement(elem, "DEFAULT-VALUE")
         if defaultElement != None and self.default_value != None:
