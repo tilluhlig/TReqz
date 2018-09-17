@@ -1,15 +1,17 @@
 import TReqz
-from  xml.etree.ElementTree import Element
+from xml.etree.ElementTree import Element
+
 
 class reqif_datatype_definition_integer(TReqz.reqif_datatype_definition):
-    max:int=None # attribute, required
-    min:int=None # attribute, required
 
-    def __init__(self, content:Element = None, id_dict={}):
+    def __init__(self, content: Element = None, id_dict={}):
+        self.max: int = None  # attribute, required
+        self.min: int = None  # attribute, required
         self.name = "DATATYPE-DEFINITION-INTEGER"
-        super(reqif_datatype_definition_integer, self).__init__(content, id_dict)
+        super(reqif_datatype_definition_integer,
+              self).__init__(content, id_dict)
 
-    def decode(self, content:Element, id_dict:TReqz.reqif_id_dict={}):
+    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
         super().decode(content, id_dict)
         self.max = content.get("MAX")
         self.min = content.get("MIN")
@@ -20,5 +22,3 @@ class reqif_datatype_definition_integer(TReqz.reqif_datatype_definition):
         TReqz.reqif_utils.setElementAttribute(elem, "MAX", self.max)
         TReqz.reqif_utils.setElementAttribute(elem, "MIN", self.min)
         return elem
-
-

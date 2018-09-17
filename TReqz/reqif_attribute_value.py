@@ -1,16 +1,22 @@
-from  xml.etree.ElementTree import Element
+from xml.etree.ElementTree import Element
 import TReqz
 
-class reqif_attribute_value(TReqz.reqif_object):
-    definition:TReqz.reqif_datatype_definition=None # element, required
-    the_value:str=None # attribute, required
 
-    def __init__(self, content:Element = None, id_dict={}):
+class reqif_attribute_value(TReqz.reqif_object):
+
+    def __init__(self, content: Element = None, id_dict={}):
+        self.definition: TReqz.reqif_attribute_definition = None  # element, required
+        self.the_value: str = None  # attribute, required
         super(reqif_attribute_value, self).__init__(content, id_dict)
 
-    def getValues(self):
-        return [self.the_value]
-        
+    def getValue(self):
+        if self.the_value == None:
+            return self.definition.default_value
+        return self.the_value
+
+    def setValue(self, value: str, id_dict: TReqz.reqif_id_dict):
+        self.the_value = value
+
     def encode(self):
         elem = super().encode()
         return elem

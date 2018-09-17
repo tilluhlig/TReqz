@@ -1,4 +1,4 @@
-from .config import *
+from .reqif_config import reqif_config
 from .reqif_object import reqif_object
 from .reqif_identifiable import reqif_identifiable
 from .reqif_id_dict import reqif_id_dict
@@ -44,4 +44,4 @@ from .reqif_req_if import reqif_req_if
 from .reqif_req_if_header import reqif_req_if_header
 from .reqif_req_if_content import reqif_req_if_content
 from .reqif_enum_value import reqif_enum_value
-from .utils import utils
+from .reqif import reqif
