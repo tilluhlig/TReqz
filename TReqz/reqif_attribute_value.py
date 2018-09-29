@@ -17,6 +17,11 @@ class reqif_attribute_value(TReqz.reqif_object):
     def setValue(self, value: str, id_dict: TReqz.reqif_id_dict):
         self.the_value = value
 
+    def isEmpty(self):
+        if self.the_value == None:
+            return True
+        return False 
+
     def encode(self):
         elem = super().encode()
         return elem

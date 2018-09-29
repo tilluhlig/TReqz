@@ -35,6 +35,11 @@ class reqif_attribute_value_enumeration(TReqz.reqif_attribute_value):
             newValues.append(possibleValue)
         self.values = newValues
 
+    def isEmpty(self):
+        if self.values == None or len(self.values)==0:
+            return True
+        return False 
+
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
         super().decode(content, id_dict)
         namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
