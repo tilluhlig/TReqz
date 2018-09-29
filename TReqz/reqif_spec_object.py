@@ -35,7 +35,8 @@ class reqif_spec_object(TReqz.reqif_identifiable):
             valuesElement = TReqz.reqif_utils.addRequiredSubElement(
                 elem, "VALUES")
             for value in self.values:
-                TReqz.reqif_utils.addEncodedSubElement(valuesElement, value)
+                if not value.isEmpty():
+                    TReqz.reqif_utils.addEncodedSubElement(valuesElement, value)
 
         typeElement = TReqz.reqif_utils.addRequiredSubElement(elem, "TYPE")
         TReqz.reqif_utils.addRequiredSubElement(
