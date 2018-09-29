@@ -63,4 +63,6 @@ if __name__ == "__main__":
         requirementLongName="CRS-100", attributeLongName="reqif_comment_field", value="<div>myNewComment2</div>")
     requirementValue6 = reqif_object.getRequirementValueByLongNames(
         requirementLongName="CRS-100", attributeLongName="reqif_comment_field")
+        
+    reqif_object.dumpToFile(reqifFile)
 ```
