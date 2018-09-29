@@ -355,7 +355,7 @@ class reqif:
         newSpecHierarchy = reqif_utils.create_object_by_element_class(
             "reqif_spec_hierarchy", idDict)
         newSpecHierarchy.fill(
-            req_object=requirement, is_table_internal=is_table_internal, is_editable=is_editable)
+            req_object=requirement, is_table_internal=is_table_internal, is_editable=is_editable, last_change=last_change)
 
         if parentSpecHierarchyId == None:
             document.children.append(newSpecHierarchy)
@@ -568,6 +568,46 @@ class reqif:
                 currentSpecHierarchies = currentSpecHierarchies + specHierarchy.children
                 i += 1
             requirements += currentRequirements
+        return requirements
+
+    def getChildParentMapForDocument(self, documentId)->dict:
+        hierarchicalIds = self.getDocumentHierarchicalRequirementIds(documentId)
+
+        childParentMap = dict()
+        currentList = [hierarchicalIds]
+        for parent, childs in hierarchicalIds.items():
+            childParentMap[parent] = None
+
+        i=0
+        while i < len(currentList):
+            for parent, childs in currentList[i].items():
+                childKeys = list(childs.keys())
+                if len(childKeys)==0:
+                    continue
+                for childKey in childKeys:
+                    childParentMap[childKey] = parent
+                currentList.append(childs)
+            i+=1
+
+        return childParentMap
+
+    def getDocumentHierarchicalRequirementIds(self, documentId):
+        def collectIds(specHierarchy: TReqz.reqif_spec_hierarchy):
+            requirements = dict()
+            currentSpecHierarchies = specHierarchy.children
+            for currentSpecHierarchie in currentSpecHierarchies:
+                requirements[currentSpecHierarchie.req_object.identifier] = collectIds(
+                    currentSpecHierarchie)
+            return requirements
+
+        requirements = dict()
+        document = self.getObject(documentId)
+        for specification in document.children:
+            currentSpecHierarchies = list()+specification.children
+
+            for currentSpecHierarchie in currentSpecHierarchies:
+                requirements[currentSpecHierarchie.req_object.identifier] = collectIds(
+                    currentSpecHierarchie)
         return requirements
 
     def getHierarchicalRequirementIds(self):
@@ -846,9 +886,10 @@ class reqif:
         Returns:
             {list<str>} -- a list of unreferenced objects
         """
+        referenceMap = self.__generateReferenceMap()
         raise NotImplementedError
 
-    def __checkIfObjectIsReferenced(self, objectId: str):
+    def __checkIfObjectIsReferenced(self, objectId: str, referenceMap:dict):
         """ checks if an object (objectId) is referenced by another object or not
 
         Arguments:
@@ -857,7 +898,7 @@ class reqif:
         Returns:
             {bool} -- true if the object is referenced by another object... false if not
         """
-        return self.referenceMap.get(objectId) != None
+        return referenceMap.get(objectId) != None
 
     def __generateReferenceMap(self):
         """ generates a map which allows to check immediatly if an object is referenced by some
@@ -866,10 +907,11 @@ class reqif:
             {dict<bool>} -- shows if an object is referenced or not (true = yes, false = no)
         """
 
-        self.referenceMap = dict()
+        referenceMap = dict()
         raise NotImplementedError
+        return referenceMap
 
-    def __checkIfStringIsWellFormedXml(content: str):
+    def __checkIfStringIsWellFormedXml(self, content: str):
         """ checks if <content> is well formed xml
 
         Returns:
