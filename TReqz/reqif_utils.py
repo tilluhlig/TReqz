@@ -37,7 +37,7 @@ class reqif_utils:
 
     @staticmethod
     def get_tag_namespace(tag: str):
-        """ extracts the namespace from tag
+        """ extracts the namespace from a tag
 
         Arguments:
             tag {str} -- the tag
@@ -51,15 +51,16 @@ class reqif_utils:
 
     @staticmethod
     def generate_local_ref_list_from_elements(content: Element, id_dict: TReqz.reqif_id_dict, elements_parent_path: str):
-        """[summary]
+        """ creates a list of objects which is based on refs.
+            the refs are extracted from the parent_element
 
         Arguments:
-            content {Element} -- [description]
-            id_dict {TReqz.reqif_id_dict} -- [description]
-            elements_parent_path {str} -- [description]
+            content {Element} -- the root element
+            id_dict {TReqz.reqif_id_dict} -- the id dictionary
+            elements_parent_path {str} -- the relative path (from content-element) where the refs are located
 
         Returns:
-            [type] -- [description]
+            {list<reqif_object>} -- the objects
         """
 
         elem: Element = content.find(elements_parent_path)
@@ -72,15 +73,16 @@ class reqif_utils:
 
     @staticmethod
     def generate_local_ref_list_from_elements_text(content: Element, id_dict: TReqz.reqif_id_dict, elements_parent_path: str):
-        """[summary]
+        """ creates a list of objects which is based on refs.
+            the refs are extracted from the parent_element
 
         Arguments:
-            content {Element} -- [description]
-            id_dict {TReqz.reqif_id_dict} -- [description]
-            elements_parent_path {str} -- [description]
+            content {Element} -- the root element
+            id_dict {TReqz.reqif_id_dict} -- the id dictionary
+            elements_parent_path {str} -- the relative path (from content-element) where the refs are located
 
         Returns:
-            [type] -- [description]
+            {list<reqif_object>} -- the objects
         """
 
         elem: Element = content.find(elements_parent_path)
@@ -93,36 +95,36 @@ class reqif_utils:
 
     @staticmethod
     def get_local_ref_from_element(content: Element, id_dict: TReqz.reqif_id_dict, element_path: str):
-        """[summary]
+        """ returns the referenced object of an element (element_path)
 
         Arguments:
-            content {Element} -- [description]
-            id_dict {TReqz.reqif_id_dict} -- [description]
-            element_path {str} -- [description]
+            content {Element} -- the root element
+            id_dict {TReqz.reqif_id_dict} -- the id dict
+            element_path {str} -- the relative element path
 
         Returns:
-            [type] -- [description]
+            {reqif_identifiable} -- the object or None
         """
 
         elem: Element = content.find(element_path)
-        id = id_dict.get(elem.get("IDENTIFIER"))
+        referenced_object = id_dict.get(elem.get("IDENTIFIER"))
 
-        if id == None:
+        if referenced_object == None:
             print("missing local ref: "+elem.get("IDENTIFIER"))
             return None
 
-        return id
+        return referenced_object
 
     @staticmethod
     def get_text_from_element(content: Element, element_path: str):
-        """[summary]
+        """ extracts the element text
 
         Arguments:
-            content {Element} -- [description]
-            element_path {str} -- [description]
+            content {Element} -- the root element
+            element_path {str} -- the requested element
 
         Returns:
-            [type] -- [description]
+            {str} -- the text
         """
 
         elem: Element = content.find(element_path)
@@ -132,14 +134,14 @@ class reqif_utils:
 
     @staticmethod
     def get_element(content: Element, element_path: str):
-        """[summary]
+        """ returns an element which is located on element_path
 
         Arguments:
-            content {Element} -- [description]
-            element_path {str} -- [description]
+            content {Element} -- the root element
+            element_path {str} -- the requested path
 
         Returns:
-            [type] -- [description]
+            {Element} -- the Element
         """
 
         elem: Element = content.find(element_path)
@@ -147,15 +149,15 @@ class reqif_utils:
 
     @staticmethod
     def get_local_ref_from_element_text(content: Element, id_dict: TReqz.reqif_id_dict, element_path: str):
-        """[summary]
+        """ returns the referenced object of an element (element_path)
 
         Arguments:
-            content {Element} -- [description]
-            id_dict {TReqz.reqif_id_dict} -- [description]
-            element_path {str} -- [description]
+            content {Element} -- the root element
+            id_dict {TReqz.reqif_id_dict} -- the id dict
+            element_path {str} -- the relative element path
 
         Returns:
-            [type] -- [description]
+            {reqif_identifiable} -- the object or None
         """
 
         elem: Element = content.find(element_path)
@@ -174,16 +176,16 @@ class reqif_utils:
 
     @staticmethod
     def generate_object_list_by_element_class(content: Element, id_dict: TReqz.reqif_id_dict, elements_parent_path: str, typeList: dict):
-        """[summary]
+        """ generates a bulk of objects by a list of possible object classes (the keys are the tags which are mapped to classes)
 
         Arguments:
-            content {Element} -- [description]
-            id_dict {TReqz.reqif_id_dict} -- [description]
-            elements_parent_path {str} -- [description]
-            typeList {dict} -- [description]
+            content {Element} -- the root element
+            id_dict {TReqz.reqif_id_dict} -- the id dict
+            elements_parent_path {str} -- the element path
+            typeList {dict} -- the tag->class dict
 
         Returns:
-            [type] -- [description]
+            {list<reqif_>} -- the objects
         """
 
         elem: Element = content.find(elements_parent_path)
@@ -211,23 +213,23 @@ class reqif_utils:
 
     @staticmethod
     def current_timestamp():
-        """[summary]
+        """ returns the current timestamp
 
         Returns:
-            [type] -- [description]
+            {str} -- the timestamp
         """
         return datetime.datetime.now(pytz.utc).isoformat()
 
     @staticmethod
     def create_object_by_element_class(type: str, id_dict: TReqz.reqif_id_dict = None):
-        """[summary]
+        """ creates a new object based on an class name (type)
 
         Arguments:
-            id_dict {TReqz.reqif_id_dict} -- [description]
-            type {str} -- [description]
+            id_dict {TReqz.reqif_id_dict} -- the id dict
+            type {str} -- the class name
 
         Returns:
-            [type] -- [description]
+            {reqif_/None} -- the object or None
         """
 
         if type != None:
@@ -241,16 +243,16 @@ class reqif_utils:
 
     @staticmethod
     def generate_object_by_element_class(content: Element, id_dict: TReqz.reqif_id_dict, element_path: str, type: str):
-        """[summary]
+        """ creates a new object based on an class name (type)
 
         Arguments:
-            content {Element} -- [description]
-            id_dict {TReqz.reqif_id_dict} -- [description]
-            element_path {str} -- [description]
-            type {str} -- [description]
+            content {Element} -- the root element
+            id_dict {TReqz.reqif_id_dict} -- the id dict
+            element_path {str} -- the element path
+            type {str} -- the class name
 
         Returns:
-            [type] -- [description]
+            {reqif_/None} -- the object or None
         """
 
         elem: Element = content.find(element_path)
@@ -265,11 +267,11 @@ class reqif_utils:
 
     @staticmethod
     def merge_elements(target: Element, source: Element):
-        """[summary]
+        """ merges two elements
 
         Arguments:
-            target {Element} -- [description]
-            source {Element} -- [description]
+            target {Element} -- the target element
+            source {Element} -- the source element
         """
 
         # the target-dictionary is dominant
@@ -295,12 +297,12 @@ class reqif_utils:
 
     @staticmethod
     def setElementAttribute(elem: Element, attribute: str, value: str):
-        """[summary]
+        """ sets an element attribute
 
         Arguments:
-            elem {Element} -- [description]
-            attribute {str} -- [description]
-            value {str} -- [description]
+            elem {Element} -- the element
+            attribute {str} -- the attribute name
+            value {str} -- the new value
         """
 
         if value != None:
@@ -308,16 +310,16 @@ class reqif_utils:
 
     @staticmethod
     def createSubElement(name: str, content: str = None):
-        """[summary]
+        """ creates a new element
 
         Arguments:
-            name {str} -- [description]
+            name {str} -- the tag-name
 
         Keyword Arguments:
-            content {str} -- [description] (default: {None})
+            content {str} -- an optional content (default: {None})
 
         Returns:
-            [type] -- [description]
+            {Element} -- the new Element
         """
 
         newElem = Element(name)
@@ -327,17 +329,17 @@ class reqif_utils:
 
     @staticmethod
     def addRequiredSubElement(elem: Element, name: str, content: str = None):
-        """[summary]
+        """ ads+creates a required element to an element (elem)
 
         Arguments:
-            elem {Element} -- [description]
-            name {str} -- [description]
+            elem {Element} -- the parent element
+            name {str} -- the name of the new sub-element
 
         Keyword Arguments:
-            content {str} -- [description] (default: {None})
+            content {str} -- a optional content for the sub-element (default: {None})
 
         Returns:
-            [type] -- [description]
+            {Element} -- the new sub-element
         """
 
         newElem = TReqz.reqif_utils.createSubElement(name, content)
@@ -346,17 +348,18 @@ class reqif_utils:
 
     @staticmethod
     def addOptionalSubElement(elem: Element, name: str, content: str = ""):
-        """[summary]
+        """ ads+creates an optional element to an element (elem).
+            the element would be added if the content is not None
 
         Arguments:
-            elem {Element} -- [description]
-            name {str} -- [description]
+            elem {Element} -- the parent element
+            name {str} -- the name of the new sub-element
 
         Keyword Arguments:
-            content {str} -- [description] (default: {""})
+            content {str} -- a optional content for the sub-element (default: {None})
 
         Returns:
-            [type] -- [description]
+            {Element} -- the new sub-element
         """
 
         if content != None:
@@ -367,14 +370,14 @@ class reqif_utils:
 
     @staticmethod
     def addEncodedSubElement(elem: Element, subElem):
-        """[summary]
+        """ adds an element (subElem) to elem and encodes subElem (from reqif)
 
         Arguments:
-            elem {Element} -- [description]
-            subElem {[type]} -- [description]
+            elem {Element} -- the parent element
+            subElem {reqif_} -- the new sub-element (which needs to be encoded from reqif)
 
         Returns:
-            [type] -- [description]
+            {Element/None} -- the new element or None
         """
 
         if subElem != None:
@@ -400,13 +403,13 @@ class reqif_utils:
 
     @staticmethod
     def convertMd5ToReqifIdentifier(md5Hash: str):
-        """[summary]
+        """ converts a md5-hash to a reqif identifier
 
         Arguments:
-            md5Hash {str} -- [description]
+            md5Hash {str} -- the md5 hash (hex representation)
 
         Returns:
-            [type] -- [description]
+            {str} -- the reqif identifier
         """
 
         # example _63d2eb9d-0ed5-42ad-af40-7564803bdf4e
@@ -414,13 +417,13 @@ class reqif_utils:
 
     @staticmethod
     def generateNextLocalId(id_dict: TReqz.reqif_id_dict):
-        """[summary]
+        """ this method generates a new local id (to store an element in id_dict)
 
         Arguments:
-            id_dict {TReqz.reqif_id_dict} -- [description]
+            id_dict {TReqz.reqif_id_dict} -- the current id_dict
 
         Returns:
-            [type] -- [description]
+            {str} -- the next id
         """
 
         currentId = id_dict.getLen()
