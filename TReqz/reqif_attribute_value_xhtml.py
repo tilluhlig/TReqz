@@ -67,5 +67,5 @@ class reqif_attribute_value_xhtml(TReqz.reqif_attribute_value):
         definitionElement = TReqz.reqif_utils.addRequiredSubElement(
             elem, "DEFINITION")
         TReqz.reqif_utils.addRequiredSubElement(
-            definitionElement, "ATTRIBUTE-DEFINITION-STRING-REF", self.definition.identifier)
+            definitionElement, "ATTRIBUTE-DEFINITION-XHTML-REF", self.definition.identifier)
         return elem
