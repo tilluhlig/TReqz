@@ -26,20 +26,20 @@ if __name__ == "__main__":
 
     allRequirements = reqif_object.getAllRequirementIds()
     specificRequirement = reqif_object.findRequirementsByFieldValue(
-        "my_reqif_object_id", "CRS-22")
+        field="my_reqif_object_id", value="CRS-22")
     allRequirementsHierarchical = reqif_object.getHierarchicalRequirementIds()
     requirementValue = reqif_object.getRequirementValue(
-        "_dc3ba2a0-f0cf-4b83-b61a-483d01f208e2", "_b5709b50-04fe-45be-9354-9246f6979a91")
+        requirementId="_dc3ba2a0-f0cf-4b83-b61a-483d01f208e2", attributeTypeId="_b5709b50-04fe-45be-9354-9246f6979a91")
     requirementId = reqif_object.findRequirementIdByLongName("CRS-22")
     requirementValue2 = reqif_object.getRequirementValueByAttributeLongName(
-        requirementId, "my_reqif_object_id")
+        requirementId, attributeLongName="my_reqif_object_id")
     requirementValue3 = reqif_object.getRequirementValueByLongNames(
-        "CRS-22", "my_reqif_object_id")
+        requirementLongName="CRS-22", attributeLongName="my_reqif_object_id")
 
     reqif_object.setRequirementValueByLongNames(
-        "CRS-22", "my_reqif_object_id", "CRS-55")
+        requirementLongName="CRS-22", attributeLongName="my_reqif_object_id", value="CRS-55")
     requirementValue4 = reqif_object.getRequirementValueByLongNames(
-        "CRS-22", "my_reqif_object_id")
+        requirementLongName="CRS-22", attributeLongName="my_reqif_object_id")
 
     reqif_object.setRequirementValueByLongNames(
         "CRS-22", "reqif_comment_field", "<div>myNewComment</div>")
@@ -55,12 +55,12 @@ if __name__ == "__main__":
         documentId, specObjectTypeId, long_name="CRS-99")
 
     newRequirementId2 = reqif_object.addRequirement(
-        documentId, specObjectTypeId, newRequirementId, long_name="CRS-100")
+        documentId, specObjectTypeId, parentRequirementId=newRequirementId, long_name="CRS-100")
 
     requirementValues = reqif_object.getRequirementValuesByLongName("CRS-22")
 
     reqif_object.setRequirementValueByLongNames(
-        "CRS-100", "reqif_comment_field", "<div>myNewComment2</div>")
+        requirementLongName="CRS-100", attributeLongName="reqif_comment_field", value="<div>myNewComment2</div>")
     requirementValue6 = reqif_object.getRequirementValueByLongNames(
-        "CRS-100", "reqif_comment_field")
+        requirementLongName="CRS-100", attributeLongName="reqif_comment_field")
 ```
