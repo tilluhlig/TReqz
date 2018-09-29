@@ -22,14 +22,16 @@ if __name__ == "__main__":
 
 #### Further examples
 ``` python
-    # the example reqif contains a id-field (my_reqif_object_id, string) and a comment field (reqif_comment_field, xhtml)
+    # the example reqif contains a id-field (my_reqif_object_id, string) and
+      a comment field (reqif_comment_field, xhtml)
 
     allRequirements = reqif_object.getAllRequirementIds()
     specificRequirement = reqif_object.findRequirementsByFieldValue(
         field="my_reqif_object_id", value="CRS-22")
     allRequirementsHierarchical = reqif_object.getHierarchicalRequirementIds()
     requirementValue = reqif_object.getRequirementValue(
-        requirementId="_dc3ba2a0-f0cf-4b83-b61a-483d01f208e2", attributeTypeId="_b5709b50-04fe-45be-9354-9246f6979a91")
+        requirementId="_dc3ba2a0-f0cf-4b83-b61a-483d01f208e2",
+        attributeTypeId="_b5709b50-04fe-45be-9354-9246f6979a91")
     requirementId = reqif_object.findRequirementIdByLongName("CRS-22")
     requirementValue2 = reqif_object.getRequirementValueByAttributeLongName(
         requirementId, attributeLongName="my_reqif_object_id")
@@ -60,7 +62,10 @@ if __name__ == "__main__":
     requirementValues = reqif_object.getRequirementValuesByLongName("CRS-22")
 
     reqif_object.setRequirementValueByLongNames(
-        requirementLongName="CRS-100", attributeLongName="reqif_comment_field", value="<div>myNewComment2</div>")
+        requirementLongName="CRS-100",
+        attributeLongName="reqif_comment_field",
+        value="<div>myNewComment2</div>")
+
     requirementValue6 = reqif_object.getRequirementValueByLongNames(
         requirementLongName="CRS-100", attributeLongName="reqif_comment_field")
         
