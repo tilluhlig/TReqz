@@ -11,7 +11,7 @@ class reqif_enum_value(TReqz.reqif_identifiable):
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
         super().decode(content, id_dict)
-        namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
+        namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
         elem = content.find(
             "./{0}PROPERTIES/{0}EMBEDDED-VALUE".format(namespace))
@@ -21,8 +21,8 @@ class reqif_enum_value(TReqz.reqif_identifiable):
     def encode(self):
         elem = super().encode()
         elem.tag = self.name
-        valueElement = TReqz.reqif_utils.addRequiredSubElement(
+        valueElement = TReqz.xml_utils.addRequiredSubElement(
             elem, "PROPERTIES")
-        TReqz.reqif_utils.addEncodedSubElement(
+        TReqz.xml_utils.addEncodedSubElement(
             valueElement, self.embedded_value)
         return elem

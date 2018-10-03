@@ -19,6 +19,6 @@ class reqif_datatype_definition_integer(TReqz.reqif_datatype_definition):
     def encode(self):
         elem = super().encode()
         elem.tag = self.name
-        TReqz.reqif_utils.setElementAttribute(elem, "MAX", self.max)
-        TReqz.reqif_utils.setElementAttribute(elem, "MIN", self.min)
+        TReqz.xml_utils.setElementAttribute(elem, "MAX", self.max)
+        TReqz.xml_utils.setElementAttribute(elem, "MIN", self.min)
         return elem

@@ -1,8 +1,10 @@
 import TReqz
-from .reqif_parser import reqif_parser
 from .reqif_utils import reqif_utils
 from xml.etree.ElementTree import Element
 import re
+
+""" This class represents the access layer for the reqif format.
+"""
 
 
 class reqif:
@@ -30,7 +32,8 @@ class reqif:
             filePath {str} -- a local reqif/reqifz file
         """
 
-        self.__reqif_object: TReqz.reqif_req_if = reqif_parser.parseFile(
+        parser = TReqz.reqif_parser()
+        self.__reqif_object: TReqz.reqif_req_if = parser.parseFile(
             filePath)
         self.__id_dict: TReqz.reqif_id_dict = self.__reqif_object.getIdDict()
 
@@ -44,11 +47,37 @@ class reqif:
             pettyprint {bool} -- uses a pretty xml rendering mode (default: {True})
         """
 
-        return reqif_parser.dumpToFile(
+        parser = TReqz.reqif_parser()
+        return parser.dumpToFile(
             self.__reqif_object, filePath, pettyprint)
 
-    def addSpecObjectType(self, typeName: str, **kwargs):
-        raise NotImplementedError
+    def addSpecificationType(self, last_change=None, long_name=None, alternative_id=None, desc=None)->str:
+        if last_change == None:
+            last_change = TReqz.xml_utils.current_timestamp()
+
+        idDict = self.__reqif_object.getIdDict()
+        newSpecificationType = reqif_utils.create_object_by_element_class(
+            "reqif_specification_type", idDict)
+        newSpecificationType.fill(
+            last_change=last_change, long_name=long_name, alternative_id=alternative_id, desc=desc)
+        return newSpecificationType.identifier
+
+    def addDocument(self, specificationTypeId: str, last_change=None, long_name=None, alternative_id=None, desc=None)->str:
+        if last_change == None:
+            last_change = TReqz.xml_utils.current_timestamp()
+
+        specificationType: TReqz.reqif_specification_type = self.getObject(
+            specificationTypeId, TReqz.reqif_specification_type)
+
+        idDict = self.__reqif_object.getIdDict()
+        newSpecification = reqif_utils.create_object_by_element_class(
+            "reqif_specification", idDict)
+        newSpecification.fill(type=specificationType, last_change=last_change,
+                              long_name=long_name, alternative_id=alternative_id, desc=desc)
+        self.__reqif_object.req_if_content.specifications.append(
+            newSpecification)
+
+        return newSpecification.identifier
 
     def findSpecObjectTypeIdByLongName(self, longName: str):
         """ seeks to find a specObjectType-Id by its <longName> 
@@ -134,9 +163,6 @@ class reqif:
             ids.append(specType.identifier)
         return ids
 
-    def addDatatype(self, typeName: str, **kwargs):
-        raise NotImplementedError
-
     def findDatatypeIdByLongName(self, longName: str):
         """ seeks to find a dataType-id by its <longName>.
 
@@ -188,12 +214,6 @@ class reqif:
         for datatype in self.__reqif_object.req_if_content.datatypes:
             idList.append(datatype.identifier)
         return idList
-
-    def getAttributeTypeValues(self, specObjectTypeId: str, attributetypeId: str):
-        raise NotImplementedError  # for enums
-
-    def addAttributeType(self, specObjectTypeId: str, longName: str, datatypeId: str, isEditable: str = "false"):
-        raise NotImplementedError
 
     def findAttributeTypeIdByLongName(self, specObjectTypeId: str, longName: str):
         """ seeks to find a attributeType-id by its <longName> and the <specObjectTypeId>.
@@ -345,7 +365,7 @@ class reqif:
         """
 
         if last_change == None:
-            last_change = reqif_utils.current_timestamp()
+            last_change = TReqz.xml_utils.current_timestamp()
 
         requirement = self.getObject(requirementId, TReqz.reqif_spec_object)
         document = self.getObject(documentId)
@@ -386,7 +406,7 @@ class reqif:
             i += 1
         return None
 
-    def addRequirement(self, documentId: str, specObjectTypeId: str, parentRequirementId: str = None, last_change=None, long_name=None, alternative_id=None, desc=None, is_table_internal="false", is_editable="true"):
+    def addRequirement(self, documentId: str, specObjectTypeId: str, parentRequirementId: str = None, last_change=None, long_name=None, alternative_id=None, desc=None, is_table_internal="false", is_editable="true")->str:
         """ adds a new requirement to the document <documentId>
 
         Arguments:
@@ -407,7 +427,7 @@ class reqif:
         """
 
         if last_change == None:
-            last_change = reqif_utils.current_timestamp()
+            last_change = TReqz.xml_utils.current_timestamp()
 
         specObjects = self.__reqif_object.req_if_content.spec_objects
         specObjectType: TReqz.reqif_spec_object_type = self.getObject(
@@ -500,9 +520,6 @@ class reqif:
             requirements.append(self.getObject(id))
         return requirements
 
-    def addDocument(self, specificationTypeId: str):
-        raise NotImplementedError
-
     def getAllDocumentIds(self):
         """ returns a list which contains all existing document-id's
 
@@ -571,23 +588,24 @@ class reqif:
         return requirements
 
     def getChildParentMapForDocument(self, documentId)->dict:
-        hierarchicalIds = self.getDocumentHierarchicalRequirementIds(documentId)
+        hierarchicalIds = self.getDocumentHierarchicalRequirementIds(
+            documentId)
 
         childParentMap = dict()
         currentList = [hierarchicalIds]
         for parent, childs in hierarchicalIds.items():
             childParentMap[parent] = None
 
-        i=0
+        i = 0
         while i < len(currentList):
             for parent, childs in currentList[i].items():
                 childKeys = list(childs.keys())
-                if len(childKeys)==0:
+                if len(childKeys) == 0:
                     continue
                 for childKey in childKeys:
                     childParentMap[childKey] = parent
                 currentList.append(childs)
-            i+=1
+            i += 1
 
         return childParentMap
 
@@ -879,43 +897,3 @@ class reqif:
             raise TypeError("reqif_spec_object is required")
 
         return element
-
-    def findUnreferencedObjects(self):
-        """ finds reqif-elements which are not referenced by any other object
-
-        Returns:
-            {list<str>} -- a list of unreferenced objects
-        """
-        referenceMap = self.__generateReferenceMap()
-        raise NotImplementedError
-
-    def __checkIfObjectIsReferenced(self, objectId: str, referenceMap:dict):
-        """ checks if an object (objectId) is referenced by another object or not
-
-        Arguments:
-            objectId {str} -- the object-id
-
-        Returns:
-            {bool} -- true if the object is referenced by another object... false if not
-        """
-        return referenceMap.get(objectId) != None
-
-    def __generateReferenceMap(self):
-        """ generates a map which allows to check immediatly if an object is referenced by some
-
-        Returns:
-            {dict<bool>} -- shows if an object is referenced or not (true = yes, false = no)
-        """
-
-        referenceMap = dict()
-        raise NotImplementedError
-        return referenceMap
-
-    def __checkIfStringIsWellFormedXml(self, content: str):
-        """ checks if <content> is well formed xml
-
-        Returns:
-            {dict<bool>} -- true = is well formed, false = is not well formed
-        """
-
-        raise NotImplementedError

@@ -17,7 +17,7 @@ class reqif_req_if_content(TReqz.reqif_object):
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
         super().decode(content, id_dict)
-        namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
+        namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
         typeList = {"DATATYPE-DEFINITION-BOOLEAN": "reqif_datatype_definition_boolean",
                     "DATATYPE-DEFINITION-DATE": "reqif_datatype_definition_date",
@@ -56,45 +56,45 @@ class reqif_req_if_content(TReqz.reqif_object):
         elem = super().encode()
         elem.tag = self.name
         if len(self.datatypes) > 0:
-            datatypesElement = TReqz.reqif_utils.addRequiredSubElement(
+            datatypesElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "DATATYPES")
             for element in self.datatypes:
-                TReqz.reqif_utils.addEncodedSubElement(
+                TReqz.xml_utils.addEncodedSubElement(
                     datatypesElement, element)
 
         if len(self.spec_types) > 0:
-            spectypesElement = TReqz.reqif_utils.addRequiredSubElement(
+            spectypesElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "SPEC-TYPES")
             for element in self.spec_types:
-                TReqz.reqif_utils.addEncodedSubElement(
+                TReqz.xml_utils.addEncodedSubElement(
                     spectypesElement, element)
 
         if len(self.spec_objects) > 0:
-            specobjectsElement = TReqz.reqif_utils.addRequiredSubElement(
+            specobjectsElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "SPEC-OBJECTS")
             for element in self.spec_objects:
-                TReqz.reqif_utils.addEncodedSubElement(
+                TReqz.xml_utils.addEncodedSubElement(
                     specobjectsElement, element)
 
         if len(self.spec_relations) > 0:
-            specrelationsElement = TReqz.reqif_utils.addRequiredSubElement(
+            specrelationsElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "SPEC-RELATIONS")
             for element in self.spec_relations:
-                TReqz.reqif_utils.addEncodedSubElement(
+                TReqz.xml_utils.addEncodedSubElement(
                     specrelationsElement, element)
 
         if len(self.specifications) > 0:
-            specificationsElement = TReqz.reqif_utils.addRequiredSubElement(
+            specificationsElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "SPECIFICATIONS")
             for element in self.specifications:
-                TReqz.reqif_utils.addEncodedSubElement(
+                TReqz.xml_utils.addEncodedSubElement(
                     specificationsElement, element)
 
         if len(self.spec_relation_groups) > 0:
-            specrelationgroupsElement = TReqz.reqif_utils.addRequiredSubElement(
+            specrelationgroupsElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "SPEC-RELATION-GROUPS")
             for element in self.spec_relation_groups:
-                TReqz.reqif_utils.addEncodedSubElement(
+                TReqz.xml_utils.addEncodedSubElement(
                     specrelationgroupsElement, element)
 
         return elem

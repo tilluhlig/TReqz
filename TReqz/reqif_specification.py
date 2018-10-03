@@ -13,7 +13,7 @@ class reqif_specification(TReqz.reqif_identifiable):
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
         super().decode(content, id_dict)
-        namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
+        namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
         typeList = {"ATTRIBUTE-VALUE-BOOLEAN": "reqif_attribute_value_boolean",
                     "ATTRIBUTE-VALUE-DATE": "reqif_attribute_value_date",
@@ -37,19 +37,19 @@ class reqif_specification(TReqz.reqif_identifiable):
         elem.tag = self.name
 
         if len(self.values) > 0:
-            valuesElement = TReqz.reqif_utils.addRequiredSubElement(
+            valuesElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "VALUES")
             for value in self.values:
-                TReqz.reqif_utils.addEncodedSubElement(valuesElement, value)
+                TReqz.xml_utils.addEncodedSubElement(valuesElement, value)
 
         if len(self.children) > 0:
-            childrenElement = TReqz.reqif_utils.addRequiredSubElement(
+            childrenElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "CHILDREN")
             for child in self.children:
-                TReqz.reqif_utils.addEncodedSubElement(childrenElement, child)
+                TReqz.xml_utils.addEncodedSubElement(childrenElement, child)
 
-        typeElement = TReqz.reqif_utils.addRequiredSubElement(elem, "TYPE")
-        TReqz.reqif_utils.addRequiredSubElement(
+        typeElement = TReqz.xml_utils.addRequiredSubElement(elem, "TYPE")
+        TReqz.xml_utils.addRequiredSubElement(
             typeElement, "SPECIFICATION-TYPE-REF", self.type.identifier)
 
         return elem

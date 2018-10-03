@@ -12,7 +12,7 @@ class reqif_datatype_definition_enumeration(TReqz.reqif_datatype_definition):
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
         super().decode(content, id_dict)
-        namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
+        namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
         elem: Element = content.find("./{0}SPECIFIED-VALUES".format(namespace))
         self.specified_values: list = list()
@@ -26,8 +26,8 @@ class reqif_datatype_definition_enumeration(TReqz.reqif_datatype_definition):
         elem = super().encode()
         elem.tag = self.name
         if len(self.specified_values) > 0:
-            valuesElement = TReqz.reqif_utils.addRequiredSubElement(
+            valuesElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "SPECIFIED-VALUES")
             for value in self.specified_values:
-                TReqz.reqif_utils.addEncodedSubElement(valuesElement, value)
+                TReqz.xml_utils.addEncodedSubElement(valuesElement, value)
         return elem

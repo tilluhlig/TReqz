@@ -12,7 +12,7 @@ class reqif_spec_object(TReqz.reqif_identifiable):
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
         super().decode(content, id_dict)
-        namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
+        namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
         self.type = TReqz.reqif_utils.get_local_ref_from_element_text(
             content, id_dict, "./{0}TYPE/{0}SPEC-OBJECT-TYPE-REF".format(namespace))
@@ -32,14 +32,14 @@ class reqif_spec_object(TReqz.reqif_identifiable):
         elem.tag = self.name
 
         if len(self.values) > 0:
-            valuesElement = TReqz.reqif_utils.addRequiredSubElement(
+            valuesElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "VALUES")
             for value in self.values:
                 if not value.isEmpty():
-                    TReqz.reqif_utils.addEncodedSubElement(valuesElement, value)
+                    TReqz.xml_utils.addEncodedSubElement(valuesElement, value)
 
-        typeElement = TReqz.reqif_utils.addRequiredSubElement(elem, "TYPE")
-        TReqz.reqif_utils.addRequiredSubElement(
+        typeElement = TReqz.xml_utils.addRequiredSubElement(elem, "TYPE")
+        TReqz.xml_utils.addRequiredSubElement(
             typeElement, "SPEC-OBJECT-TYPE-REF", self.type.identifier)
 
         return elem

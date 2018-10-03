@@ -17,6 +17,6 @@ class reqif_datatype_definition_string(TReqz.reqif_datatype_definition):
     def encode(self):
         elem = super().encode()
         elem.tag = self.name
-        TReqz.reqif_utils.setElementAttribute(
+        TReqz.xml_utils.setElementAttribute(
             elem, "MAX-LENGTH", self.max_length)
         return elem

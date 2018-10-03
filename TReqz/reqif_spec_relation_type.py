@@ -11,7 +11,7 @@ class reqif_spec_relation_type(TReqz.reqif_identifiable):
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
         super().decode(content, id_dict)
-        namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
+        namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
         typeList = {"ATTRIBUTE-DEFINITION-BOOLEAN": "reqif_attribute_definition_boolean",
                     "ATTRIBUTE-DEFINITION-DATE": "reqif_attribute_definition_date",
@@ -28,10 +28,10 @@ class reqif_spec_relation_type(TReqz.reqif_identifiable):
         elem.tag = self.name
 
         if len(self.spec_attributes) > 0:
-            specattributesElement = TReqz.reqif_utils.addRequiredSubElement(
+            specattributesElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "SPEC-ATTRIBUTES")
             for spec in self.spec_attributes:
-                TReqz.reqif_utils.addEncodedSubElement(
+                TReqz.xml_utils.addEncodedSubElement(
                     specattributesElement, spec)
 
         return elem

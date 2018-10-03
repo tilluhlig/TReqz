@@ -4,51 +4,11 @@ import hashlib
 import TReqz
 import datetime
 import pytz
+import os
 
 
 class reqif_utils:
-    @staticmethod
-    def check_tag_name(tag: str, expectedName: str):
-        """ compares a tag with an expected tag-name (expectedName)
-
-        Arguments:
-            tag {str} -- a tag like "{ns}DIV"
-            expectedName {str} -- a expected tag-name like "DIV"
-
-        Returns:
-            {bool} -- whether the tag name is the expected (true = yes, false = no)
-        """
-
-        return reqif_utils.get_tag_name(tag) == expectedName
-
-    @staticmethod
-    def get_tag_name(tag: str):
-        """ removes the leading namespace from a tag
-
-        Arguments:
-            tag {str} -- the tag
-
-        Returns:
-            [type] -- the converted tag without its namespace
-        """
-
-        name = re.split("\{.*\}", tag)
-        return name[1] if name else ''
-
-    @staticmethod
-    def get_tag_namespace(tag: str):
-        """ extracts the namespace from a tag
-
-        Arguments:
-            tag {str} -- the tag
-
-        Returns:
-            {str} -- the namespace
-        """
-
-        namespace = re.match("\{.*\}", tag)
-        return namespace.group(0) if namespace else ''
-
+    
     @staticmethod
     def generate_local_ref_list_from_elements(content: Element, id_dict: TReqz.reqif_id_dict, elements_parent_path: str):
         """ creates a list of objects which is based on refs.
@@ -94,6 +54,51 @@ class reqif_utils:
         return id_list
 
     @staticmethod
+    def create_object_by_element_class(type: str, id_dict: TReqz.reqif_id_dict = None):
+        """ creates a new object based on an class name (type)
+
+        Arguments:
+            id_dict {TReqz.reqif_id_dict} -- the id dict
+            type {str} -- the class name
+
+        Returns:
+            {reqif_/None} -- the object or None
+        """
+
+        if type != None:
+            classname = "TReqz."+type
+            newObject = eval(classname)(None, id_dict)
+
+            if id_dict != None and hasattr(newObject, "create"):
+                newObject.create(id_dict)
+            return newObject
+        return None
+
+    @staticmethod
+    def generate_object_by_element_class(content: Element, id_dict: TReqz.reqif_id_dict, element_path: str, type: str):
+        """ creates a new object based on an class name (type)
+
+        Arguments:
+            content {Element} -- the root element
+            id_dict {TReqz.reqif_id_dict} -- the id dict
+            element_path {str} -- the element path
+            type {str} -- the class name
+
+        Returns:
+            {reqif_/None} -- the object or None
+        """
+
+        elem: Element = content.find(element_path)
+        if type != None and elem != None:
+            classname = "TReqz."+type
+            #typeClass = importlib.import_module(type, 'TReqz.'+type)
+            #classname = getattr(typeClass, type)
+            #newObject = classname(elem, id_dict)
+            newObject = eval(classname)(elem, id_dict)
+            return newObject
+        return None
+
+    @staticmethod
     def get_local_ref_from_element(content: Element, id_dict: TReqz.reqif_id_dict, element_path: str):
         """ returns the referenced object of an element (element_path)
 
@@ -114,38 +119,6 @@ class reqif_utils:
             return None
 
         return referenced_object
-
-    @staticmethod
-    def get_text_from_element(content: Element, element_path: str):
-        """ extracts the element text
-
-        Arguments:
-            content {Element} -- the root element
-            element_path {str} -- the requested element
-
-        Returns:
-            {str} -- the text
-        """
-
-        elem: Element = content.find(element_path)
-        if elem == None:
-            return None
-        return elem.text
-
-    @staticmethod
-    def get_element(content: Element, element_path: str):
-        """ returns an element which is located on element_path
-
-        Arguments:
-            content {Element} -- the root element
-            element_path {str} -- the requested path
-
-        Returns:
-            {Element} -- the Element
-        """
-
-        elem: Element = content.find(element_path)
-        return elem
 
     @staticmethod
     def get_local_ref_from_element_text(content: Element, id_dict: TReqz.reqif_id_dict, element_path: str):
@@ -197,7 +170,7 @@ class reqif_utils:
         if elem != None:
             valueElements = elem.getchildren()
             for elem2 in valueElements:
-                elemName = reqif_utils.get_tag_name(elem2.tag)
+                elemName = TReqz.xml_utils.get_tag_name(elem2.tag)
                 elemClass = typeList.get(elemName)
                 if elemClass != None:
                     classname = "TReqz."+elemClass
@@ -210,196 +183,6 @@ class reqif_utils:
                     # unknown type
                     pass
         return results
-
-    @staticmethod
-    def current_timestamp():
-        """ returns the current timestamp
-
-        Returns:
-            {str} -- the timestamp
-        """
-        return datetime.datetime.now(pytz.utc).isoformat()
-
-    @staticmethod
-    def create_object_by_element_class(type: str, id_dict: TReqz.reqif_id_dict = None):
-        """ creates a new object based on an class name (type)
-
-        Arguments:
-            id_dict {TReqz.reqif_id_dict} -- the id dict
-            type {str} -- the class name
-
-        Returns:
-            {reqif_/None} -- the object or None
-        """
-
-        if type != None:
-            classname = "TReqz."+type
-            newObject = eval(classname)(None, id_dict)
-
-            if id_dict != None and hasattr(newObject, "create"):
-                newObject.create(id_dict)
-            return newObject
-        return None
-
-    @staticmethod
-    def generate_object_by_element_class(content: Element, id_dict: TReqz.reqif_id_dict, element_path: str, type: str):
-        """ creates a new object based on an class name (type)
-
-        Arguments:
-            content {Element} -- the root element
-            id_dict {TReqz.reqif_id_dict} -- the id dict
-            element_path {str} -- the element path
-            type {str} -- the class name
-
-        Returns:
-            {reqif_/None} -- the object or None
-        """
-
-        elem: Element = content.find(element_path)
-        if type != None and elem != None:
-            classname = "TReqz."+type
-            #typeClass = importlib.import_module(type, 'TReqz.'+type)
-            #classname = getattr(typeClass, type)
-            #newObject = classname(elem, id_dict)
-            newObject = eval(classname)(elem, id_dict)
-            return newObject
-        return None
-
-    @staticmethod
-    def merge_elements(target: Element, source: Element):
-        """ merges two elements
-
-        Arguments:
-            target {Element} -- the target element
-            source {Element} -- the source element
-        """
-
-        # the target-dictionary is dominant
-
-        # merge attributes
-        if (target.attrib == None):
-            target.attrib = {}
-        if (source.attrib == None):
-            source.attrib = {}
-        td: dict = target.attrib
-        sd: dict = source.attrib
-        for key, value in sd.items():
-            if td.get(key) == None:
-                td[key] = value
-            else:
-                # the key already exists
-                pass
-
-        # merge elements
-        # todo: recursive merge
-        for elem in source.iter():
-            target.append(elem)
-
-    @staticmethod
-    def setElementAttribute(elem: Element, attribute: str, value: str):
-        """ sets an element attribute
-
-        Arguments:
-            elem {Element} -- the element
-            attribute {str} -- the attribute name
-            value {str} -- the new value
-        """
-
-        if value != None:
-            elem.set(attribute, value)
-
-    @staticmethod
-    def createSubElement(name: str, content: str = None):
-        """ creates a new element
-
-        Arguments:
-            name {str} -- the tag-name
-
-        Keyword Arguments:
-            content {str} -- an optional content (default: {None})
-
-        Returns:
-            {Element} -- the new Element
-        """
-
-        newElem = Element(name)
-        if content != None:
-            newElem.text = content
-        return newElem
-
-    @staticmethod
-    def addRequiredSubElement(elem: Element, name: str, content: str = None):
-        """ ads+creates a required element to an element (elem)
-
-        Arguments:
-            elem {Element} -- the parent element
-            name {str} -- the name of the new sub-element
-
-        Keyword Arguments:
-            content {str} -- a optional content for the sub-element (default: {None})
-
-        Returns:
-            {Element} -- the new sub-element
-        """
-
-        newElem = TReqz.reqif_utils.createSubElement(name, content)
-        elem.append(newElem)
-        return newElem
-
-    @staticmethod
-    def addOptionalSubElement(elem: Element, name: str, content: str = ""):
-        """ ads+creates an optional element to an element (elem).
-            the element would be added if the content is not None
-
-        Arguments:
-            elem {Element} -- the parent element
-            name {str} -- the name of the new sub-element
-
-        Keyword Arguments:
-            content {str} -- a optional content for the sub-element (default: {None})
-
-        Returns:
-            {Element} -- the new sub-element
-        """
-
-        if content != None:
-            newElem = TReqz.reqif_utils.createSubElement(name, content)
-            elem.append(newElem)
-            return newElem
-        return None
-
-    @staticmethod
-    def addEncodedSubElement(elem: Element, subElem):
-        """ adds an element (subElem) to elem and encodes subElem (from reqif)
-
-        Arguments:
-            elem {Element} -- the parent element
-            subElem {reqif_} -- the new sub-element (which needs to be encoded from reqif)
-
-        Returns:
-            {Element/None} -- the new element or None
-        """
-
-        if subElem != None:
-            newElem = subElem.encode()
-            elem.append(newElem)
-            return newElem
-        return None
-
-    @staticmethod
-    def generateMd5(content: str):
-        """ generates a md5 hash for the given <content>
-
-        Arguments:
-            content {str} -- the content
-
-        Returns:
-            {str} -- a hex representation of the md5 hash
-        """
-
-        m = hashlib.md5()
-        m.update(content.encode('utf-8'))
-        return m.hexdigest()
 
     @staticmethod
     def convertMd5ToReqifIdentifier(md5Hash: str):
@@ -430,7 +213,11 @@ class reqif_utils:
         currentReqifIdentifier = None
         while currentReqifIdentifier == None or id_dict.get(currentReqifIdentifier) != None:
             currentId = currentId + 1
-            currentHash = TReqz.reqif_utils.generateMd5(str(currentId))
+            currentHash = TReqz.xml_utils.generateMd5(str(currentId))
             currentReqifIdentifier = TReqz.reqif_utils.convertMd5ToReqifIdentifier(
                 currentHash)
         return currentReqifIdentifier
+
+    @staticmethod
+    def validateReqifFile(filePath:str):
+        return TReqz.xml_utils.validateXmlFile(filePath, os.path.dirname(__file__)+"/reqif.xsd")

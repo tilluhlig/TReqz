@@ -18,7 +18,7 @@ class reqif_embeded_value(TReqz.reqif_object):
     def encode(self):
         elem = super().encode()
         elem.tag = self.name
-        TReqz.reqif_utils.setElementAttribute(elem, "KEY", self.key)
-        TReqz.reqif_utils.setElementAttribute(
+        TReqz.xml_utils.setElementAttribute(elem, "KEY", self.key)
+        TReqz.xml_utils.setElementAttribute(
             elem, "OTHER-CONTENT", self.other_content)
         return elem

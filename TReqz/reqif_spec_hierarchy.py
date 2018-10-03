@@ -16,7 +16,7 @@ class reqif_spec_hierarchy(TReqz.reqif_identifiable):
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
         super().decode(content, id_dict)
-        namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
+        namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
         self.req_object = TReqz.reqif_utils.get_local_ref_from_element_text(
             content, id_dict, "./{0}OBJECT/{0}SPEC-OBJECT-REF".format(namespace))
 
@@ -35,24 +35,24 @@ class reqif_spec_hierarchy(TReqz.reqif_identifiable):
         elem.tag = self.name
 
         if len(self.children) > 0:
-            childrenElement = TReqz.reqif_utils.addRequiredSubElement(
+            childrenElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "CHILDREN")
             for child in self.children:
-                TReqz.reqif_utils.addEncodedSubElement(childrenElement, child)
+                TReqz.xml_utils.addEncodedSubElement(childrenElement, child)
 
         if len(self.editable_atts) > 0:
-            attsElement = TReqz.reqif_utils.addRequiredSubElement(
+            attsElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "EDITABLE-ATTS")
             for attribute in self.editable_atts:
-                TReqz.reqif_utils.addRequiredSubElement(
+                TReqz.xml_utils.addRequiredSubElement(
                     attsElement, attribute.name+"-REF", attribute.identifier)
 
-        objectElement = TReqz.reqif_utils.addRequiredSubElement(elem, "OBJECT")
-        TReqz.reqif_utils.addRequiredSubElement(
+        objectElement = TReqz.xml_utils.addRequiredSubElement(elem, "OBJECT")
+        TReqz.xml_utils.addRequiredSubElement(
             objectElement, "SPEC-OBJECT-REF", self.req_object.identifier)
 
-        TReqz.reqif_utils.setElementAttribute(
+        TReqz.xml_utils.setElementAttribute(
             elem, "IS-EDITABLE", self.is_editable)
-        TReqz.reqif_utils.setElementAttribute(
+        TReqz.xml_utils.setElementAttribute(
             elem, "IS-TABLE-INTERNAL", self.is_table_internal)
         return elem

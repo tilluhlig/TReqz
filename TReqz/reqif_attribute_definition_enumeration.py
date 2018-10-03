@@ -32,7 +32,7 @@ class reqif_attribute_definition_enumeration(TReqz.reqif_attribute_definition):
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
         super().decode(content, id_dict)
-        namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
+        namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
         typeList = {
             "ATTRIBUTE-VALUE-ENUMERATION": "reqif_attribute_value_enumeration"}
@@ -46,16 +46,16 @@ class reqif_attribute_definition_enumeration(TReqz.reqif_attribute_definition):
     def encode(self):
         elem = super().encode()
         elem.tag = self.name
-        TReqz.reqif_utils.setElementAttribute(
+        TReqz.xml_utils.setElementAttribute(
             elem, "MULTI-VALUED", self.multi_valued)
 
-        defaultElement = TReqz.reqif_utils.addRequiredSubElement(
+        defaultElement = TReqz.xml_utils.addRequiredSubElement(
             elem, "DEFAULT-VALUE")
         if defaultElement != None and self.default_value != None:
             for value in self.default_value:
-                TReqz.reqif_utils.addEncodedSubElement(defaultElement, value)
+                TReqz.xml_utils.addEncodedSubElement(defaultElement, value)
 
-        typeElement = TReqz.reqif_utils.addRequiredSubElement(elem, "TYPE")
-        TReqz.reqif_utils.addRequiredSubElement(
+        typeElement = TReqz.xml_utils.addRequiredSubElement(elem, "TYPE")
+        TReqz.xml_utils.addRequiredSubElement(
             typeElement, "DATATYPE-DEFINITION-ENUMERATION-REF", self.type.identifier)
         return elem

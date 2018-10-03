@@ -12,13 +12,13 @@ class reqif_attribute_definition(TReqz.reqif_identifiable):
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
         super().decode(content, id_dict)
-        namespace = TReqz.reqif_utils.get_tag_namespace(content.tag)
+        namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
         self.is_editable = content.get("IS-EDITABLE")
 
     def encode(self):
         elem = super().encode()
         elem.tag = self.name
-        TReqz.reqif_utils.setElementAttribute(
+        TReqz.xml_utils.setElementAttribute(
             elem, "IS-EDITABLE", self.is_editable)
         return elem
