@@ -23,7 +23,7 @@ if __name__ == "__main__":
 #### Further examples
 ``` python
     # the example reqif contains a id-field (my_reqif_object_id, string) and
-      a comment field (reqif_comment_field, xhtml)
+    # a comment field (reqif_comment_field, xhtml)
 
     allRequirements = reqif_object.getAllRequirementIds()
     specificRequirement = reqif_object.findRequirementsByFieldValue(
