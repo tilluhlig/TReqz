@@ -493,12 +493,13 @@ class reqif:
                                 break
                     else:
                         if concreteValues == value:
-                            break
+                            foundValue = True
                 else:
                     foundValue = True
 
                 if foundValue == True:
                     requirementIds.append(specObject.identifier)
+                    break
 
         return requirementIds
 
@@ -557,6 +558,7 @@ class reqif:
         for specification in document.children:
             currentRequirements = list()
             currentSpecHierarchies = list()+specification.children
+            requirements += [specification.req_object.identifier]
             i = 0
             while i < len(currentSpecHierarchies):
                 specHierarchy: TReqz.reqif_spec_hierarchy = currentSpecHierarchies[i]
@@ -578,6 +580,7 @@ class reqif:
         for specification in specifications:
             currentRequirements = list()
             currentSpecHierarchies = list()+specification.children
+            requirements += [specification.req_object.identifier]
             i = 0
             while i < len(currentSpecHierarchies):
                 specHierarchy: TReqz.reqif_spec_hierarchy = currentSpecHierarchies[i]
@@ -621,11 +624,12 @@ class reqif:
         requirements = dict()
         document = self.getObject(documentId)
         for specification in document.children:
-            currentSpecHierarchies = list()+specification.children
+            #currentSpecHierarchies = list()+specification.children
+            requirements[specification.req_object.identifier] = collectIds(specification)
 
-            for currentSpecHierarchie in currentSpecHierarchies:
-                requirements[currentSpecHierarchie.req_object.identifier] = collectIds(
-                    currentSpecHierarchie)
+            #for currentSpecHierarchie in currentSpecHierarchies:
+            #    requirements[currentSpecHierarchie.req_object.identifier] = collectIds(
+            #        currentSpecHierarchie)
         return requirements
 
     def getHierarchicalRequirementIds(self):
@@ -646,11 +650,13 @@ class reqif:
         requirements = dict()
         specifications = self.__reqif_object.req_if_content.specifications
         for specification in specifications:
-            currentSpecHierarchies = list()+specification.children
+            #currentSpecHierarchies = list()+specification.children
+            #requirements+=[specification.req_object.identifier]
+            requirements[specification.req_object.identifier] = collectIds(specification)
 
-            for currentSpecHierarchie in currentSpecHierarchies:
-                requirements[currentSpecHierarchie.req_object.identifier] = collectIds(
-                    currentSpecHierarchie)
+            #for currentSpecHierarchie in currentSpecHierarchies:
+            #    requirements[currentSpecHierarchie.req_object.identifier] = collectIds(
+            #        currentSpecHierarchie)
         return requirements
 
     def __checkIfRequirementValueExists(self, requirementId: str, attributeId: str):
