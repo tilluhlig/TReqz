@@ -38,6 +38,8 @@ class xml_utils:
         Returns:
             [type] -- the converted tag without its namespace
         """
+        if tag == None:
+            return ""
 
         name = re.split("\{.*\}", tag)
         if len(name)>=2:
@@ -52,8 +54,11 @@ class xml_utils:
             tag {str} -- the tag
 
         Returns:
-            {str} -- the namespace
+            {str} -- the namespace, e.g. {html}
         """
+
+        if tag==None:
+            tag = ""
 
         namespace = re.match("\{.*\}", tag)
         if namespace != None:
@@ -317,7 +322,7 @@ class xml_utils:
         all_descendants = list(result.iter())
         for element in all_descendants:
             element.tag = "{http://www.w3.org/1999/xhtml}"+element.tag
-        return element
+        return result
 
     @staticmethod
     def stringIsWellFormedXml(content: str):
@@ -344,6 +349,8 @@ class xml_utils:
         Returns:
             str -- the normalized string
         """
+        if content == None:
+            return None
 
         normalizedcontent = re.sub(
             r"<[^<]+>",
