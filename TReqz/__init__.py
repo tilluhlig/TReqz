@@ -1,6 +1,9 @@
-from xmlHelper import xml_object as xml_object
-from xmlHelper import xml_utils as xml_utils
-from xmlHelper import xml_parser as xml_parser
+from ..xmlHelper import xml_object as xml_object
+from ..xmlHelper import xml_utils as xml_utils
+from ..xmlHelper import xml_parser as xml_parser
+###import xmlHelper.xml_object as xml_object
+###import xmlHelper.xml_utils as xml_utils
+###import xmlHelper.xml_parser as xml_parser
 from .reqif_config import reqif_config
 from .reqif_object import reqif_object
 from .reqif_identifiable import reqif_identifiable

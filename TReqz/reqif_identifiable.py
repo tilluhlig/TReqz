@@ -1,7 +1,7 @@
 import xml.etree.cElementTree as ET
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import ElementTree
-import TReqz
+from .. import TReqz
 
 
 class reqif_identifiable(TReqz.reqif_object):

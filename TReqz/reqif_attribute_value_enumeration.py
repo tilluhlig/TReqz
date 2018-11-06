@@ -1,6 +1,6 @@
 from xml.etree.ElementTree import Element
-import TReqz
-import TReqz.reqif_utils
+from .. import TReqz
+from ..TReqz import reqif_utils
 
 
 class reqif_attribute_value_enumeration(TReqz.reqif_attribute_value):

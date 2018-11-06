@@ -1,4 +1,4 @@
-import TReqz
+from .. import TReqz
 from xml.etree.ElementTree import Element
 
 

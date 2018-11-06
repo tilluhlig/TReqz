@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 import re
 import io
 import hashlib
-import xmlHelper
+from .. import xmlHelper
 import datetime
 import pytz
 from lxml import etree
@@ -183,7 +183,7 @@ class xml_utils:
             {Element} -- the new sub-element
         """
 
-        newElem = xmlHelper.xml_utils.createSubElement(name, content)
+        newElem = xml_utils.createSubElement(name, content)
         elem.append(newElem)
         return newElem
 
@@ -204,7 +204,7 @@ class xml_utils:
         """
 
         if content != None:
-            newElem = xmlHelper.xml_utils.createSubElement(name, content)
+            newElem = xml_utils.createSubElement(name, content)
             elem.append(newElem)
             return newElem
         return None

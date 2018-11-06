@@ -1,6 +1,6 @@
 from xml.etree.ElementTree import Element
 import re
-import TReqz
+from .. import TReqz
 
 
 class reqif_object(TReqz.xml_object):

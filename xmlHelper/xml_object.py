@@ -1,6 +1,6 @@
 from xml.etree.ElementTree import Element
 import re
-import xmlHelper
+from .. import xmlHelper
 
 
 class xml_object:

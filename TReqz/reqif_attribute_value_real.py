@@ -1,5 +1,5 @@
 from xml.etree.ElementTree import Element
-import TReqz
+from .. import TReqz
 
 
 class reqif_attribute_value_real(TReqz.reqif_attribute_value):

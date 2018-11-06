@@ -1,5 +1,5 @@
 from xml.etree.ElementTree import Element
-import TReqz
+from .. import TReqz
 
 
 class reqif_spec_hierarchy(TReqz.reqif_identifiable):

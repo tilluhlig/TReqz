@@ -1,7 +1,7 @@
 from xml.etree.ElementTree import Element
 import re
 import hashlib
-import TReqz
+from .. import TReqz
 import datetime
 import pytz
 import os

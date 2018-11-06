@@ -2,7 +2,7 @@ import xml.etree.cElementTree as ET
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import ElementTree
 import re
-import TReqz
+from .. import TReqz
 
 
 class reqif_id_dict(object):

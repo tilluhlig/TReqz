@@ -1,6 +1,6 @@
 import shutil
 import sys
-import TReqz
+from .. import TReqz
 import xml.etree.cElementTree as ET
 from xml.etree.ElementTree import Element
 from xml.etree.ElementTree import ElementTree

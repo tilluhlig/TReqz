@@ -1,6 +1,6 @@
 from xml.etree.ElementTree import Element
 import xml.etree.ElementTree as ET
-import TReqz
+from .. import TReqz
 import re
 
 
