@@ -1,4 +1,4 @@
-import TReqz
+from .. import TReqz
 from .reqif_utils import reqif_utils
 from xml.etree.ElementTree import Element
 import re
@@ -580,7 +580,7 @@ class reqif:
         for specification in specifications:
             currentRequirements = list()
             currentSpecHierarchies = list()+specification.children
-            requirements += [specification.req_object.identifier]
+            #requirements += [specification.req_object.identifier]
             i = 0
             while i < len(currentSpecHierarchies):
                 specHierarchy: TReqz.reqif_spec_hierarchy = currentSpecHierarchies[i]
@@ -652,7 +652,8 @@ class reqif:
         for specification in specifications:
             #currentSpecHierarchies = list()+specification.children
             #requirements+=[specification.req_object.identifier]
-            requirements[specification.req_object.identifier] = collectIds(specification)
+            first = specification.children[0] #### is this correct? looks very creepy
+            requirements[first.req_object.identifier] = collectIds(first)
 
             #for currentSpecHierarchie in currentSpecHierarchies:
             #    requirements[currentSpecHierarchie.req_object.identifier] = collectIds(
