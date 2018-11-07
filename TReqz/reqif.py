@@ -275,7 +275,14 @@ class reqif:
             {bool} -- whether the attribute is an enumeration or not (true = yes, false = no)
         """
 
+        if attributeId == None:
+            raise RuntimeError("invalid attributeId")
+
         attribute = self.getObject(attributeId)
+
+        if attribute == None:
+            raise RuntimeError("invalid attribute")
+
         if "ENUMERATION" in attribute.name:
             return True
         return False
