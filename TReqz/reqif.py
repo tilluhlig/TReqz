@@ -619,7 +619,7 @@ class reqif:
 
         return childParentMap
 
-    def getDocumentHierarchicalRequirementIds(self, documentId):
+    def getDocumentHierarchicalRequirementIds(self, documentId)->dict:
         def collectIds(specHierarchy: TReqz.reqif_spec_hierarchy):
             requirements = dict()
             currentSpecHierarchies = specHierarchy.children
@@ -639,7 +639,7 @@ class reqif:
             #        currentSpecHierarchie)
         return requirements
 
-    def getHierarchicalRequirementIds(self):
+    def getHierarchicalRequirementIds(self)->dict:
         """ returns a list which contains the id's of all existing requirements (in hierarchical order)
 
         Returns:
@@ -667,7 +667,7 @@ class reqif:
             #        currentSpecHierarchie)
         return requirements
 
-    def __checkIfRequirementValueExists(self, requirementId: str, attributeId: str):
+    def __checkIfRequirementValueExists(self, requirementId: str, attributeId: str)->bool:
         """ check if the requireent value of <requirementId> exists, so it can be written
 
         Arguments:
