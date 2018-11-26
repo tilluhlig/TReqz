@@ -54,7 +54,7 @@ class reqif_utils:
         return id_list
 
     @staticmethod
-    def create_object_by_element_class(type: str, id_dict: TReqz.reqif_id_dict = None):
+    def create_object_by_element_class(type: str, id_dict: TReqz.reqif_id_dict = None, identifier = None):
         """ creates a new object based on an class name (type)
 
         Arguments:
@@ -69,7 +69,12 @@ class reqif_utils:
             classname = "TReqz."+type
             newObject = eval(classname)(None, id_dict)
 
-            if id_dict != None and hasattr(newObject, "create"):
+            if id_dict != None and identifier != None:
+                # if the identifier is predefined
+                newObject.identifier = identifier
+                id_dict.add(newObject)
+            elif id_dict != None and hasattr(newObject, "create"):
+                # if we need a new identifier (generated)
                 newObject.create(id_dict)
             return newObject
         return None

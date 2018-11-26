@@ -300,6 +300,10 @@ class reqif:
 
         attributeId = self.findAttributeTypeIdByLongName(
             specObjectTypeId, attributeLongName)
+
+        if attributeId== None:
+            return False
+
         return self.checkAttributeIsEnumeration(attributeId)
 
     def convertEnumerationValues(self, attributeId: str, values: list):
@@ -413,7 +417,7 @@ class reqif:
             i += 1
         return None
 
-    def addRequirement(self, documentId: str, specObjectTypeId: str, parentRequirementId: str = None, last_change=None, long_name=None, alternative_id=None, desc=None, is_table_internal="false", is_editable="true")->str:
+    def addRequirement(self, documentId: str, specObjectTypeId: str, parentRequirementId: str = None, last_change=None, long_name=None, alternative_id=None, desc=None, is_table_internal="false", is_editable="true", identifier=None)->str:
         """ adds a new requirement to the document <documentId>
 
         Arguments:
@@ -428,6 +432,7 @@ class reqif:
             desc {[type]} -- an optional description (default: {None})
             is_table_internal {str} -- whether the requirement is table internal (true = yes, false = no) (default: {"false"})
             is_editable {str} -- whether the requirement is editable (true = yes, false = no) (default: {"true"})
+            identifier {str} -- a predefined identifier (None if a identifier should be generated) (default: {None})
 
         Returns:
             {str} -- the new identifier or None if an error occured
@@ -442,7 +447,7 @@ class reqif:
 
         idDict = self.__reqif_object.getIdDict()
         newRequirement = reqif_utils.create_object_by_element_class(
-            "reqif_spec_object", idDict)
+            type="reqif_spec_object", id_dict=idDict, identifier=identifier)
         newRequirement.fill(type=specObjectType, last_change=last_change,
                             long_name=long_name, alternative_id=alternative_id, desc=desc)
         specObjects.append(newRequirement)
@@ -619,7 +624,7 @@ class reqif:
 
         return childParentMap
 
-    def getDocumentHierarchicalRequirementIds(self, documentId)->dict:
+    def getDocumentHierarchicalRequirementIds(self, documentId):
         def collectIds(specHierarchy: TReqz.reqif_spec_hierarchy):
             requirements = dict()
             currentSpecHierarchies = specHierarchy.children
@@ -639,7 +644,7 @@ class reqif:
             #        currentSpecHierarchie)
         return requirements
 
-    def getHierarchicalRequirementIds(self)->dict:
+    def getHierarchicalRequirementIds(self):
         """ returns a list which contains the id's of all existing requirements (in hierarchical order)
 
         Returns:
@@ -667,7 +672,7 @@ class reqif:
             #        currentSpecHierarchie)
         return requirements
 
-    def __checkIfRequirementValueExists(self, requirementId: str, attributeId: str)->bool:
+    def __checkIfRequirementValueExists(self, requirementId: str, attributeId: str):
         """ check if the requireent value of <requirementId> exists, so it can be written
 
         Arguments:
