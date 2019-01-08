@@ -18,6 +18,7 @@ class utils:
     def testDecodeAttribute(self, obj, reqifAttributeName:str, attributeName:str, attributeValue:str='A'):
         utils.decodeObj(obj, "<"+obj.name+" "+attributeName+"='"+attributeValue+"' />")
         self.assertEqual(attributeValue, obj.get(reqifAttributeName))
+        obj.fill(**{reqifAttributeName:None})
 
     @staticmethod
     def testIdentifiableDecodeAttributes(self, obj):
@@ -37,9 +38,9 @@ class utils:
     def testEncodeAttribute(self, obj, reqifAttributeName:str, xmlAttributeName:str, attributeValue:str='A'):
         xmlContent = utils.encodeObj(obj,{reqifAttributeName:attributeValue})
         self.assertEqual("<"+obj.name+" "+xmlAttributeName+"=\""+attributeValue+"\" />", xmlContent)
+        obj.fill(**{reqifAttributeName:None})
 
     @staticmethod
     def testIdentifiableEncodeAttributes(self, obj):
         for xmlAttributeName, reqifAttributeName in utils.getIdentifiableAttributes().items():
             utils.testEncodeAttribute(self, obj, reqifAttributeName, xmlAttributeName, xmlAttributeName+"1")
-            obj.fill(**{reqifAttributeName:None})
