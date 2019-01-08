@@ -1,10 +1,13 @@
 import unittest
-from libs.Requirements import TReqz as TReqz
+from libs.Requirements.TReqz.tests import utils as TE
 
 
 class TestReqifReqIf(unittest.TestCase):
     def setUp(self):
-        pass
+        self.obj = TE.TReqz.reqif_req_if()
+
+    def test_name(self):
+        self.assertEqual("REQ-IF", self.obj.name)
 
     def test_decode(self):
         raise NotImplementedError

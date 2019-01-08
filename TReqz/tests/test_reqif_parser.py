@@ -1,5 +1,5 @@
 import unittest
-from libs.Requirements import TReqz as TReqz
+from libs.Requirements.TReqz.tests import utils as TE
 
 
 class TestReqifParser(unittest.TestCase):

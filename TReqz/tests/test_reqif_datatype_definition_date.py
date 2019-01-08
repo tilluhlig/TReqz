@@ -10,10 +10,10 @@ class TestReqifDatatypeDefinitionDate(unittest.TestCase):
         self.assertEqual("DATATYPE-DEFINITION-DATE", self.obj.name)
 
     def test_decode(self):
-        TE.utils.testIdentifiableDecodeAttributes(self, self.obj)
+        TE.utils.testDecodeIdentifiableAttributes(self, self.obj)
 
     def test_encode(self):
-        TE.utils.testIdentifiableEncodeAttributes(self, self.obj)
+        TE.utils.testEncodeIdentifiableAttributes(self, self.obj)
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,10 +1,10 @@
 import unittest
-from libs.Requirements import TReqz as TReqz
+from libs.Requirements.TReqz.tests import utils as TE
 
 
 class TestReqifObject(unittest.TestCase):
     def setUp(self):
-        pass
+        self.obj = TE.TReqz.reqif_object()
 
     def test_decode(self):
         raise NotImplementedError

@@ -10,13 +10,13 @@ class TestReqifDatatypeDefinitionReal(unittest.TestCase):
         self.assertEqual("DATATYPE-DEFINITION-REAL", self.obj.name)
 
     def test_decode(self):
-        TE.utils.testIdentifiableDecodeAttributes(self, self.obj)
+        TE.utils.testDecodeIdentifiableAttributes(self, self.obj)
         TE.utils.testDecodeAttribute(self, self.obj, 'accuracy', 'ACCURACY')
         TE.utils.testDecodeAttribute(self, self.obj, 'max', 'MAX')
         TE.utils.testDecodeAttribute(self, self.obj, 'min', 'MIN')
 
     def test_encode(self):
-        TE.utils.testIdentifiableEncodeAttributes(self, self.obj)
+        TE.utils.testEncodeIdentifiableAttributes(self, self.obj)
         TE.utils.testEncodeAttribute(self, self.obj, 'accuracy', 'ACCURACY')
         TE.utils.testEncodeAttribute(self, self.obj, 'max', 'MAX')
         TE.utils.testEncodeAttribute(self, self.obj, 'min', 'MIN')

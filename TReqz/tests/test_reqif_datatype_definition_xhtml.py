@@ -1,10 +1,13 @@
 import unittest
-from libs.Requirements import TReqz as TReqz
+from libs.Requirements.TReqz.tests import utils as TE
 
 
 class TestReqifDatatypeDefinitionXhtml(unittest.TestCase):
     def setUp(self):
-        pass
+        self.obj = TE.TReqz.reqif_datatype_definition_xhtml()
+
+    def test_name(self):
+        self.assertEqual("DATATYPE-DEFINITION-XHTML", self.obj.name)
 
     def test_decode(self):
         raise NotImplementedError

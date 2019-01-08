@@ -1,10 +1,13 @@
 import unittest
-from libs.Requirements import TReqz as TReqz
+from libs.Requirements.TReqz.tests import utils as TE
 
 
 class TestReqifSpecHierarchy(unittest.TestCase):
     def setUp(self):
-        pass
+        self.obj = TE.TReqz.reqif_spec_hierarchy()
+
+    def test_name(self):
+        self.assertEqual("SPEC-HIERARCHY", self.obj.name)
 
     def test_decode(self):
         raise NotImplementedError
