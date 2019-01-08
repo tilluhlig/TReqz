@@ -5,7 +5,7 @@ from ..TReqz import reqif_utils
 
 class reqif_attribute_value_enumeration(TReqz.reqif_attribute_value):
 
-    def __init__(self, content: Element = None, id_dict={}):
+    def __init__(self, content: Element = None, id_dict=None):
         self.definition: TReqz.reqif_attribute_definition_enumeration = None  # localRef, required
         self.values: list = list()  # localRef, reqif_enum_value, element, optional
         self.name = "ATTRIBUTE-VALUE-ENUMERATION"
@@ -40,7 +40,7 @@ class reqif_attribute_value_enumeration(TReqz.reqif_attribute_value):
             return True
         return False 
 
-    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
+    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
         self.values = TReqz.reqif_utils.generate_local_ref_list_from_elements_text(

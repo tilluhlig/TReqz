@@ -4,13 +4,13 @@ from xml.etree.ElementTree import Element
 
 class reqif_embeded_value(TReqz.reqif_object):
 
-    def __init__(self, content: Element = None, id_dict={}):
+    def __init__(self, content: Element = None, id_dict=None):
         self.key: str = None  # attribute, required
         self.other_content: str = None  # attribute, required
         self.name = "EMBEDDED-VALUE"
         super(reqif_embeded_value, self).__init__(content, id_dict)
 
-    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
+    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
         self.key = content.get("KEY")
         self.other_content = content.get("OTHER-CONTENT")

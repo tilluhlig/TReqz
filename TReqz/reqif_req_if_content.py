@@ -4,7 +4,7 @@ from .. import TReqz
 
 class reqif_req_if_content(TReqz.reqif_object):
 
-    def __init__(self, content: Element = None, id_dict={}):
+    def __init__(self, content: Element = None, id_dict=None):
         self.datatypes: list = list()  # reqif_datatype_definition, optional
         # reqif_specification_type, reqif_spec_relation_type, reqif_spec_object_type, reqif_relation_group_type, optional
         self.spec_types: list = list()
@@ -15,7 +15,7 @@ class reqif_req_if_content(TReqz.reqif_object):
         self.name = "REQ-IF-CONTENT"
         super(reqif_req_if_content, self).__init__(content, id_dict)
 
-    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
+    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 

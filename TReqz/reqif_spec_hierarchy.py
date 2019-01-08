@@ -4,7 +4,7 @@ from .. import TReqz
 
 class reqif_spec_hierarchy(TReqz.reqif_identifiable):
 
-    def __init__(self, content: Element = None, id_dict={}):
+    def __init__(self, content: Element = None, id_dict=None):
         self.children: list = list()  # reqif_spec_hierarchy
         self.req_object: TReqz.reqif_object  # local_ref, required
         self.editable_atts: list = list()  # optional  TODO TODO
@@ -14,7 +14,7 @@ class reqif_spec_hierarchy(TReqz.reqif_identifiable):
         self.name = "SPEC-HIERARCHY"
         super(reqif_spec_hierarchy, self).__init__(content, id_dict)
 
-    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
+    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
         self.req_object = TReqz.reqif_utils.get_local_ref_from_element_text(

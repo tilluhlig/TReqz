@@ -4,7 +4,7 @@ from .. import TReqz
 
 class reqif_attribute_value(TReqz.reqif_object):
 
-    def __init__(self, content: Element = None, id_dict={}):
+    def __init__(self, content: Element = None, id_dict=None):
         self.definition: TReqz.reqif_attribute_definition = None  # element, required
         self.the_value: str = None  # attribute, required
         super(reqif_attribute_value, self).__init__(content, id_dict)

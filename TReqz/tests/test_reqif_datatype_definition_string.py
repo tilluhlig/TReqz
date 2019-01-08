@@ -1,7 +1,5 @@
 import unittest
 from libs.Requirements.TReqz.tests import utils as TE
-import xml.etree.cElementTree as ET
-from xml.etree.ElementTree import Element as Element
 
 
 class TestReqifDatatypeDefinitionString(unittest.TestCase):

@@ -6,14 +6,14 @@ import re
 
 class reqif_attribute_value_xhtml(TReqz.reqif_attribute_value):
 
-    def __init__(self, content: Element = None, id_dict={}):
+    def __init__(self, content: Element = None, id_dict=None):
         self.definition: TReqz.reqif_attribute_definition_xhtml = None  # localRef, required
         self.the_original_value: str = None  # element, optional
         self.is_simplified: str = None  # attribute, optional
         self.name = "ATTRIBUTE-VALUE-XHTML"
         super(reqif_attribute_value_xhtml, self).__init__(content, id_dict)
 
-    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
+    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
         elem = TReqz.xml_utils.get_element(

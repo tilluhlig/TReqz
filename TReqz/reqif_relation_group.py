@@ -4,7 +4,7 @@ from .. import TReqz
 
 class reqif_relation_group(TReqz.reqif_identifiable):
 
-    def __init__(self, content: Element = None, id_dict={}):
+    def __init__(self, content: Element = None, id_dict=None):
         self.source_specification: TReqz.reqif_object  # local_ref, required
         self.target_specification: TReqz.reqif_object  # local_ref, required
         self.spec_relations: list = list()  # local_ref, optional
@@ -12,7 +12,7 @@ class reqif_relation_group(TReqz.reqif_identifiable):
         self.name = "RELATION_GROUP"
         super(reqif_relation_group, self).__init__(content, id_dict)
 
-    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
+    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 

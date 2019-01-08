@@ -19,7 +19,7 @@ class reqif_req_if(TReqz.reqif_object):
             self.reqif_dict = id_dict
         super(reqif_req_if, self).__init__(content, self.reqif_dict)
 
-    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
+    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
 
         self.lang = content.get("{http://www.w3.org/XML/1998/namespace}lang")

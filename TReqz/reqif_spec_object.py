@@ -4,13 +4,13 @@ from .. import TReqz
 
 class reqif_spec_object(TReqz.reqif_identifiable):
 
-    def __init__(self, content: Element = None, id_dict={}):
+    def __init__(self, content: Element = None, id_dict=None):
         self.values: list = list()  # reqif_attribute_value, optional
         self.type: TReqz.reqif_spec_object_type = None  # local ref, required
         self.name = "SPEC-OBJECT"
         super(reqif_spec_object, self).__init__(content, id_dict)
 
-    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
+    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 

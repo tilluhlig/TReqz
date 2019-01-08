@@ -6,7 +6,7 @@ from .. import TReqz
 
 class reqif_identifiable(TReqz.reqif_object):
 
-    def __init__(self, content: Element = None, id_dict={}):
+    def __init__(self, content: Element = None, id_dict=None):
         self.desc: str = None  # attribute, optional
         self.identifier: str = None  # attribute, required
         self.last_change: str = None  # attribute, required

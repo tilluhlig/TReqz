@@ -4,7 +4,7 @@ from .. import TReqz
 
 class reqif_attribute_definition_enumeration(TReqz.reqif_attribute_definition):
 
-    def __init__(self, content: Element = None, id_dict={}):
+    def __init__(self, content: Element = None, id_dict=None):
         self.multi_valued: str = None  # attribute, required
         self.name = "ATTRIBUTE-DEFINITION-ENUMERATION"
         super(reqif_attribute_definition_enumeration,
@@ -30,7 +30,7 @@ class reqif_attribute_definition_enumeration(TReqz.reqif_attribute_definition):
             valueMap[possibleValues.embedded_value.key] = possibleValues
         return valueMap
 
-    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
+    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 

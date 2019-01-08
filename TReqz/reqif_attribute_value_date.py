@@ -4,12 +4,12 @@ from .. import TReqz
 
 class reqif_attribute_value_date(TReqz.reqif_attribute_value):
 
-    def __init__(self, content: Element = None, id_dict={}):
+    def __init__(self, content: Element = None, id_dict=None):
         self.definition: TReqz.reqif_attribute_definition_date = None  # localRef, required
         self.name = "ATTRIBUTE-VALUE-DATE"
         super(reqif_attribute_value_date, self).__init__(content, id_dict)
 
-    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = {}):
+    def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
         self.the_value = content.get("THE-VALUE")

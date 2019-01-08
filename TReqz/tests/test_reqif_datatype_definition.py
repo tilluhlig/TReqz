@@ -1,16 +1,15 @@
 import unittest
-from libs.Requirements import TReqz as TReqz
-
+from libs.Requirements.TReqz.tests import utils as TE
 
 class TestReqifDatatypeDefinition(unittest.TestCase):
     def setUp(self):
-        pass
+        self.obj = TE.TReqz.reqif_datatype_definition()
 
     def test_decode(self):
-        raise NotImplementedError
+        TE.utils.testIdentifiableDecodeAttributes(self, self.obj)
 
     def test_encode(self):
-        raise NotImplementedError
+        TE.utils.testIdentifiableEncodeAttributes(self, self.obj)
 
 if __name__ == '__main__':
     unittest.main()
