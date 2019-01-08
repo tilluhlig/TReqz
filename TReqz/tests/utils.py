@@ -10,9 +10,22 @@ class utils:
         return {"DESC":"desc", "IDENTIFIER":"identifier", "LAST-CHANGE":"last_change", "LONG-NAME":"long_name"}
     
     @staticmethod
-    def decodeObj(obj, xmlContent:str):
+    def decodeObj(obj, xmlContent:str, id_dict=None):
         elem:Element = ET.fromstring(xmlContent)
-        obj.decode(elem)
+        obj.decode(elem, id_dict)
+        
+    @staticmethod
+    def testDecodeLocalRefFromElementText(self, obj, xmlContent:str, reqifAttributeName:str, testIdentifier:str):
+        id_dict = TReqz.reqif_id_dict()
+        utils.decodeObj(obj, "<"+obj.name+">"+xmlContent+"</"+obj.name+">", id_dict)
+        self.assertEqual(None, obj.get(reqifAttributeName))
+
+        newIdentifiable = TReqz.reqif_identifiable()
+        newIdentifiable.identifier=testIdentifier
+        id_dict.add(newIdentifiable)
+        utils.decodeObj(obj, "<"+obj.name+">"+xmlContent+"</"+obj.name+">", id_dict)
+        self.assertEqual(testIdentifier, obj.get(reqifAttributeName).identifier)
+        obj.fill(**{reqifAttributeName:None})
 
     @staticmethod
     def testDecodeAttribute(self, obj, reqifAttributeName:str, attributeName:str, attributeValue:str='A'):
@@ -21,7 +34,7 @@ class utils:
         obj.fill(**{reqifAttributeName:None})
 
     @staticmethod
-    def testIdentifiableDecodeAttributes(self, obj):
+    def testDecodeIdentifiableAttributes(self, obj):
         for xmlAttributeName, reqifAttributeName in utils.getIdentifiableAttributes().items():
             utils.testDecodeAttribute(self, obj, reqifAttributeName, xmlAttributeName, xmlAttributeName+"1")
             obj.fill(**{reqifAttributeName:None})
@@ -35,12 +48,20 @@ class utils:
         return xmlContent
         
     @staticmethod
+    def testEncodeLocalRefFromElementText(self, obj, xmlTestReference:str, reqifAttributeName:str, testIdentifier:str):
+        newIdentifiable = TReqz.reqif_identifiable()
+        newIdentifiable.identifier=testIdentifier
+        xmlContent = utils.encodeObj(obj,{reqifAttributeName:newIdentifiable})
+        self.assertEqual("<"+obj.name+">"+xmlTestReference+"</"+obj.name+">", xmlContent)
+        obj.fill(**{reqifAttributeName:None})
+        
+    @staticmethod
     def testEncodeAttribute(self, obj, reqifAttributeName:str, xmlAttributeName:str, attributeValue:str='A'):
         xmlContent = utils.encodeObj(obj,{reqifAttributeName:attributeValue})
         self.assertEqual("<"+obj.name+" "+xmlAttributeName+"=\""+attributeValue+"\" />", xmlContent)
         obj.fill(**{reqifAttributeName:None})
 
     @staticmethod
-    def testIdentifiableEncodeAttributes(self, obj):
+    def testEncodeIdentifiableAttributes(self, obj):
         for xmlAttributeName, reqifAttributeName in utils.getIdentifiableAttributes().items():
             utils.testEncodeAttribute(self, obj, reqifAttributeName, xmlAttributeName, xmlAttributeName+"1")
