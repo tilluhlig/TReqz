@@ -258,9 +258,12 @@ class xml_utils:
         xmlSchemaContent:str = schemaFile.read()
         schemaFile.close()
 
-        xmlFile = open(filePath,"rb")
-        xmlFileContent:str = xmlFile.read()
-        xmlFile.close()
+        try:
+            xmlFile = open(filePath,"rb")
+            xmlFileContent:str = xmlFile.read()
+            xmlFile.close()
+        except:
+            return False
 
         schema = io.BytesIO(xmlSchemaContent)
         xmlschema_doc = etree.parse(schema)

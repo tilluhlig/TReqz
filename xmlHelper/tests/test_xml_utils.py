@@ -1,6 +1,7 @@
 import unittest
-from xmlHelper import xml_utils as xml_utils
+from libs.Requirements.xmlHelper import xml_utils as xml_utils
 import re
+import time
 
 
 class TestXmlUtils(unittest.TestCase):
@@ -49,16 +50,31 @@ class TestXmlUtils(unittest.TestCase):
         raise NotImplementedError
 
     def test_current_timestamp(self):
-        raise NotImplementedError
+        firstTimestamp = xml_utils.current_timestamp()
+        time.sleep(1)
+        secondTimestamp = xml_utils.current_timestamp()
+        self.assertNotEqual(firstTimestamp, secondTimestamp)
 
     def test_merge_elements(self):
         raise NotImplementedError
 
     def test_setElementAttribute(self):
-        raise NotImplementedError
+        elem = xml_utils.createSubElement("element")
+        xml_utils.setElementAttribute(elem, "attrib", "value")
+        self.assertEqual("value", elem.get("attrib"))
+        xml_utils.setElementAttribute(elem, "attrib", "value2")
+        self.assertEqual("value2", elem.get("attrib"))
+        xml_utils.setElementAttribute(elem, "attrib", None)
+        self.assertEqual("value2", elem.get("attrib"))
 
     def test_createSubElement(self):
-        raise NotImplementedError
+        elem = xml_utils.createSubElement("element")
+        self.assertEqual("element", elem.tag)
+        self.assertEqual(None, elem.text)
+
+        elem2 = xml_utils.createSubElement("element", "content")
+        self.assertEqual("element", elem2.tag)
+        self.assertEqual("content", elem2.text)
 
     def test_addRequiredSubElement(self):
         raise NotImplementedError
