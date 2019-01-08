@@ -10,11 +10,14 @@ import re
 class reqif:
 
     def __init__(self, filePath: str = None):
-        __reqif_object: TReqz.reqif_req_if = None
-        __id_dict = None
+        self.__reqif_object: TReqz.reqif_req_if = None
+        self.__id_dict = None
 
         if filePath != None:
             self.parseFile(filePath)
+
+    def getReqifContainer(self):
+        return self.__reqif_object
 
     def getHeader(self):
         """ returns the header object
@@ -148,7 +151,8 @@ class reqif:
 
         longNames = list()
         for specType in self.__reqif_object.req_if_content.spec_types:
-            longNames.append(specType.long_name)
+            if specType.name == "SPEC-OBJECT-TYPE":
+                longNames.append(specType.long_name)
         return longNames
 
     def getAllSpecObjectTypeIds(self):
@@ -160,7 +164,8 @@ class reqif:
 
         ids = list()
         for specType in self.__reqif_object.req_if_content.spec_types:
-            ids.append(specType.identifier)
+            if specType.name == "SPEC-OBJECT-TYPE":
+                ids.append(specType.identifier)
         return ids
 
     def findDatatypeIdByLongName(self, longName: str):
@@ -262,7 +267,7 @@ class reqif:
         longNames = list()
 
         for attributeType in specType.spec_attributes:
-            longNames.append(attributeType.longName)
+            longNames.append(attributeType.long_name)
         return longNames
 
     def checkAttributeIsEnumeration(self, attributeId: str):

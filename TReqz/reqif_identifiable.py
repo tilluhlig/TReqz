@@ -14,22 +14,22 @@ class reqif_identifiable(TReqz.reqif_object):
         self.alternative_id: str = None  # element, optional
         super(reqif_identifiable, self).__init__(content, id_dict)
 
-    def create(self, id_dict={}):
+    def create(self, id_dict=None):
         self.identifier = TReqz.reqif_utils.generateNextLocalId(id_dict)
-        if self.identifier != None:
+        if self.identifier != None and id_dict != None:
             id_dict.add(self)
         else:
             # problem
             pass
         return self.identifier
 
-    def decode(self, content: Element, id_dict={}):  # :TReqz.reqif_id_dict.reqif_id_dict
+    def decode(self, content: Element, id_dict=None):  # :TReqz.reqif_id_dict.reqif_id_dict
         super().decode(content, id_dict)
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
         self.desc = content.get("DESC")
         self.identifier = content.get("IDENTIFIER")
-        if self.identifier != None:
+        if self.identifier != None and id_dict != None:
             id_dict.add(self)
         self.last_change = content.get("LAST-CHANGE")
         self.long_name = content.get("LONG-NAME")
