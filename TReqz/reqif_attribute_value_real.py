@@ -21,8 +21,10 @@ class reqif_attribute_value_real(TReqz.reqif_attribute_value):
         elem.tag = self.name
         TReqz.xml_utils.setElementAttribute(
             elem, "THE-VALUE", self.the_value)
-        definitionElement = TReqz.xml_utils.addRequiredSubElement(
-            elem, "DEFINITION")
-        TReqz.xml_utils.addRequiredSubElement(
-            definitionElement, "ATTRIBUTE-DEFINITION-REAL-REF", self.definition.identifier)
+        
+        if self.definition != None:
+            definitionElement = TReqz.xml_utils.addRequiredSubElement(
+                elem, "DEFINITION")
+            TReqz.xml_utils.addRequiredSubElement(
+                definitionElement, "ATTRIBUTE-DEFINITION-REAL-REF", self.definition.identifier)
         return elem
