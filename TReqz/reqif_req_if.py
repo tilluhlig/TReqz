@@ -12,12 +12,12 @@ class reqif_req_if(TReqz.reqif_object):
         self.req_if_content: TReqz.reqif_req_if_content = None  # required
         self.lang: str = None  # attribute, optional
         self.reqif_dict: TReqz.reqif_id_dict = None
-        self.name = "REQ-IF"
         if id_dict == None:
             self.reqif_dict = TReqz.reqif_id_dict()
         else:
             self.reqif_dict = id_dict
         super(reqif_req_if, self).__init__(content, self.reqif_dict)
+        self.name = "REQ-IF"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)

@@ -5,9 +5,9 @@ from .. import TReqz
 class reqif_attribute_definition_xhtml(TReqz.reqif_attribute_definition):
 
     def __init__(self, content: Element = None, id_dict=None):
-        self.name = "ATTRIBUTE-DEFINITION-XHTML"
         super(reqif_attribute_definition_xhtml,
               self).__init__(content, id_dict)
+        self.name = "ATTRIBUTE-DEFINITION-XHTML"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
@@ -27,7 +27,9 @@ class reqif_attribute_definition_xhtml(TReqz.reqif_attribute_definition):
                 elem, "DEFAULT-VALUE")
             TReqz.xml_utils.addEncodedSubElement(
                 defaultElement, self.default_value)
-        typeElement = TReqz.xml_utils.addRequiredSubElement(elem, "TYPE")
-        TReqz.xml_utils.addRequiredSubElement(
-            typeElement, "DATATYPE-DEFINITION-XHTML-REF", self.type.identifier)
+
+        if self.type != None:
+            typeElement = TReqz.xml_utils.addRequiredSubElement(elem, "TYPE")
+            TReqz.xml_utils.addRequiredSubElement(
+                typeElement, "DATATYPE-DEFINITION-XHTML-REF", self.type.identifier)
         return elem

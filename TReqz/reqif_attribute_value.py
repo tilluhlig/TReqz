@@ -8,6 +8,7 @@ class reqif_attribute_value(TReqz.reqif_object):
         self.definition: TReqz.reqif_attribute_definition = None  # element, required
         self.the_value: str = None  # attribute, required
         super(reqif_attribute_value, self).__init__(content, id_dict)
+        self.name = "ATTRIBUTE-VALUE"
 
     def getValue(self):
         if self.the_value == None:

@@ -6,8 +6,8 @@ class reqif_attribute_value_real(TReqz.reqif_attribute_value):
 
     def __init__(self, content: Element = None, id_dict=None):
         self.definition: TReqz.reqif_attribute_definition_real = None  # localRef, required
-        self.name = "ATTRIBUTE-VALUE-REAL"
         super(reqif_attribute_value_real, self).__init__(content, id_dict)
+        self.name = "ATTRIBUTE-VALUE-REAL"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)

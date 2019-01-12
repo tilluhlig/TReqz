@@ -8,9 +8,9 @@ class reqif_attribute_value_enumeration(TReqz.reqif_attribute_value):
     def __init__(self, content: Element = None, id_dict=None):
         self.definition: TReqz.reqif_attribute_definition_enumeration = None  # localRef, required
         self.values: list = list()  # localRef, reqif_enum_value, element, optional
-        self.name = "ATTRIBUTE-VALUE-ENUMERATION"
         super(reqif_attribute_value_enumeration,
               self).__init__(content, id_dict)
+        self.name = "ATTRIBUTE-VALUE-ENUMERATION"
 
     def getValue(self):
         if len(self.values)==0 and self.definition.default_value != None:
@@ -52,14 +52,18 @@ class reqif_attribute_value_enumeration(TReqz.reqif_attribute_value):
         elem = super().encode()
         elem.tag = self.name
 
-        valuesElement = TReqz.xml_utils.addOptionalSubElement(elem, "VALUES")
-        if valuesElement != None and len(self.values) > 0:
+        valuesElement = None
+        if self.values != None and len(self.values) > 0:
+            valuesElement = TReqz.xml_utils.addOptionalSubElement(elem, "VALUES")
+
+        if self.values != None and len(self.values) > 0:
             for value in self.values:
                 TReqz.xml_utils.addRequiredSubElement(
                     valuesElement, "ENUM-VALUE-REF", value.identifier)
 
-        definitionElement = TReqz.xml_utils.addRequiredSubElement(
-            elem, "DEFINITION")
-        TReqz.xml_utils.addRequiredSubElement(
-            definitionElement, "ATTRIBUTE-DEFINITION-ENUMERATION-REF", self.definition.identifier)
+        if self.definition != None:
+            definitionElement = TReqz.xml_utils.addRequiredSubElement(
+                elem, "DEFINITION")
+            TReqz.xml_utils.addRequiredSubElement(
+                definitionElement, "ATTRIBUTE-DEFINITION-ENUMERATION-REF", self.definition.identifier)
         return elem

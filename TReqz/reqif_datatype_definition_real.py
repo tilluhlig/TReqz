@@ -8,8 +8,8 @@ class reqif_datatype_definition_real(TReqz.reqif_datatype_definition):
         self.accuracy: int = None  # attribute, required
         self.max: int = None  # attribute, required
         self.min: int = None  # attribute, required
-        self.name = "DATATYPE-DEFINITION-REAL"
         super(reqif_datatype_definition_real, self).__init__(content, id_dict)
+        self.name = "DATATYPE-DEFINITION-REAL"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)

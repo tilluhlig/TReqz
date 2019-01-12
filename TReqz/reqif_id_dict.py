@@ -62,4 +62,7 @@ class reqif_id_dict(object):
             {reqif_} -- the removed object
         """
 
+        if self.identifiers.get(name) == None:
+            return None
+
         return self.identifiers.pop(name)

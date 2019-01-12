@@ -5,8 +5,8 @@ from .. import TReqz
 class reqif_attribute_definition_date(TReqz.reqif_attribute_definition):
 
     def __init__(self, content: Element = None, id_dict=None):
-        self.name = "ATTRIBUTE-DEFINITION-DATE"
         super(reqif_attribute_definition_date, self).__init__(content, id_dict)
+        self.name = "ATTRIBUTE-DEFINITION-DATE"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
@@ -26,7 +26,9 @@ class reqif_attribute_definition_date(TReqz.reqif_attribute_definition):
                 elem, "DEFAULT-VALUE")
             TReqz.xml_utils.addEncodedSubElement(
                 defaultElement, self.default_value)
-        typeElement = TReqz.xml_utils.addRequiredSubElement(elem, "TYPE")
-        TReqz.xml_utils.addRequiredSubElement(
-            typeElement, "DATATYPE-DEFINITION-DATE-REF", self.type.identifier)
+
+        if self.type != None:
+            typeElement = TReqz.xml_utils.addRequiredSubElement(elem, "TYPE")
+            TReqz.xml_utils.addRequiredSubElement(
+                typeElement, "DATATYPE-DEFINITION-DATE-REF", self.type.identifier)
         return elem

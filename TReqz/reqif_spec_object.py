@@ -7,8 +7,8 @@ class reqif_spec_object(TReqz.reqif_identifiable):
     def __init__(self, content: Element = None, id_dict=None):
         self.values: list = list()  # reqif_attribute_value, optional
         self.type: TReqz.reqif_spec_object_type = None  # local ref, required
-        self.name = "SPEC-OBJECT"
         super(reqif_spec_object, self).__init__(content, id_dict)
+        self.name = "SPEC-OBJECT"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
@@ -17,15 +17,8 @@ class reqif_spec_object(TReqz.reqif_identifiable):
         self.type = TReqz.reqif_utils.get_local_ref_from_element_text(
             content, id_dict, "./{0}TYPE/{0}SPEC-OBJECT-TYPE-REF".format(namespace))
 
-        typeList = {"ATTRIBUTE-VALUE-BOOLEAN": "reqif_attribute_value_boolean",
-                    "ATTRIBUTE-VALUE-DATE": "reqif_attribute_value_date",
-                    "ATTRIBUTE-VALUE-INTEGER": "reqif_attribute_value_integer",
-                    "ATTRIBUTE-VALUE-ENUMERATION": "reqif_attribute_value_enumeration",
-                    "ATTRIBUTE-VALUE-REAL": "reqif_attribute_value_real",
-                    "ATTRIBUTE-VALUE-STRING": "reqif_attribute_value_string",
-                    "ATTRIBUTE-VALUE-XHTML": "reqif_attribute_value_xhtml"}
         self.values = TReqz.reqif_utils.generate_object_list_by_element_class(
-            content, id_dict, "./{0}VALUES".format(namespace), typeList)
+            content, id_dict, "./{0}VALUES".format(namespace), TReqz.reqif_config.ATTRIBUTE_VALUE_TAG_TO_CLASS)
 
     def encode(self):
         elem = super().encode()
@@ -38,8 +31,9 @@ class reqif_spec_object(TReqz.reqif_identifiable):
                 if not value.isEmpty():
                     TReqz.xml_utils.addEncodedSubElement(valuesElement, value)
 
-        typeElement = TReqz.xml_utils.addRequiredSubElement(elem, "TYPE")
-        TReqz.xml_utils.addRequiredSubElement(
-            typeElement, "SPEC-OBJECT-TYPE-REF", self.type.identifier)
+        if self.type != None:
+            typeElement = TReqz.xml_utils.addRequiredSubElement(elem, "TYPE")
+            TReqz.xml_utils.addRequiredSubElement(
+                typeElement, "SPEC-OBJECT-TYPE-REF", self.type.identifier)
 
         return elem

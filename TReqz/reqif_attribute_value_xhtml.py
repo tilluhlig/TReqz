@@ -10,8 +10,8 @@ class reqif_attribute_value_xhtml(TReqz.reqif_attribute_value):
         self.definition: TReqz.reqif_attribute_definition_xhtml = None  # localRef, required
         self.the_original_value: str = None  # element, optional
         self.is_simplified: str = None  # attribute, optional
-        self.name = "ATTRIBUTE-VALUE-XHTML"
         super(reqif_attribute_value_xhtml, self).__init__(content, id_dict)
+        self.name = "ATTRIBUTE-VALUE-XHTML"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
@@ -45,8 +45,9 @@ class reqif_attribute_value_xhtml(TReqz.reqif_attribute_value):
             elem, "THE-VALUE")
         thevalueElement.append(encodedXhtml)
 
-        definitionElement = TReqz.xml_utils.addRequiredSubElement(
-            elem, "DEFINITION")
-        TReqz.xml_utils.addRequiredSubElement(
-            definitionElement, "ATTRIBUTE-DEFINITION-XHTML-REF", self.definition.identifier)
+        if self.definition != None:
+            definitionElement = TReqz.xml_utils.addRequiredSubElement(
+                elem, "DEFINITION")
+            TReqz.xml_utils.addRequiredSubElement(
+                definitionElement, "ATTRIBUTE-DEFINITION-XHTML-REF", self.definition.identifier)
         return elem

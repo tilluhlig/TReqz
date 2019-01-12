@@ -11,8 +11,8 @@ class reqif_spec_hierarchy(TReqz.reqif_identifiable):
         self.is_editable: str = None  # attribute, optional
         self.is_table_internal: str = None  # attribute, optional
 
-        self.name = "SPEC-HIERARCHY"
         super(reqif_spec_hierarchy, self).__init__(content, id_dict)
+        self.name = "SPEC-HIERARCHY"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)

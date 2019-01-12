@@ -6,8 +6,8 @@ class reqif_enum_value(TReqz.reqif_identifiable):
 
     def __init__(self, content: Element = None, id_dict=None):
         self.embedded_value: TReqz.reqif_embeded_value = None  # element, required
-        self.name = "ENUM-VALUE"
         super(reqif_enum_value, self).__init__(content, id_dict)
+        self.name = "ENUM-VALUE"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)

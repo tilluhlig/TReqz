@@ -13,8 +13,8 @@ class reqif_req_if_header(TReqz.reqif_object):
         self.source_tool_id: str = None  # element, required
         self.title: str = None  # element, required
         self.identifier: str = None  # attribute, required
-        self.name = "REQ-IF-HEADER"
         super(reqif_req_if_header, self).__init__(content, id_dict)
+        self.name = "REQ-IF-HEADER"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)

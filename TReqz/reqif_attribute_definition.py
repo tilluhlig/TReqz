@@ -9,6 +9,7 @@ class reqif_attribute_definition(TReqz.reqif_identifiable):
         self.type: TReqz.reqif_datatype_definition = None  # local_ref, required
         self.is_editable: str = None  # attribute, optional
         super(reqif_attribute_definition, self).__init__(content, id_dict)
+        self.name:str = "ATTRIBUTE-DEFINITION"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)

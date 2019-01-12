@@ -6,9 +6,9 @@ class reqif_datatype_definition_enumeration(TReqz.reqif_datatype_definition):
 
     def __init__(self, content: Element = None, id_dict=None):
         self.specified_values: list = list()  # reqif_enum_value, element, optional
-        self.name = "DATATYPE-DEFINITION-ENUMERATION"
         super(reqif_datatype_definition_enumeration,
               self).__init__(content, id_dict)
+        self.name = "DATATYPE-DEFINITION-ENUMERATION"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)

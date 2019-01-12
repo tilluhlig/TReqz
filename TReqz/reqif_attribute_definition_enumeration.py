@@ -6,9 +6,9 @@ class reqif_attribute_definition_enumeration(TReqz.reqif_attribute_definition):
 
     def __init__(self, content: Element = None, id_dict=None):
         self.multi_valued: str = None  # attribute, required
-        self.name = "ATTRIBUTE-DEFINITION-ENUMERATION"
         super(reqif_attribute_definition_enumeration,
               self).__init__(content, id_dict)
+        self.name = "ATTRIBUTE-DEFINITION-ENUMERATION"
 
     def getValueMap(self):
         valueDefinitions = self.type.specified_values
@@ -49,13 +49,15 @@ class reqif_attribute_definition_enumeration(TReqz.reqif_attribute_definition):
         TReqz.xml_utils.setElementAttribute(
             elem, "MULTI-VALUED", self.multi_valued)
 
-        defaultElement = TReqz.xml_utils.addRequiredSubElement(
-            elem, "DEFAULT-VALUE")
-        if defaultElement != None and self.default_value != None:
-            for value in self.default_value:
-                TReqz.xml_utils.addEncodedSubElement(defaultElement, value)
+        if self.default_value != None:
+            defaultElement = TReqz.xml_utils.addRequiredSubElement(
+                elem, "DEFAULT-VALUE")
+            if defaultElement != None and self.default_value != None:
+                for value in self.default_value:
+                    TReqz.xml_utils.addEncodedSubElement(defaultElement, value)
 
-        typeElement = TReqz.xml_utils.addRequiredSubElement(elem, "TYPE")
-        TReqz.xml_utils.addRequiredSubElement(
-            typeElement, "DATATYPE-DEFINITION-ENUMERATION-REF", self.type.identifier)
+        if self.type != None:
+            typeElement = TReqz.xml_utils.addRequiredSubElement(elem, "TYPE")
+            TReqz.xml_utils.addRequiredSubElement(
+                typeElement, "DATATYPE-DEFINITION-ENUMERATION-REF", self.type.identifier)
         return elem

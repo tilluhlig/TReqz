@@ -12,29 +12,18 @@ class reqif_req_if_content(TReqz.reqif_object):
         self.spec_relations: list = list()  # reqif_spec_relation, optional
         self.specifications: list = list()  # reqif_specification, optional
         self.spec_relation_groups: list = list()  # reqif_relation_group, optional
-        self.name = "REQ-IF-CONTENT"
         super(reqif_req_if_content, self).__init__(content, id_dict)
+        self.name = "REQ-IF-CONTENT"
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
-        typeList = {"DATATYPE-DEFINITION-BOOLEAN": "reqif_datatype_definition_boolean",
-                    "DATATYPE-DEFINITION-DATE": "reqif_datatype_definition_date",
-                    "DATATYPE-DEFINITION-ENUMERATION": "reqif_datatype_definition_enumeration",
-                    "DATATYPE-DEFINITION-INTEGER": "reqif_datatype_definition_integer",
-                    "DATATYPE-DEFINITION-REAL": "reqif_datatype_definition_real",
-                    "DATATYPE-DEFINITION-STRING": "reqif_datatype_definition_string",
-                    "DATATYPE-DEFINITION-XHTML": "reqif_datatype_definition_xhtml"}
         self.datatypes = TReqz.reqif_utils.generate_object_list_by_element_class(
-            content, id_dict, "./{0}DATATYPES".format(namespace), typeList)
+            content, id_dict, "./{0}DATATYPES".format(namespace), TReqz.reqif_config.DATATYPE_DEFINITION_TAG_TO_CLASS)
 
-        typeList = {"RELATION-GROUP-TYPE": "reqif_relation_group_type",
-                    "SPECIFICATION-TYPE": "reqif_specification_type",
-                    "SPEC-RELATION-TYPE": "reqif_spec_relation_type",
-                    "SPEC-OBJECT-TYPE": "reqif_spec_object_type"}
         self.spec_types = TReqz.reqif_utils.generate_object_list_by_element_class(
-            content, id_dict, "./{0}SPEC-TYPES".format(namespace), typeList)
+            content, id_dict, "./{0}SPEC-TYPES".format(namespace), TReqz.reqif_config.SPEC_TYPES_TAG_TO_CLASS)
 
         typeList = {"SPEC-OBJECT": "reqif_spec_object"}
         self.spec_objects = TReqz.reqif_utils.generate_object_list_by_element_class(
