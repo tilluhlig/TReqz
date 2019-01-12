@@ -26,6 +26,44 @@ class utils:
         utils.decodeObj(obj, "<"+obj.name+">"+xmlContent+"</"+obj.name+">", id_dict)
         self.assertEqual(testIdentifier, obj.get(reqifAttributeName).identifier)
         obj.fill(**{reqifAttributeName:None})
+        
+    @staticmethod
+    def testDecodeObjectByElementClass(self, obj, xmlContent:str, reqifAttributeName:str, objectClassName:str):
+        id_dict = TReqz.reqif_id_dict()
+        utils.decodeObj(obj, "<"+obj.name+">"+xmlContent+"</"+obj.name+">", id_dict)
+        self.assertEqual(objectClassName, obj.get(reqifAttributeName).name)
+        obj.fill(**{reqifAttributeName:None})
+
+    @staticmethod
+    def testDecodeLocalRefListFromElementsText(self, obj, xmlContent:str, reqifAttributeName:str, testIdentifier:list):
+        id_dict = TReqz.reqif_id_dict()
+        utils.decodeObj(obj, "<"+obj.name+">"+xmlContent+"</"+obj.name+">", id_dict)
+        res = []
+        for identifier in testIdentifier:
+            res.append(None)
+        self.assertEqual(res, obj.get(reqifAttributeName))
+
+        for identifier in testIdentifier:
+            newIdentifiable = TReqz.reqif_identifiable()
+            newIdentifiable.identifier=identifier
+            id_dict.add(newIdentifiable)
+        utils.decodeObj(obj, "<"+obj.name+">"+xmlContent+"</"+obj.name+">", id_dict)
+        elements = obj.get(reqifAttributeName)
+        res = []
+        for elem in elements:
+            res.append(elem.identifier)
+        self.assertEqual(testIdentifier, res)
+        obj.fill(**{reqifAttributeName:None})
+
+    @staticmethod
+    def testDecodeObjectListByElementClass(self, obj, xmlContent:str, reqifAttributeName:str, resultClasses:list):
+        id_dict = TReqz.reqif_id_dict()
+        utils.decodeObj(obj, "<"+obj.name+">"+xmlContent+"</"+obj.name+">", id_dict)
+        classList = list()
+        for elem in obj.get(reqifAttributeName):
+            classList.append(elem.name)
+        self.assertEqual(resultClasses, classList)
+        obj.fill(**{reqifAttributeName:None})
 
     @staticmethod
     def testDecodeAttribute(self, obj, reqifAttributeName:str, attributeName:str, attributeValue:str='A'):
@@ -52,9 +90,56 @@ class utils:
         newIdentifiable = TReqz.reqif_identifiable()
         newIdentifiable.identifier=testIdentifier
         xmlContent = utils.encodeObj(obj,{reqifAttributeName:newIdentifiable})
-        self.assertEqual("<"+obj.name+">"+xmlTestReference+"</"+obj.name+">", xmlContent)
+
+        if xmlTestReference != '':
+            self.assertEqual("<"+obj.name+">"+xmlTestReference+"</"+obj.name+">", xmlContent)
+        else:
+            self.assertEqual("<"+obj.name+" />", xmlContent)
+
         obj.fill(**{reqifAttributeName:None})
         
+    @staticmethod
+    def testEncodeObjectByElementClass(self, obj, xmlTestReference:str, reqifAttributeName:str, elem):
+        xmlContent = utils.encodeObj(obj,{reqifAttributeName:elem})
+
+        if xmlTestReference != '':
+            self.assertEqual("<"+obj.name+">"+xmlTestReference+"</"+obj.name+">", xmlContent)
+        else:
+            self.assertEqual("<"+obj.name+" />", xmlContent)
+
+        obj.fill(**{reqifAttributeName:None})
+
+    @staticmethod
+    def testEncodeLocalRefListFromElementsText(self, obj, xmlTestReference:str, reqifAttributeName:str, testIdentifier:str):
+        testElements = list()
+        for identifier in testIdentifier:
+            newIdentifiable = TReqz.reqif_identifiable()
+            newIdentifiable.identifier=identifier
+            testElements.append(newIdentifiable)
+        xmlContent = utils.encodeObj(obj,{reqifAttributeName:testElements})
+
+        if xmlTestReference != '':
+            self.assertEqual("<"+obj.name+">"+xmlTestReference+"</"+obj.name+">", xmlContent)
+        else:
+            self.assertEqual("<"+obj.name+" />", xmlContent)
+        obj.fill(**{reqifAttributeName:None})
+
+    @staticmethod
+    def testEncodeObjectListByElementClass(self, obj, xmlTestReference:str, reqifAttributeName:str, elements):
+        objects = list()
+        for elemType in elements:
+            classname = "TReqz."+elemType
+            newObject = eval(classname)(None)
+            objects.append(newObject)
+        xmlContent = utils.encodeObj(obj,{reqifAttributeName:objects})
+
+        if xmlTestReference != '':
+            self.assertEqual("<"+obj.name+">"+xmlTestReference+"</"+obj.name+">", xmlContent)
+        else:
+            self.assertEqual("<"+obj.name+" />", xmlContent)
+
+        obj.fill(**{reqifAttributeName:None})
+
     @staticmethod
     def testEncodeAttribute(self, obj, reqifAttributeName:str, xmlAttributeName:str, attributeValue:str='A'):
         xmlContent = utils.encodeObj(obj,{reqifAttributeName:attributeValue})
