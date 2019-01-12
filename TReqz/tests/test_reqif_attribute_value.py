@@ -6,6 +6,9 @@ class TestReqifAttributeValue(unittest.TestCase):
     def setUp(self):
         self.obj = TE.TReqz.reqif_attribute_value()
 
+    def test_name(self):
+        self.assertEqual("ATTRIBUTE-VALUE", self.obj.name)
+
     def test_decode(self):
         raise NotImplementedError
 

@@ -15,5 +15,14 @@ class TestReqifAttributeValueEnumeration(unittest.TestCase):
     def test_encode(self):
         raise NotImplementedError
 
+    def test_getValue(self):
+        raise NotImplementedError
+
+    def test_setValue(self):
+        raise NotImplementedError
+
+    def test_isEmpty(self):
+        raise NotImplementedError
+
 if __name__ == '__main__':
     unittest.main()

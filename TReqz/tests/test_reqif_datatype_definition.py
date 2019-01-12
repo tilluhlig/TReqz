@@ -5,11 +5,14 @@ class TestReqifDatatypeDefinition(unittest.TestCase):
     def setUp(self):
         self.obj = TE.TReqz.reqif_datatype_definition()
 
+    def test_name(self):
+        self.assertEqual("DATATYPE-DEFINITION", self.obj.name)
+
     def test_decode(self):
-        TE.utils.testDecodeIdentifiableAttributes(self, self.obj)
+        pass # DATATYPE-DEFINITION is no real object type
 
     def test_encode(self):
-        TE.utils.testEncodeIdentifiableAttributes(self, self.obj)
+        pass # DATATYPE-DEFINITION is no real object type
 
 if __name__ == '__main__':
     unittest.main()

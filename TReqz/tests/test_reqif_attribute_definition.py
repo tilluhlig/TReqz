@@ -10,10 +10,10 @@ class TestReqifAttributeDefinition(unittest.TestCase):
         self.assertEqual("ATTRIBUTE-DEFINITION", self.obj.name)
 
     def test_decode(self):
-        raise NotImplementedError
+        TE.utils.testDecodeAttribute(self, self.obj, 'is_editable', 'IS-EDITABLE')
 
     def test_encode(self):
-        raise NotImplementedError
+        TE.utils.testEncodeAttribute(self, self.obj, 'is_editable', 'IS-EDITABLE')
 
 if __name__ == '__main__':
     unittest.main()

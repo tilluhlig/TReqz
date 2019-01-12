@@ -7,9 +7,12 @@ class TestReqifIdentifiable(unittest.TestCase):
         self.obj = TE.TReqz.reqif_identifiable()
 
     def test_decode(self):
-        raise NotImplementedError
+        pass # this class is abstract
 
     def test_encode(self):
+        pass # this class is abstract
+
+    def test_create(self):
         raise NotImplementedError
 
 if __name__ == '__main__':

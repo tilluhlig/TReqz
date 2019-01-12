@@ -10,10 +10,14 @@ class TestReqifAttributeDefinitionInteger(unittest.TestCase):
         self.assertEqual("ATTRIBUTE-DEFINITION-INTEGER", self.obj.name)
 
     def test_decode(self):
-        raise NotImplementedError
+        TE.utils.testDecodeLocalRefFromElementText(self, self.obj, "<TYPE><DATATYPE-DEFINITION-INTEGER-REF>1</DATATYPE-DEFINITION-INTEGER-REF></TYPE>", "type", "1")
+        TE.utils.testDecodeObjectByElementClass(self, self.obj, "<DEFAULT-VALUE><ATTRIBUTE-VALUE-INTEGER /></DEFAULT-VALUE>", "default_value", "ATTRIBUTE-VALUE-INTEGER")
+        TE.utils.testDecodeAttribute(self, self.obj, 'is_editable', 'IS-EDITABLE')
 
     def test_encode(self):
-        raise NotImplementedError
+        TE.utils.testEncodeLocalRefFromElementText(self, self.obj, "<TYPE><DATATYPE-DEFINITION-INTEGER-REF>1</DATATYPE-DEFINITION-INTEGER-REF></TYPE>", "type", "1")
+        TE.utils.testEncodeObjectByElementClass(self, self.obj, "<DEFAULT-VALUE><ATTRIBUTE-VALUE-INTEGER /></DEFAULT-VALUE>", "default_value", TE.TReqz.reqif_attribute_value_integer())
+        TE.utils.testEncodeAttribute(self, self.obj, 'is_editable', 'IS-EDITABLE')
 
 if __name__ == '__main__':
     unittest.main()

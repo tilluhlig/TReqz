@@ -10,10 +10,10 @@ class TestReqifDatatypeDefinitionXhtml(unittest.TestCase):
         self.assertEqual("DATATYPE-DEFINITION-XHTML", self.obj.name)
 
     def test_decode(self):
-        raise NotImplementedError
+        TE.utils.testDecodeIdentifiableAttributes(self, self.obj)
 
     def test_encode(self):
-        raise NotImplementedError
+        TE.utils.testEncodeIdentifiableAttributes(self, self.obj)
 
 if __name__ == '__main__':
     unittest.main()
