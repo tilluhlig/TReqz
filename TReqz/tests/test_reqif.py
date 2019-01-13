@@ -31,10 +31,26 @@ class TestReqif(unittest.TestCase):
         raise NotImplementedError
 
     def test_addSpecificationType(self):
-        raise NotImplementedError
+        self.loadExampleA()
+        newSpecificationTypeIdentifier = self.reqif.addSpecificationType(last_change="a", long_name="b", alternative_id="c", desc="d")
+        self.assertIsNotNone(newSpecificationTypeIdentifier)
+        newSpecificationType = self.reqif.getObject(newSpecificationTypeIdentifier)
+        self.assertEqual("SPECIFICATION-TYPE", newSpecificationType.name)
+        self.assertEqual("a", newSpecificationType.last_change)
+        self.assertEqual("b", newSpecificationType.long_name)
+        self.assertEqual("c", newSpecificationType.alternative_id)
+        self.assertEqual("d", newSpecificationType.desc)
 
     def test_addDocument(self):
-        raise NotImplementedError
+        self.loadExampleA()
+        newSpecificationIdentifier = self.reqif.addDocument(specificationTypeId="_d1c29c9a-ff71-4936-beac-14c5e4b2986a", last_change="a", long_name="b", alternative_id="c", desc="d")
+        self.assertIsNotNone(newSpecificationIdentifier)
+        newSpecification = self.reqif.getObject(newSpecificationIdentifier)
+        self.assertEqual("SPECIFICATION", newSpecification.name)
+        self.assertEqual("a", newSpecification.last_change)
+        self.assertEqual("b", newSpecification.long_name)
+        self.assertEqual("c", newSpecification.alternative_id)
+        self.assertEqual("d", newSpecification.desc)
 
     def test_findSpecObjectTypeIdByLongName(self):
         self.loadExampleA()
@@ -139,7 +155,16 @@ class TestReqif(unittest.TestCase):
         self.assertEqual("_e8f9de75-ac3b-4257-b3a8-9f9131ce0a0f", specHierarchyId)
 
     def test_addRequirement(self):
-        raise NotImplementedError
+        self.loadExampleA()
+        specObjectTypeId = self.reqif.findSpecObjectTypeIdByLongName("Test_OBJECT-TYPE")
+        newReqIdentifier = self.reqif.addRequirement( documentId='_f230a28b-e124-4612-b2f8-3a94e0da19fb', specObjectTypeId=specObjectTypeId, parentRequirementId= None, last_change="a", long_name="b", alternative_id="c", desc="d", is_table_internal="false", is_editable="true", identifier=None)
+        newReq = self.reqif.getObject(newReqIdentifier)
+        self.assertEqual("SPEC-OBJECT", newReq.name)
+        self.assertIsNotNone(newReqIdentifier)
+        self.assertEqual("a", newReq.last_change)
+        self.assertEqual("b", newReq.long_name)
+        self.assertEqual("c", newReq.alternative_id)
+        self.assertEqual("d", newReq.desc)
 
     def test_findRequirementIdByLongName(self):
         self.loadExampleA()
@@ -178,7 +203,11 @@ class TestReqif(unittest.TestCase):
         self.assertEqual(18, len(res))
 
     def test_getChildParentMapForDocument(self):
-        raise NotImplementedError
+        self.loadExampleA()
+        ids = self.reqif.getAllDocumentIds()
+        childParentMap = self.reqif.getChildParentMapForDocument(ids[0])
+        self.assertNotEqual([], childParentMap)
+        self.assertNotEqual(None, childParentMap)
 
     def test_getDocumentHierarchicalRequirementIds(self):
         self.loadExampleA()

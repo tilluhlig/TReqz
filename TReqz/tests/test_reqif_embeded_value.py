@@ -10,10 +10,12 @@ class TestReqifEmbeddedValue(unittest.TestCase):
         self.assertEqual("EMBEDDED-VALUE", self.obj.name)
 
     def test_decode(self):
-        raise NotImplementedError
+        TE.utils.testDecodeAttribute(self, self.obj, 'key', 'KEY')
+        TE.utils.testDecodeAttribute(self, self.obj, 'other_content', 'OTHER-CONTENT')
 
     def test_encode(self):
-        raise NotImplementedError
+        TE.utils.testEncodeAttribute(self, self.obj, 'key', 'KEY')
+        TE.utils.testEncodeAttribute(self, self.obj, 'other_content', 'OTHER-CONTENT')
 
 if __name__ == '__main__':
     unittest.main()
