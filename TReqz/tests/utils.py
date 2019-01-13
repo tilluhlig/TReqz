@@ -1,5 +1,5 @@
 import xml.etree.cElementTree as ET
-from libs.Requirements import TReqz as TReqz
+from ... import TReqz as TReqz
 from xml.etree.ElementTree import Element as Element
 import unittest
 
