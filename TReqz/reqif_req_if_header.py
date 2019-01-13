@@ -21,7 +21,7 @@ class reqif_req_if_header(TReqz.reqif_object):
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
         self.identifier = content.get("IDENTIFIER")
-        if self.identifier != None:
+        if id_dict != None and self.identifier != None:
             id_dict.add(self)
         self.comment = content.findtext("./{0}COMMENT".format(namespace))
         self.creation_time = content.findtext(

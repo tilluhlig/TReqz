@@ -1,13 +1,7 @@
-import shutil
-import sys
 from .. import TReqz
 import xml.etree.cElementTree as ET
 from xml.etree.ElementTree import Element
-from xml.etree.ElementTree import ElementTree
-import re
 from lxml import etree
-import io
-
 
 class reqif_parser(TReqz.xml_parser):
 
@@ -26,6 +20,9 @@ class reqif_parser(TReqz.xml_parser):
         return reqif
 
     def dump(self, content: TReqz.reqif_req_if, pettyprint=True):
+        if content == None:
+            raise RuntimeError("NoneType is not allowed")
+
         xml: Element = content.encode()
         xmlData = ET.tostring(xml)
         #xmlResult = xmlData.decode("utf-8")
