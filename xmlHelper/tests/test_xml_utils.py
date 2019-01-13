@@ -1,5 +1,6 @@
 import unittest
 from libs.Requirements.xmlHelper import xml_utils as xml_utils
+import xml.etree.ElementTree as ET
 import re
 import time
 
@@ -44,10 +45,24 @@ class TestXmlUtils(unittest.TestCase):
             self.assertEqual(xml_utils.get_tag_namespace(value[1]), value[0])
 
     def test_get_text_from_element(self):
-        raise NotImplementedError
+        res = xml_utils.get_text_from_element(ET.fromstring("<a><b>text</b>abc</a>"), "./b")
+        self.assertEqual("text", res)
+
+        res = xml_utils.get_text_from_element(ET.fromstring("<a><b>text</b></a>"), ".")
+        self.assertEqual(None, res)
+
+        res = xml_utils.get_text_from_element(ET.fromstring("<a>abc<b>text</b></a>"), ".")
+        self.assertEqual("abc", res)
 
     def test_get_element(self):
-        raise NotImplementedError
+        res = xml_utils.get_element(ET.fromstring("<a><b>text</b>abc</a>"), "./b")
+        self.assertEqual("b", res.tag)
+
+        res = xml_utils.get_element(ET.fromstring("<a><b>text</b></a>"), ".")
+        self.assertEqual("a", res.tag)
+
+        res = xml_utils.get_element(ET.fromstring("<a>abc<b>text</b></a>"), "./b/c")
+        self.assertEqual(None, res)
 
     def test_current_timestamp(self):
         firstTimestamp = xml_utils.current_timestamp()
