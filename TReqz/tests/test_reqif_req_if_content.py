@@ -1,5 +1,5 @@
 import unittest
-from libs.Requirements.TReqz.tests import utils as TE
+from . import utils as TE
 
 
 class TestReqifReqIfContent(unittest.TestCase):

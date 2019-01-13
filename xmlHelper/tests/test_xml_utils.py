@@ -1,5 +1,5 @@
 import unittest
-from libs.Requirements.xmlHelper import xml_utils as xml_utils
+from .. import xml_utils as xml_utils
 import xml.etree.ElementTree as ET
 import re
 import time

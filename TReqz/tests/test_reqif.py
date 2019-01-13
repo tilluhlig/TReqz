@@ -2,7 +2,7 @@ import unittest
 import os
 import shutil
 import sys
-from libs.Requirements import TReqz as TReqz
+from ... import TReqz as TReqz
 
 
 class TestReqif(unittest.TestCase):
