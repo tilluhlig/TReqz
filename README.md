@@ -1,5 +1,7 @@
 # TReqz
 
+[![Build Status](https://travis-ci.com/tilluhlig/TReqz.svg?branch=master)](https://travis-ci.com/tilluhlig/TReqz)
+
 #### How to use it
 ``` python
 import TReqz.reqif
