@@ -72,6 +72,16 @@ class utils:
         obj.fill(**{reqifAttributeName:None})
 
     @staticmethod
+    def testDecodeElementText(self, obj, xmlContent:str, reqifAttributeName:str, testText:str):
+        id_dict = TReqz.reqif_id_dict()
+        utils.decodeObj(obj, "<"+obj.name+">"+xmlContent+"</"+obj.name+">", id_dict)
+        self.assertEqual(testText, obj.get(reqifAttributeName))
+
+        utils.decodeObj(obj, "<"+obj.name+"></"+obj.name+">", id_dict)
+        self.assertEqual(None, obj.get(reqifAttributeName))
+        obj.fill(**{reqifAttributeName:None})
+
+    @staticmethod
     def testDecodeIdentifiableAttributes(self, obj):
         for xmlAttributeName, reqifAttributeName in utils.getIdentifiableAttributes().items():
             utils.testDecodeAttribute(self, obj, reqifAttributeName, xmlAttributeName, xmlAttributeName+"1")
@@ -138,6 +148,16 @@ class utils:
         else:
             self.assertEqual("<"+obj.name+" />", xmlContent)
 
+        obj.fill(**{reqifAttributeName:None})
+
+    @staticmethod
+    def testEncodeElementText(self, obj, xmlTestReference:str, reqifAttributeName:str, testText:str):
+        xmlContent = utils.encodeObj(obj,{reqifAttributeName:testText})
+
+        if xmlTestReference != '':
+            self.assertEqual("<"+obj.name+">"+xmlTestReference+"</"+obj.name+">", xmlContent)
+        else:
+            self.assertEqual("<"+obj.name+" />", xmlContent)
         obj.fill(**{reqifAttributeName:None})
 
     @staticmethod
