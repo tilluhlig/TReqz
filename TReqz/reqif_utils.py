@@ -173,8 +173,7 @@ class reqif_utils:
 
         results = list()
         if elem != None:
-            valueElements = elem.getchildren()
-            for elem2 in valueElements:
+            for elem2 in elem: # iterates over children
                 elemName = TReqz.xml_utils.get_tag_name(elem2.tag)
                 elemClass = typeList.get(elemName)
                 if elemClass != None:
