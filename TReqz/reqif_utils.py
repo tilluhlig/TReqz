@@ -224,4 +224,12 @@ class reqif_utils:
 
     @staticmethod
     def validateReqifFile(filePath:str):
+        """ validates a reqif-file <filePath>
+        
+        Arguments:
+            filePath {str} -- the xml-file which needs to be validated
+        
+        Returns:
+            bool -- true = is valid, false = is not valid
+        """
         return TReqz.xml_utils.validateXmlFile(filePath, os.path.dirname(__file__)+"/reqif.xsd")
