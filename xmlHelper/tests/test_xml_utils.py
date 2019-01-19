@@ -3,6 +3,9 @@ from .. import xml_utils as xml_utils
 import xml.etree.ElementTree as ET
 import re
 import time
+from xml.etree.ElementTree import Element
+from xml.etree.ElementTree import ElementTree
+import os
 
 
 class TestXmlUtils(unittest.TestCase):
@@ -106,13 +109,18 @@ class TestXmlUtils(unittest.TestCase):
         self.assertTrue(re.match("^[a-f0-9]{32}$", res))
 
     def test_validateXmlFile(self):
-        raise NotImplementedError
+        self.assertTrue(xml_utils.validateXmlFile(os.path.dirname(__file__)+'/../../TReqz/examples/exampleA/Test_000977e1.reqif', os.path.dirname(__file__)+"/../../TReqz/reqif.xsd"))
+        self.assertFalse(xml_utils.validateXmlFile(os.path.dirname(__file__)+'/../../TReqz/examples/exampleA/unknownFile.reqif', os.path.dirname(__file__)+"/../../TReqz/reqif.xsd" ))
 
     def test_decodeXhtml(self):
-        raise NotImplementedError
+        self.assertEqual("<p />", xml_utils.decodeXhtml(ET.fromstring("<p />")))
+        self.assertEqual("", xml_utils.decodeXhtml(None))
+        self.assertEqual("<html:a xmlns:html=\"http://www.w3.org/1999/xhtml\"><p /></html:a>", xml_utils.decodeXhtml(ET.fromstring("<html:a  xmlns:html=\"http://www.w3.org/1999/xhtml\"><html:p /></html:a>")))
 
     def test_encodeXhtml(self):
-        raise NotImplementedError
+        self.assertEqual(b"<html:p xmlns:html=\"http://www.w3.org/1999/xhtml\" />", ET.tostring(xml_utils.encodeXhtml(None)))
+        self.assertEqual(b"<html:p xmlns:html=\"http://www.w3.org/1999/xhtml\" />", ET.tostring(xml_utils.encodeXhtml("")))
+        self.assertEqual(b"<html:div xmlns:html=\"http://www.w3.org/1999/xhtml\"><html:a /><html:a /></html:div>", ET.tostring(xml_utils.encodeXhtml("<a></a><a></a>")))
 
     def test_stringIsWellFormedXml(self):
         self.assertFalse(xml_utils.stringIsWellFormedXml(""))

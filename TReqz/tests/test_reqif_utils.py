@@ -116,8 +116,8 @@ class TestReqifUtils(unittest.TestCase):
         self.assertNotIn(nextid3, [nextid, nextid2])
 
     def test_validateReqifFile(self):
-        self.assertTrue(TE.TReqz.reqif_utils.validateReqifFile(os.path.dirname(__file__)+'/examples/exampleA/Test_000977e1.reqif'))
-        self.assertFalse(TE.TReqz.reqif_utils.validateReqifFile(os.path.dirname(__file__)+'/examples/exampleA/unknownFile.reqif'))
+        self.assertTrue(TE.TReqz.reqif_utils.validateReqifFile(os.path.dirname(__file__)+'/../examples/exampleA/Test_000977e1.reqif'))
+        self.assertFalse(TE.TReqz.reqif_utils.validateReqifFile(os.path.dirname(__file__)+'/../examples/exampleA/unknownFile.reqif'))
 
 if __name__ == '__main__':
     unittest.main()
