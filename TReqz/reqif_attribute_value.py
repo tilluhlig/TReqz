@@ -11,7 +11,7 @@ class reqif_attribute_value(TReqz.reqif_object):
         self.name = "ATTRIBUTE-VALUE"
 
     def getValue(self):
-        if self.the_value == None:
+        if self.the_value == None and self.definition != None:
             return self.definition.default_value
         return self.the_value
 

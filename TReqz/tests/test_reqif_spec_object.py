@@ -23,9 +23,16 @@ class TestReqifSpecObject(unittest.TestCase):
         TE.utils.testEncodeLocalRefFromElementText(self, self.obj, "<TYPE><SPEC-OBJECT-TYPE-REF>1</SPEC-OBJECT-TYPE-REF></TYPE>", "type", "1")
 		
         for TAG, CLASS in TE.TReqz.reqif_config.ATTRIBUTE_VALUE_TAG_TO_CLASS.items():
-            TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<VALUES><"+TAG+" /></VALUES>", "values", [CLASS])
-            TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<VALUES><"+TAG+" /><"+TAG+" /></VALUES>", "values", [CLASS, CLASS])
+            TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<VALUES />", "values", [CLASS])
+            TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<VALUES />", "values", [CLASS, CLASS])
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "", "values", [])
+
+            classname = "TE.TReqz."+CLASS
+            newObject = eval(classname)(None)
+            newObject.setValue('a', None)
+            xmlContent = TE.utils.encodeObj(self.obj,{'values':[newObject]})
+            self.assertEqual("<"+self.obj.name+"><VALUES><"+TAG+" THE-VALUE=\"a\" /></VALUES></"+self.obj.name+">", xmlContent)
+            self.obj.fill(**{'values':None})
 
 if __name__ == '__main__':
     unittest.main()

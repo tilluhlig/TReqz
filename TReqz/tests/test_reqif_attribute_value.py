@@ -9,20 +9,29 @@ class TestReqifAttributeValue(unittest.TestCase):
     def test_name(self):
         self.assertEqual("ATTRIBUTE-VALUE", self.obj.name)
 
-    def test_decode(self):
-        raise NotImplementedError
-
     def test_encode(self):
-        raise NotImplementedError
+        self.assertEqual("", TE.utils.encodeObj(self.obj, {})) # no additional content
 
     def test_getValue(self):
-        raise NotImplementedError
+        self.assertEqual(None, self.obj.getValue())
+        
+        definition = TE.TReqz.reqif_attribute_definition()
+        definition.fill(default_value='bb')
+        self.obj.fill(definition=definition)
+        self.assertEqual('bb', self.obj.getValue())
+
+        self.obj.setValue('aa', None)
+        self.assertEqual('aa', self.obj.getValue())
 
     def test_setValue(self):
-        raise NotImplementedError
+        self.assertTrue(self.obj.isEmpty())
+        self.obj.setValue('aa', None)
+        self.assertEqual('aa', self.obj.getValue())
 
     def test_isEmpty(self):
-        raise NotImplementedError
+        self.assertTrue(self.obj.isEmpty())
+        self.obj.setValue('aa', None)
+        self.assertFalse(self.obj.isEmpty())
 
 if __name__ == '__main__':
     unittest.main()

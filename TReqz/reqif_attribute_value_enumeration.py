@@ -22,6 +22,9 @@ class reqif_attribute_value_enumeration(TReqz.reqif_attribute_value):
         return returnValues
 
     def setValue(self, values: list, id_dict: TReqz.reqif_id_dict):
+        if isinstance(values, str):
+            values = [values]
+
         if values == None:
             self.values = list()
             return

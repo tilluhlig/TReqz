@@ -8,28 +8,6 @@ import os
 
 
 class reqif_utils:
-    
-    @staticmethod
-    def generate_local_ref_list_from_elements(content: Element, id_dict: TReqz.reqif_id_dict, elements_parent_path: str):
-        """ creates a list of objects which is based on refs.
-            the refs are extracted from the parent_element
-
-        Arguments:
-            content {Element} -- the root element
-            id_dict {TReqz.reqif_id_dict} -- the id dictionary
-            elements_parent_path {str} -- the relative path (from content-element) where the refs are located
-
-        Returns:
-            {list<reqif_object>} -- the objects
-        """
-
-        elem: Element = content.find(elements_parent_path)
-        id_list = list()
-        if elem != None:
-            valueElements = list(elem)
-            for elem2 in valueElements:
-                id_list.append(id_dict.get(elem2))
-        return id_list
 
     @staticmethod
     def generate_local_ref_list_from_elements_text(content: Element, id_dict: TReqz.reqif_id_dict, elements_parent_path: str):
@@ -72,6 +50,10 @@ class reqif_utils:
             if id_dict != None and identifier != None:
                 # if the identifier is predefined
                 newObject.identifier = identifier
+
+                if id_dict.get(identifier) != None:
+                    raise RuntimeError('the identifier still exist')
+
                 id_dict.add(newObject)
             elif id_dict != None and hasattr(newObject, "create"):
                 # if we need a new identifier (generated)
@@ -120,7 +102,7 @@ class reqif_utils:
         referenced_object = id_dict.get(elem.get("IDENTIFIER"))
 
         if referenced_object == None:
-            print("missing local ref: "+elem.get("IDENTIFIER"))
+            print("missing local ref: "+str(elem.get("IDENTIFIER")))
             return None
 
         return referenced_object
@@ -147,7 +129,7 @@ class reqif_utils:
         id = id_dict.get(elem.text)
 
         if id == None:
-            print("missing local ref: "+elem.text)
+            print("missing local ref: "+str(elem.text))
             return None
 
         return id
@@ -198,6 +180,12 @@ class reqif_utils:
         Returns:
             {str} -- the reqif identifier
         """
+
+        if md5Hash == None:
+            raise RuntimeError("a valid md5 hash is required")
+
+        if len(md5Hash)<32:
+            raise RuntimeError("a valid md5 hash is required")
 
         # example _63d2eb9d-0ed5-42ad-af40-7564803bdf4e
         return "_"+md5Hash[0:7]+"-"+md5Hash[8:11]+"-"+md5Hash[12:15]+"-"+md5Hash[16:19]+"-"+md5Hash[20:31]
