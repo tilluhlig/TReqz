@@ -21,8 +21,10 @@ class reqif_enum_value(TReqz.reqif_identifiable):
     def encode(self):
         elem = super().encode()
         elem.tag = self.name
-        valueElement = TReqz.xml_utils.addRequiredSubElement(
-            elem, "PROPERTIES")
-        TReqz.xml_utils.addEncodedSubElement(
-            valueElement, self.embedded_value)
+
+        if self.embedded_value != None:
+            valueElement = TReqz.xml_utils.addRequiredSubElement(
+                elem, "PROPERTIES")
+            TReqz.xml_utils.addEncodedSubElement(
+                valueElement, self.embedded_value)
         return elem
