@@ -10,10 +10,15 @@ class TestReqifEnumValue(unittest.TestCase):
         self.assertEqual("ENUM-VALUE", self.obj.name)
 
     def test_decode(self):
-        raise NotImplementedError
+        TE.utils.testDecodeIdentifiableAttributes(self, self.obj)
+        TE.utils.decodeObj(self.obj, '<ENUM-VALUE><PROPERTIES><EMBEDDED-VALUE /></PROPERTIES></ENUM-VALUE>', None)
+        self.assertIsNotNone(self.obj.embedded_value)
+        self.assertEqual("EMBEDDED-VALUE", self.obj.embedded_value.name)
 
     def test_encode(self):
-        raise NotImplementedError
+        TE.utils.testEncodeIdentifiableAttributes(self, self.obj)
+        self.assertEqual("<ENUM-VALUE><PROPERTIES><EMBEDDED-VALUE /></PROPERTIES></ENUM-VALUE>", TE.utils.encodeObj(self.obj, {'embedded_value':TE.TReqz.reqif_embeded_value()}))
+        self.assertEqual("<ENUM-VALUE />", TE.utils.encodeObj(self.obj, {'embedded_value':None}))
 
 if __name__ == '__main__':
     unittest.main()

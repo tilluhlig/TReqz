@@ -254,10 +254,6 @@ class xml_utils:
             bool -- true = is valid, false = is not valid
         """
 
-        schemaFile = open(schemaPath,"rb")
-        xmlSchemaContent:str = schemaFile.read()
-        schemaFile.close()
-
         try:
             xmlFile = open(filePath,"rb")
             xmlFileContent:str = xmlFile.read()
@@ -265,9 +261,7 @@ class xml_utils:
         except:
             return False
 
-        schema = io.BytesIO(xmlSchemaContent)
-        xmlschema_doc = etree.parse(schema)
-        xmlschema = etree.XMLSchema(xmlschema_doc)
+        xmlschema = etree.XMLSchema(file=schemaPath)
         xmlFile = io.BytesIO(xmlFileContent)
         doc:ElementTree = etree.parse(xmlFile)
         res = xmlschema.validate(doc)
@@ -298,9 +292,9 @@ class xml_utils:
                     "\\1",
                     element.tag
                 )
+            content.tag = oldTag
             value = ET.tostring(content, encoding='utf-8', method='xml')
             value = value.decode("utf-8")
-            content.tag = oldTag
             return value
         return ""
 
