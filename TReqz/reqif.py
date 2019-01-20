@@ -736,6 +736,10 @@ class reqif:
             attributeLongName = key
             attributeId = self.findAttributeTypeIdByLongName(
                 specObjectTypeId, attributeLongName)
+
+            if attributeId == None:
+                raise RuntimeError('missing reqif field: '+attributeLongName)
+
             self.setRequirementValue(requirementId, attributeId, values[key])
 
     def setRequirementValue(self, requirementId: str, attributeId: str, value):
