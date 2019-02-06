@@ -18,6 +18,18 @@ class reqif_attribute_value_xhtml(TReqz.reqif_attribute_value):
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
         elem = TReqz.xml_utils.get_element(
             content, "./{0}THE-VALUE".format(namespace))
+
+        # check whether there are more than one subelement
+        children = elem.getchildren()
+        if len(children)==0:
+            elem=None
+        elif len(children)==1:
+            elem = elem[0]
+        else:
+            # more than one (not allowed but possible)
+            elem.tag = 'div'
+            elem.attrib = dict()
+
         self.the_value = TReqz.xml_utils.decodeXhtml(elem)
 
         elem = TReqz.xml_utils.get_element(
