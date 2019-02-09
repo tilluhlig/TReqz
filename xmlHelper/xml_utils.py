@@ -104,7 +104,7 @@ class xml_utils:
         Returns:
             {str} -- the timestamp
         """
-        return datetime.datetime.now(pytz.utc).isoformat()
+        return datetime.datetime.now(None).isoformat() #pytz.utc
 
     @staticmethod
     def merge_elements(target: Element, source: Element):
