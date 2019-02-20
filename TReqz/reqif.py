@@ -925,3 +925,44 @@ class reqif:
             raise TypeError("reqif_spec_object is required")
 
         return element
+
+    def getAllDocumentRootRequirements(self, documentId:str)->list:
+        """ returns all root requirements of a specific document
+        
+        Arguments:
+            documentId {str} -- the document id
+        
+        Returns:
+            list -- the root requirements (ID's)
+        """
+        specificationObject: TReqz.reqif_specification = self.getObject(
+            documentId, TReqz.reqif_specification)
+
+        children = list()+specificationObject.children
+        childIds=list()
+        for child in children:
+            childIds.append(child.req_object.identifier)
+        return childIds
+
+    def getRequirementChilds(self, documentId:str, requirementId:str)->list:
+        """ returns all child requirements 
+        
+        Arguments:
+            documentId {str} -- the document id
+            requirementId {str} -- the parent requirement
+        
+        Returns:
+            list -- the child requirements (ID's) or an empty list
+        """
+        reqHierarchyId = self.findSpecHierarchyByRequirementId(documentId, requirementId)
+
+        if reqHierarchyId==None:
+            return None
+
+        reqHierarchyObject = self.getObject(reqHierarchyId)
+
+        children = list()+reqHierarchyObject.children
+        childIds=list()
+        for child in children:
+            childIds.append(child.req_object.identifier)
+        return childIds
