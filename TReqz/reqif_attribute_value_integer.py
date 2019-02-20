@@ -19,8 +19,10 @@ class reqif_attribute_value_integer(TReqz.reqif_attribute_value):
     def encode(self):
         elem = super().encode()
         elem.tag = self.name
-        TReqz.xml_utils.setElementAttribute(
-            elem, "THE-VALUE", self.the_value)
+
+        if self.the_value != None:
+            TReqz.xml_utils.setElementAttribute(
+                elem, "THE-VALUE", self.the_value)
         
         if self.definition != None:
             definitionElement = TReqz.xml_utils.addRequiredSubElement(
