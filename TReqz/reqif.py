@@ -1042,3 +1042,153 @@ class reqif:
         attributeId = self.findAttributeTypeIdByLongName(
             specObjectTypeId, attributeLongName)
         return self.getAttributeDefaultValue(attributeId)
+
+    def checkAttributeIsInteger(self, attributeId: str):
+        """ checks if an attribute has the type Integer
+
+        Arguments:
+            attributeId {str} -- the attribute id
+
+        Returns:
+            {bool} -- whether the attribute is an Integer or not (true = yes, false = no)
+        """
+        raise NotImplementedError
+
+    def checkAttributeIsIntegerByLongName(self, specObjectTypeId: str, attributeLongName: str):
+        """ checks if an attribute has the type Integer
+
+        Arguments:
+            specObjectTypeId {str} -- a specObjectType-id which belongs to the attribute
+            attributeLongName {str} -- the long-name of the attribute
+
+        Returns:
+            {bool} -- whether the attribute is an Integer or not (true = yes, false = no)
+        """
+
+        attributeId = self.findAttributeTypeIdByLongName(
+            specObjectTypeId, attributeLongName)
+
+        if attributeId== None:
+            return False
+
+        return self.checkAttributeIsInteger(attributeId)
+
+    def checkAttributeIsString(self, attributeId: str):
+        """ checks if an attribute has the type String
+
+        Arguments:
+            attributeId {str} -- the attribute id
+
+        Returns:
+            {bool} -- whether the attribute is a String or not (true = yes, false = no)
+        """
+        raise NotImplementedError
+
+    def checkAttributeIsStringByLongName(self, specObjectTypeId: str, attributeLongName: str):
+        """ checks if an attribute has the type String
+
+        Arguments:
+            specObjectTypeId {str} -- a specObjectType-id which belongs to the attribute
+            attributeLongName {str} -- the long-name of the attribute
+
+        Returns:
+            {bool} -- whether the attribute is a String or not (true = yes, false = no)
+        """
+
+        attributeId = self.findAttributeTypeIdByLongName(
+            specObjectTypeId, attributeLongName)
+
+        if attributeId== None:
+            return False
+
+        return self.checkAttributeIsString(attributeId)
+
+    def checkAttributeIsReal(self, attributeId: str):
+        """ checks if an attribute has the type Real
+
+        Arguments:
+            attributeId {str} -- the attribute id
+
+        Returns:
+            {bool} -- whether the attribute is a Real or not (true = yes, false = no)
+        """
+        raise NotImplementedError
+
+    def checkAttributeIsRealByLongName(self, specObjectTypeId: str, attributeLongName: str):
+        """ checks if an attribute has the type Real
+
+        Arguments:
+            specObjectTypeId {str} -- a specObjectType-id which belongs to the attribute
+            attributeLongName {str} -- the long-name of the attribute
+
+        Returns:
+            {bool} -- whether the attribute is a Real or not (true = yes, false = no)
+        """
+
+        attributeId = self.findAttributeTypeIdByLongName(
+            specObjectTypeId, attributeLongName)
+
+        if attributeId== None:
+            return False
+
+        return self.checkAttributeIsReal(attributeId)
+
+    def checkAttributeIsBoolean(self, attributeId: str):
+        """ checks if an attribute has the type Boolean
+
+        Arguments:
+            attributeId {str} -- the attribute id
+
+        Returns:
+            {bool} -- whether the attribute is a Boolean or not (true = yes, false = no)
+        """
+        raise NotImplementedError
+
+    def checkAttributeIsBooleanByLongName(self, specObjectTypeId: str, attributeLongName: str):
+        """ checks if an attribute has the type Boolean
+
+        Arguments:
+            specObjectTypeId {str} -- a specObjectType-id which belongs to the attribute
+            attributeLongName {str} -- the long-name of the attribute
+
+        Returns:
+            {bool} -- whether the attribute is a Boolean or not (true = yes, false = no)
+        """
+
+        attributeId = self.findAttributeTypeIdByLongName(
+            specObjectTypeId, attributeLongName)
+
+        if attributeId== None:
+            return False
+
+        return self.checkAttributeIsBoolean(attributeId)
+
+    def checkAttributeIsDate(self, attributeId: str):
+        """ checks if an attribute has the type Date
+
+        Arguments:
+            attributeId {str} -- the attribute id
+
+        Returns:
+            {bool} -- whether the attribute is a Date or not (true = yes, false = no)
+        """
+        raise NotImplementedError
+
+    def checkAttributeIsDateByLongName(self, specObjectTypeId: str, attributeLongName: str):
+        """ checks if an attribute has the type Date
+
+        Arguments:
+            specObjectTypeId {str} -- a specObjectType-id which belongs to the attribute
+            attributeLongName {str} -- the long-name of the attribute
+
+        Returns:
+            {bool} -- whether the attribute is a Date or not (true = yes, false = no)
+        """
+
+        attributeId = self.findAttributeTypeIdByLongName(
+            specObjectTypeId, attributeLongName)
+
+        if attributeId== None:
+            return False
+
+        return self.checkAttributeIsDate(attributeId)
