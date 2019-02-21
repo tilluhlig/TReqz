@@ -311,6 +311,47 @@ class reqif:
 
         return self.checkAttributeIsEnumeration(attributeId)
 
+    def checkAttributeIsXhtml(self, attributeId: str):
+        """ checks if an attribute has the type xhtml
+
+        Arguments:
+            attributeId {str} -- the attribute id
+
+        Returns:
+            {bool} -- whether the attribute is a xhtml or not (true = yes, false = no)
+        """
+
+        if attributeId == None:
+            raise RuntimeError("invalid attributeId")
+
+        attribute = self.getObject(attributeId)
+
+        if attribute == None:
+            raise RuntimeError("invalid attribute")
+
+        if "XHTML" in attribute.name:
+            return True
+        return False
+
+    def checkAttributeIsXhtmlByLongName(self, specObjectTypeId: str, attributeLongName: str):
+        """ checks if an attribute has the type xhtml
+
+        Arguments:
+            specObjectTypeId {str} -- a specObjectType-id which belongs to the attribute
+            attributeLongName {str} -- the long-name of the attribute
+
+        Returns:
+            {bool} -- whether the attribute is a xhtml or not (true = yes, false = no)
+        """
+
+        attributeId = self.findAttributeTypeIdByLongName(
+            specObjectTypeId, attributeLongName)
+
+        if attributeId== None:
+            return False
+
+        return self.checkAttributeIsXhtml(attributeId)
+
     def convertEnumerationValues(self, attributeId: str, values: list):
         """ translates the key representations of the enumeration values by their long/real value
 
@@ -323,6 +364,16 @@ class reqif:
         """
 
         attribute = self.getObject(attributeId)
+
+        if values == None or values == []:
+            if attribute.default_value == [] or attribute.default_value == None:
+                return []
+            else:
+                values = []
+                defaultValues = attribute.default_value
+                for value in defaultValues:
+                    values.extend(value.getValue())
+
         valueDefinitions = attribute.type.specified_values
         valueMap = dict()
         for possibleValues in valueDefinitions:
@@ -966,3 +1017,28 @@ class reqif:
         for child in children:
             childIds.append(child.req_object.identifier)
         return childIds
+
+    def getAttributeDefaultValue(self, attributeId:str):
+        """ returns the default value of an attribute
+        
+        Arguments:
+            attributeId {str} -- the attribute id
+
+        Returns:
+            list,str -- the default values/value
+        """
+        raise NotImplementedError
+        
+    def getAttributeDefaultValueByLongName(self, specObjectTypeId: str, attributeLongName: str):
+        """ returns the default value of an attribute (specified by its long name)
+        
+        Arguments:
+            specObjectTypeId {str} -- a specObjectType-id
+            attributeLongName {str} -- the attribute
+
+        Returns:
+            list,str -- the default values/value
+        """
+        attributeId = self.findAttributeTypeIdByLongName(
+            specObjectTypeId, attributeLongName)
+        return self.getAttributeDefaultValue(attributeId)
