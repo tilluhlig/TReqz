@@ -108,7 +108,8 @@ class xml_utils:
 
     @staticmethod
     def merge_elements(target: Element, source: Element):
-        """ merges two elements
+        """ merges the source attributes into the target element and adds an attribute from source
+            if it does not exist in the target attribute list
 
         Arguments:
             target {Element} -- the target element
@@ -170,7 +171,7 @@ class xml_utils:
 
     @staticmethod
     def addRequiredSubElement(elem: Element, name: str, content: str = None):
-        """ ads+creates a required element to an element (elem)
+        """ adds+creates a required element to an element (elem)
 
         Arguments:
             elem {Element} -- the parent element
@@ -211,7 +212,8 @@ class xml_utils:
 
     @staticmethod
     def addEncodedSubElement(elem: Element, subElem):
-        """ adds an element (subElem) to elem and encodes subElem (from reqif)
+        """ adds an element (subElem) to elem and encodes subElem (from reqif, e.g. xhtml)
+            subElem has to support encode() which returns an Element
 
         Arguments:
             elem {Element} -- the parent element

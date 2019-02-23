@@ -39,7 +39,7 @@ class reqif_spec_hierarchy(TReqz.reqif_identifiable):
             for child in self.children:
                 TReqz.xml_utils.addEncodedSubElement(childrenElement, child)
 
-        if len(self.editable_atts) > 0:
+        if self.editable_atts!=None and len(self.editable_atts) > 0:
             attsElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "EDITABLE-ATTS")
             for attribute in self.editable_atts:

@@ -33,9 +33,16 @@ class TestReqifSpecHierarchy(unittest.TestCase):
 
         for TAG, CLASS in TE.TReqz.reqif_config.ATTRIBUTE_DEFINITION_TAG_TO_CLASS.items():
             TE.utils.testEncodeLocalRefListFromElementsText(self, self.obj, "", "editable_atts", [])
-            TE.utils.testEncodeLocalRefListFromElementsText(self, self.obj, "<EDITABLE-ATTS><"+TAG+"-REF>1</"+TAG+"-REF></EDITABLE-ATTS>", "editable_atts", ["1"])
-            TE.utils.testEncodeLocalRefListFromElementsText(self, self.obj, "<EDITABLE-ATTS><"+TAG+"-REF>1</"+TAG+"-REF><"+TAG+"-REF>2</"+TAG+"-REF></EDITABLE-ATTS>", "editable_atts", ["1", "2"])
-		
+
+            testElements = list()
+            for identifier in ["1"]:
+                newIdentifiable = eval("TE.TReqz."+CLASS+"()")
+                newIdentifiable.identifier=identifier
+                testElements.append(newIdentifiable)
+            xmlContent = TE.utils.encodeObj(self.obj,{"editable_atts":testElements})
+            self.assertEqual("<"+self.obj.name+">"+"<EDITABLE-ATTS><"+TAG+"-REF>1</"+TAG+"-REF></EDITABLE-ATTS>"+"</"+self.obj.name+">", xmlContent)
+            self.obj.fill(**{"editable_atts":None})
+
         for TAG, CLASS in TE.TReqz.reqif_config.SPEC_HIERARCHY_TAG_TO_CLASS.items():
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<CHILDREN><"+TAG+" /></CHILDREN>", "children", [CLASS])
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<CHILDREN><"+TAG+" /><"+TAG+" /></CHILDREN>", "children", [CLASS, CLASS])

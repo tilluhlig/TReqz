@@ -74,7 +74,16 @@ class TestXmlUtils(unittest.TestCase):
         self.assertNotEqual(firstTimestamp, secondTimestamp)
 
     def test_merge_elements(self):
-        raise NotImplementedError
+        obj = Element("A")
+        xml_utils.merge_elements(obj, Element("B", attrib={}))
+        self.assertEqual(obj.tag, 'A')
+
+        xml_utils.merge_elements(obj, Element("B", attrib={"a":"b"}))
+        self.assertEqual(obj.tag, 'A')
+        self.assertEqual(obj.get('a'), 'b')
+
+        xml_utils.merge_elements(obj, Element("B", attrib={"a":"c"}))
+        self.assertEqual(obj.get('a'), 'b')
 
     def test_setElementAttribute(self):
         elem = xml_utils.createSubElement("element")
@@ -95,10 +104,30 @@ class TestXmlUtils(unittest.TestCase):
         self.assertEqual("content", elem2.text)
 
     def test_addRequiredSubElement(self):
-        raise NotImplementedError
+        elem = Element("A")
+        xml_utils.addRequiredSubElement(elem, "B", "content")
+        self.assertEqual(elem.tag, 'A')
+        self.assertEqual(elem.text, None)
+        self.assertEqual(len(elem.getchildren()), 1)
+        childs = elem.getchildren()
+        self.assertEqual(childs[0].tag, 'B')
+        self.assertEqual(childs[0].text, "content")
 
     def test_addEncodedSubElement(self):
-        raise NotImplementedError
+        class internalTestClass:
+            def __init__(self, content:str):
+                self.content=content
+            def encode(self):
+                return Element(self.content)
+
+        elem = Element("A")
+        elem2 = internalTestClass("B")
+        xml_utils.addEncodedSubElement(elem, elem2)
+        self.assertEqual(elem.tag, 'A')
+        self.assertEqual(elem.text, None)
+        self.assertEqual(len(elem.getchildren()), 1)
+        childs = elem.getchildren()
+        self.assertEqual(childs[0].tag, "B")
 
     def test_generateMd5(self):
         res = xml_utils.generateMd5('A')
