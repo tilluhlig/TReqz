@@ -11,7 +11,7 @@ class TestReqifAttributeDefinitionString(unittest.TestCase):
 
     def test_decode(self):
         TE.utils.testDecodeLocalRefFromElementText(self, self.obj, "<TYPE><DATATYPE-DEFINITION-STRING-REF>1</DATATYPE-DEFINITION-STRING-REF></TYPE>", "type", "1")
-        TE.utils.testDecodeObjectByElementClass(self, self.obj, "<DEFAULT-VALUE><ATTRIBUTE-VALUE-DATE /></DEFAULT-VALUE>", "default_value", "ATTRIBUTE-VALUE-STRING")
+        TE.utils.testDecodeObjectByElementClass(self, self.obj, "<DEFAULT-VALUE><ATTRIBUTE-VALUE-STRING /></DEFAULT-VALUE>", "default_value", "ATTRIBUTE-VALUE-STRING")
         TE.utils.testDecodeAttribute(self, self.obj, 'is_editable', 'IS-EDITABLE')
 
     def test_encode(self):

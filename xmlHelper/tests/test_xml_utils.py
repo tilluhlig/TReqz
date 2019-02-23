@@ -14,7 +14,7 @@ class TestXmlUtils(unittest.TestCase):
         values = [["A", "A"],
                   ["A", "{}A"],
                   ["A", "{A}A"],
-                  ["A", "{html:aa}A"],
+                  ["A", "{xhtml:aa}A"],
                   ["", "{}"],
                   ["", None]]
         for value in values:
@@ -24,12 +24,12 @@ class TestXmlUtils(unittest.TestCase):
         values = [[True, "A", "A"],
                   [True, "{}A", "A"],
                   [True, "{A}A", "A"],
-                  [True, "{html:aa}A", "A"],
+                  [True, "{xhtml:aa}A", "A"],
                   [False, "{}", "A"],
                   [False, None, "A"],
                   [False, "{}A", "B"],
                   [False, "A", "B"],
-                  [False, "{html:aa}A", "B"],
+                  [False, "{xhtml:aa}A", "B"],
                   [False, "{}A", None],
                   [False, None, "A"],
                   [True, None, ""]]
@@ -41,7 +41,7 @@ class TestXmlUtils(unittest.TestCase):
         values = [["", "A"],
                   ["{}", "{}A"],
                   ["{A}", "{A}A"],
-                  ["{html:aa}", "{html:aa}A"],
+                  ["{xhtml:aa}", "{xhtml:aa}A"],
                   ["{}", "{}"],
                   ["", None]]
         for value in values:
@@ -115,12 +115,12 @@ class TestXmlUtils(unittest.TestCase):
     def test_decodeXhtml(self):
         self.assertEqual("<p />", xml_utils.decodeXhtml(ET.fromstring("<p />")))
         self.assertEqual("", xml_utils.decodeXhtml(None))
-        self.assertEqual("<html:a xmlns:html=\"http://www.w3.org/1999/xhtml\"><p /></html:a>", xml_utils.decodeXhtml(ET.fromstring("<html:a  xmlns:html=\"http://www.w3.org/1999/xhtml\"><html:p /></html:a>")))
+        self.assertEqual("<a><p /></a>", xml_utils.decodeXhtml(ET.fromstring("<xhtml:a xmlns:xhtml=\"http://www.w3.org/1999/xhtml\"><xhtml:p /></xhtml:a>")))
 
     def test_encodeXhtml(self):
-        self.assertEqual(b"<html:p xmlns:html=\"http://www.w3.org/1999/xhtml\" />", ET.tostring(xml_utils.encodeXhtml(None)))
-        self.assertEqual(b"<html:p xmlns:html=\"http://www.w3.org/1999/xhtml\" />", ET.tostring(xml_utils.encodeXhtml("")))
-        self.assertEqual(b"<html:div xmlns:html=\"http://www.w3.org/1999/xhtml\"><html:a /><html:a /></html:div>", ET.tostring(xml_utils.encodeXhtml("<a></a><a></a>")))
+        self.assertEqual(b"<xhtml:p />", ET.tostring(xml_utils.encodeXhtml(None)))
+        self.assertEqual(b"<xhtml:p />", ET.tostring(xml_utils.encodeXhtml("")))
+        self.assertEqual(b"<xhtml:div><xhtml:a /><xhtml:a /></xhtml:div>", ET.tostring(xml_utils.encodeXhtml("<a></a><a></a>")))
 
     def test_stringIsWellFormedXml(self):
         self.assertFalse(xml_utils.stringIsWellFormedXml(""))
@@ -132,7 +132,7 @@ class TestXmlUtils(unittest.TestCase):
     def test_normalizeXhtml(self):
         values = [["", ""],
                   [None, None],
-                  ["<html:div>AA</html:div>", "AA"],
+                  ["<xhtml:div>AA</xhtml:div>", "AA"],
                   ["<img src=\"abc/asas.png\">AA</img>", "AA"],
                   ["A\nA", "AA"],
                   ["<a><b><c>AA</a>", "AA"],

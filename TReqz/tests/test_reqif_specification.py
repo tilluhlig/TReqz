@@ -28,9 +28,14 @@ class TestReqifSpecification(unittest.TestCase):
         TE.utils.testEncodeIdentifiableAttributes(self, self.obj)
 
         for TAG, CLASS in TE.TReqz.reqif_config.ATTRIBUTE_VALUE_TAG_TO_CLASS.items():
-            TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<VALUES><"+TAG+" /></VALUES>", "values", [CLASS])
-            TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<VALUES><"+TAG+" /><"+TAG+" /></VALUES>", "values", [CLASS, CLASS])
-            TE.utils.testEncodeObjectListByElementClass(self, self.obj, "", "values", [])
+            if TAG == 'ATTRIBUTE-VALUE-XHTML':
+                TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<VALUES><"+TAG+"><THE-VALUE><xhtml:p /></THE-VALUE></"+TAG+"></VALUES>", "values", [CLASS])
+                TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<VALUES><"+TAG+"><THE-VALUE><xhtml:p /></THE-VALUE></"+TAG+"><"+TAG+"><THE-VALUE><xhtml:p /></THE-VALUE></"+TAG+"></VALUES>", "values", [CLASS, CLASS])
+                TE.utils.testEncodeObjectListByElementClass(self, self.obj, "", "values", [])
+            else:
+                TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<VALUES><"+TAG+" /></VALUES>", "values", [CLASS])
+                TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<VALUES><"+TAG+" /><"+TAG+" /></VALUES>", "values", [CLASS, CLASS])
+                TE.utils.testEncodeObjectListByElementClass(self, self.obj, "", "values", [])
 
         for TAG, CLASS in TE.TReqz.reqif_config.SPEC_HIERARCHY_TAG_TO_CLASS.items():
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<CHILDREN><"+TAG+" /></CHILDREN>", "children", [CLASS])

@@ -1,13 +1,17 @@
 import unittest
 from . import utils as TE
+import os
 
 
 class TestReqifParser(unittest.TestCase):
     def setUp(self):
-        pass
+        filePath = os.path.realpath(__file__)
+        self.localPath = os.path.dirname(filePath)
 
     def test_parseFile(self):
-        raise NotImplementedError
+        parser = TE.TReqz.reqif_parser()
+        elem = parser.parseFile(self.localPath+"/../examples/exampleB/exampleB.reqif")
+        self.assertIsNotNone(elem)
 
     def test_parse(self):
         parser = TE.TReqz.reqif_parser()
@@ -25,7 +29,11 @@ class TestReqifParser(unittest.TestCase):
         self.assertNotEqual(None, xmlContent)
 
     def test_dumpToFile(self):
-        raise NotImplementedError
+        parser = TE.TReqz.reqif_parser()
+        elem = parser.parseFile(self.localPath+"/../examples/exampleB/exampleB.reqif")
+        parser.dumpToFile(elem, self.localPath+"/../examples/exampleB/exampleB_2.reqif")
+        TE.utils.testIfFilesAreEqual(self, self.localPath+"/../examples/exampleB/exampleB.reqif", self.localPath+"/../examples/exampleB/exampleB_2.reqif")
+
 
 if __name__ == '__main__':
     unittest.main()

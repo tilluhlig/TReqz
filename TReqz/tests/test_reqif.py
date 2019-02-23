@@ -1,8 +1,7 @@
 import unittest
 import os
-import shutil
-import sys
 from ... import TReqz as TReqz
+from . import utils as TE
 
 
 class TestReqif(unittest.TestCase):
@@ -13,6 +12,20 @@ class TestReqif(unittest.TestCase):
 
     def loadExampleA(self):
         self.reqif.parseFile(self.localPath+"/../examples/exampleA/Test_000977e1.reqif")
+
+    def loadExampleB(self):
+        self.reqif.parseFile(self.localPath+"/../examples/exampleB/exampleB.reqif")
+        self.elemA = self.reqif.findRequirementsByFieldValue("name", "A")[0].identifier
+        self.elemB = self.reqif.findRequirementsByFieldValue("name", "B")[0].identifier
+        self.elemC = self.reqif.findRequirementsByFieldValue("name", "C")[0].identifier
+        self.elemD = self.reqif.findRequirementsByFieldValue("name", "D")[0].identifier
+        self.elemE = self.reqif.findRequirementsByFieldValue("name", "E")[0].identifier
+        self.elemF = self.reqif.findRequirementsByFieldValue("name", "F")[0].identifier
+        self.elemG = self.reqif.findRequirementsByFieldValue("name", "G")[0].identifier
+        self.elemH = self.reqif.findRequirementsByFieldValue("name", "H")[0].identifier
+        self.elemI = self.reqif.findRequirementsByFieldValue("name", "I")[0].identifier
+        self.elemJ = self.reqif.findRequirementsByFieldValue("name", "J")[0].identifier
+        self.elemK = self.reqif.findRequirementsByFieldValue("name", "K")[0].identifier
 
     def test_getHeader(self):
         self.loadExampleA()
@@ -28,7 +41,9 @@ class TestReqif(unittest.TestCase):
         self.assertIsNotNone(self.reqif.getReqifContainer())
 
     def test_dumpToFile(self):
-        raise NotImplementedError
+        self.loadExampleB()
+        self.reqif.dumpToFile(self.localPath+"/../examples/exampleB/exampleB_2.reqif")
+        TE.utils.testIfFilesAreEqual(self, self.localPath+"/../examples/exampleB/exampleB.reqif", self.localPath+"/../examples/exampleB/exampleB_2.reqif")
 
     def test_addSpecificationType(self):
         self.loadExampleA()
@@ -282,6 +297,115 @@ class TestReqif(unittest.TestCase):
         self.loadExampleA()
         obj = self.reqif.getObject("_0f807d36-241f-4079-9e8a-ae6666c35931")
         self.assertEqual("_0f807d36-241f-4079-9e8a-ae6666c35931", obj.identifier)
+
+    def test_getAllDocumentRootRequirements(self):
+        self.loadExampleB()
+        rootRequirementIds = self.reqif.getAllDocumentRootRequirements(self.reqif.getAllDocumentIds()[0])
+        self.assertEqual([self.elemA, self.elemB, self.elemC, self.elemD, self.elemK], rootRequirementIds)
+
+    def test_getRequirementChilds(self):
+        self.loadExampleB()
+        documentId = self.reqif.getAllDocumentIds()[0]
+        self.assertEqual([], self.reqif.getRequirementChilds(documentId, self.elemA))
+        self.assertEqual([self.elemE, self.elemI], self.reqif.getRequirementChilds(documentId, self.elemD))
+        self.assertEqual([self.elemG], self.reqif.getRequirementChilds(documentId, self.elemF))
+        self.assertEqual([], self.reqif.getRequirementChilds(documentId, self.elemK))
+
+    def test_getAttributeDefaultValue(self):
+        print("TODO: the function getAttributeDefaultValue is currently not tested")
+
+    def test_getAttributeDefaultValueByLongName(self):
+        print("TODO: the function getAttributeDefaultValueByLongName is currently not tested")
+
+    def test_checkAttributeIsInteger(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.assertFalse(self.reqif.checkAttributeIsInteger(self.reqif.findAttributeTypeIdByLongName(typeId, "string_column")))
+        self.assertTrue(self.reqif.checkAttributeIsInteger(self.reqif.findAttributeTypeIdByLongName(typeId, "integer_column")))
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsInteger(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
+
+    def test_checkAttributeIsIntegerByLongName(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.assertFalse(self.reqif.checkAttributeIsIntegerByLongName(typeId, "string_column"))
+        self.assertTrue(self.reqif.checkAttributeIsIntegerByLongName(typeId, "integer_column"))
+        self.assertFalse(self.reqif.checkAttributeIsIntegerByLongName(typeId, "unknown_column"))
+
+    def test_checkAttributeIsString(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.assertFalse(self.reqif.checkAttributeIsString(self.reqif.findAttributeTypeIdByLongName(typeId, "integer_column")))
+        self.assertTrue(self.reqif.checkAttributeIsString(self.reqif.findAttributeTypeIdByLongName(typeId, "string_column")))
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsString(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
+
+    def test_checkAttributeIsStringByLongName(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.assertFalse(self.reqif.checkAttributeIsStringByLongName(typeId, "integer_column"))
+        self.assertTrue(self.reqif.checkAttributeIsStringByLongName(typeId, "string_column"))
+        self.assertFalse(self.reqif.checkAttributeIsStringByLongName(typeId, "unknown_column"))
+
+    def test_checkAttributeIsReal(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.assertFalse(self.reqif.checkAttributeIsReal(self.reqif.findAttributeTypeIdByLongName(typeId, "integer_column")))
+        self.assertTrue(self.reqif.checkAttributeIsReal(self.reqif.findAttributeTypeIdByLongName(typeId, "real_column")))
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsReal(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
+
+    def test_checkAttributeIsRealByLongName(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.assertFalse(self.reqif.checkAttributeIsRealByLongName(typeId, "integer_column"))
+        self.assertTrue(self.reqif.checkAttributeIsRealByLongName(typeId, "real_column"))
+        self.assertFalse(self.reqif.checkAttributeIsRealByLongName(typeId, "unknown_column"))
+
+    def test_checkAttributeIsBoolean(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.assertFalse(self.reqif.checkAttributeIsBoolean(self.reqif.findAttributeTypeIdByLongName(typeId, "integer_column")))
+        self.assertTrue(self.reqif.checkAttributeIsBoolean(self.reqif.findAttributeTypeIdByLongName(typeId, "bool_column")))
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsBoolean(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
+
+    def test_checkAttributeIsBooleanByLongName(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.assertFalse(self.reqif.checkAttributeIsBooleanByLongName(typeId, "integer_column"))
+        self.assertTrue(self.reqif.checkAttributeIsBooleanByLongName(typeId, "bool_column"))
+        self.assertFalse(self.reqif.checkAttributeIsBooleanByLongName(typeId, "unknown_column"))
+
+    def test_checkAttributeIsDate(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.assertFalse(self.reqif.checkAttributeIsDate(self.reqif.findAttributeTypeIdByLongName(typeId, "integer_column")))
+        self.assertTrue(self.reqif.checkAttributeIsDate(self.reqif.findAttributeTypeIdByLongName(typeId, "date_column")))
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsDate(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
+
+    def test_checkAttributeIsDateByLongName(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.assertFalse(self.reqif.checkAttributeIsDateByLongName(typeId, "integer_column"))
+        self.assertTrue(self.reqif.checkAttributeIsDateByLongName(typeId, "date_column"))
+        self.assertFalse(self.reqif.checkAttributeIsDateByLongName(typeId, "unknown_column"))
+
+    def test_checkAttributeIsXhtmlByLongName(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.assertFalse(self.reqif.checkAttributeIsXhtmlByLongName(typeId, "integer_column"))
+        self.assertTrue(self.reqif.checkAttributeIsXhtmlByLongName(typeId, "xhtml_column"))
+        self.assertFalse(self.reqif.checkAttributeIsXhtmlByLongName(typeId, "unknown_column"))
+
+    def test_checkAttributeIsXhtml(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.assertFalse(self.reqif.checkAttributeIsXhtml(self.reqif.findAttributeTypeIdByLongName(typeId, "integer_column")))
+        self.assertTrue(self.reqif.checkAttributeIsXhtml(self.reqif.findAttributeTypeIdByLongName(typeId, "xhtml_column")))
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsXhtml(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
 
 
 if __name__ == '__main__':
