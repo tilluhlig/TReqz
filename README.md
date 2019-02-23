@@ -1,6 +1,7 @@
 # TReqz
 
 [![Build Status](https://travis-ci.com/tilluhlig/TReqz.svg?branch=master)](https://travis-ci.com/tilluhlig/TReqz)
+[![Coverage Status](https://coveralls.io/repos/github/tilluhlig/TReqz/badge.svg?branch=master)](https://coveralls.io/github/tilluhlig/TReqz?branch=master)
 
 #### How to use it
 ``` python
