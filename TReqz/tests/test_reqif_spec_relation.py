@@ -35,7 +35,3 @@ class TestReqifSpecRelation(unittest.TestCase):
                 TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<VALUES><"+TAG+" /></VALUES>", "values", [CLASS])
                 TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<VALUES><"+TAG+" /><"+TAG+" /></VALUES>", "values", [CLASS, CLASS])
                 TE.utils.testEncodeObjectListByElementClass(self, self.obj, "", "values", [])
-
-
-if __name__ == '__main__':
-    unittest.main()

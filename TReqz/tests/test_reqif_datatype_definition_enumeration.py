@@ -24,6 +24,3 @@ class TestReqifDatatypeDefinitionEnumeration(unittest.TestCase):
         TE.utils.testEncodeIdentifiableAttributes(self, self.obj)
         self.assertEqual("<DATATYPE-DEFINITION-ENUMERATION><SPECIFIED-VALUES><ENUM-VALUE /><ENUM-VALUE /></SPECIFIED-VALUES></DATATYPE-DEFINITION-ENUMERATION>", TE.utils.encodeObj(self.obj, {'specified_values':[TE.TReqz.reqif_enum_value(), TE.TReqz.reqif_enum_value()]}))
         self.assertEqual("<DATATYPE-DEFINITION-ENUMERATION />", TE.utils.encodeObj(self.obj, {'specified_values':[]}))
-
-if __name__ == '__main__':
-    unittest.main()

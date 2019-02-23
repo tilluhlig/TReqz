@@ -13,6 +13,3 @@ class TestReqifDatatypeDefinition(unittest.TestCase):
 
     def test_encode(self):
         pass # DATATYPE-DEFINITION is no real object type
-
-if __name__ == '__main__':
-    unittest.main()

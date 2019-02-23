@@ -16,6 +16,3 @@ class TestReqifAttributeValueDate(unittest.TestCase):
     def test_encode(self):
         TE.utils.testEncodeLocalRefFromElementText(self, self.obj, "<DEFINITION><ATTRIBUTE-DEFINITION-DATE-REF>1</ATTRIBUTE-DEFINITION-DATE-REF></DEFINITION>", "definition", "1")
         TE.utils.testEncodeAttribute(self, self.obj, 'the_value', 'THE-VALUE')
-
-if __name__ == '__main__':
-    unittest.main()

@@ -18,6 +18,3 @@ class TestReqifAttributeDefinitionXhtml(unittest.TestCase):
         TE.utils.testEncodeLocalRefFromElementText(self, self.obj, "<TYPE><DATATYPE-DEFINITION-XHTML-REF>1</DATATYPE-DEFINITION-XHTML-REF></TYPE>", "type", "1")
         TE.utils.testEncodeObjectByElementClass(self, self.obj, "<DEFAULT-VALUE><ATTRIBUTE-VALUE-XHTML><THE-VALUE><xhtml:p /></THE-VALUE></ATTRIBUTE-VALUE-XHTML></DEFAULT-VALUE>", "default_value", TE.TReqz.reqif_attribute_value_xhtml())
         TE.utils.testEncodeAttribute(self, self.obj, 'is_editable', 'IS-EDITABLE')
-
-if __name__ == '__main__':
-    unittest.main()

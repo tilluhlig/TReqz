@@ -26,6 +26,3 @@ class TestReqifRelationGroup(unittest.TestCase):
         TE.utils.testEncodeLocalRefListFromElementsText(self, self.obj, "<SPEC-RELATIONS><SPEC-RELATION-REF>1</SPEC-RELATION-REF><SPEC-RELATION-REF>2</SPEC-RELATION-REF></SPEC-RELATIONS>", "spec_relations", ["1", "2"])
         TE.utils.testEncodeLocalRefListFromElementsText(self, self.obj, "<SPEC-RELATIONS><SPEC-RELATION-REF>1</SPEC-RELATION-REF></SPEC-RELATIONS>", "spec_relations", ["1"])
         TE.utils.testEncodeLocalRefListFromElementsText(self, self.obj, "", "spec_relations", [])
-
-if __name__ == '__main__':
-    unittest.main()

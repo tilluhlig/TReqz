@@ -23,6 +23,3 @@ class TestReqifAttributeValueEnumeration(unittest.TestCase):
 
     def test_isEmpty(self):
         print("TODO: the function isEmpty is currently not tested")
-
-if __name__ == '__main__':
-    unittest.main()

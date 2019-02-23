@@ -27,6 +27,3 @@ class TestReqifAttributeDefinitionEnumeration(unittest.TestCase):
 
     def test_getValueMapWithEnumObjects(self):
         print("TODO: the function getValueMapWithEnumObjects is currently not tested")
-
-if __name__ == '__main__':
-    unittest.main()

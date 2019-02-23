@@ -72,6 +72,9 @@ class TestReqif(unittest.TestCase):
         specObjectTypeId = self.reqif.findSpecObjectTypeIdByLongName("Test_OBJECT-TYPE")
         self.assertEqual("_63d2eb9d-0ed5-42ad-af40-7564803bdf4e", specObjectTypeId)
 
+        specObjectTypeId = self.reqif.findSpecObjectTypeIdByLongName("unknown-TYPE")
+        self.assertEqual(None, specObjectTypeId)
+
     def test_findSpecObjectTypeByLongName(self):
         self.loadExampleA()
         specObjectType = self.reqif.findSpecObjectTypeByLongName("Test_OBJECT-TYPE")
@@ -406,7 +409,3 @@ class TestReqif(unittest.TestCase):
         self.assertTrue(self.reqif.checkAttributeIsXhtml(self.reqif.findAttributeTypeIdByLongName(typeId, "xhtml_column")))
         with self.assertRaises(RuntimeError):
             self.reqif.checkAttributeIsXhtml(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
-
-
-if __name__ == '__main__':
-    unittest.main()

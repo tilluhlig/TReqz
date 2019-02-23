@@ -18,6 +18,3 @@ class TestReqifAttributeDefinitionReal(unittest.TestCase):
         TE.utils.testEncodeLocalRefFromElementText(self, self.obj, "<TYPE><DATATYPE-DEFINITION-REAL-REF>1</DATATYPE-DEFINITION-REAL-REF></TYPE>", "type", "1")
         TE.utils.testEncodeObjectByElementClass(self, self.obj, "<DEFAULT-VALUE><ATTRIBUTE-VALUE-REAL /></DEFAULT-VALUE>", "default_value", TE.TReqz.reqif_attribute_value_real())
         TE.utils.testEncodeAttribute(self, self.obj, 'is_editable', 'IS-EDITABLE')
-
-if __name__ == '__main__':
-    unittest.main()

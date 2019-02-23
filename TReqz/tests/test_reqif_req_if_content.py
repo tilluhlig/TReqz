@@ -70,6 +70,3 @@ class TestReqifReqIfContent(unittest.TestCase):
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<SPEC-RELATION-GROUPS><"+TAG+" /></SPEC-RELATION-GROUPS>", "spec_relation_groups", [CLASS])
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<SPEC-RELATION-GROUPS><"+TAG+" /><"+TAG+" /></SPEC-RELATION-GROUPS>", "spec_relation_groups", [CLASS, CLASS])
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "", "spec_relation_groups", [])
-
-if __name__ == '__main__':
-    unittest.main()

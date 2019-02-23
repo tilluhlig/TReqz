@@ -22,6 +22,3 @@ class TestReqifAttributeValueXhtml(unittest.TestCase):
         self.obj.fill(**{'is_simplified':None})
         
         print("TODO: the function encode is currently not completely tested") # es fehlt noch die Prüfung von value und original value
-
-if __name__ == '__main__':
-    unittest.main()

@@ -19,6 +19,3 @@ class TestReqifEnumValue(unittest.TestCase):
         TE.utils.testEncodeIdentifiableAttributes(self, self.obj)
         self.assertEqual("<ENUM-VALUE><PROPERTIES><EMBEDDED-VALUE /></PROPERTIES></ENUM-VALUE>", TE.utils.encodeObj(self.obj, {'embedded_value':TE.TReqz.reqif_embeded_value()}))
         self.assertEqual("<ENUM-VALUE />", TE.utils.encodeObj(self.obj, {'embedded_value':None}))
-
-if __name__ == '__main__':
-    unittest.main()

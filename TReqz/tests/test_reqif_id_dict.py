@@ -35,6 +35,3 @@ class TestReqifIdDict(unittest.TestCase):
         self.assertEqual(None, self.obj.remove("a"))
         self.obj.add(self.a)
         self.assertEqual(self.a, self.obj.remove("a"))
-
-if __name__ == '__main__':
-    unittest.main()

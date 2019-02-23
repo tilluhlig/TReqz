@@ -18,6 +18,3 @@ class TestReqifAttributeDefinitionInteger(unittest.TestCase):
         TE.utils.testEncodeLocalRefFromElementText(self, self.obj, "<TYPE><DATATYPE-DEFINITION-INTEGER-REF>1</DATATYPE-DEFINITION-INTEGER-REF></TYPE>", "type", "1")
         TE.utils.testEncodeObjectByElementClass(self, self.obj, "<DEFAULT-VALUE><ATTRIBUTE-VALUE-INTEGER /></DEFAULT-VALUE>", "default_value", TE.TReqz.reqif_attribute_value_integer())
         TE.utils.testEncodeAttribute(self, self.obj, 'is_editable', 'IS-EDITABLE')
-
-if __name__ == '__main__':
-    unittest.main()

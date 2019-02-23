@@ -47,6 +47,3 @@ class TestReqifSpecHierarchy(unittest.TestCase):
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<CHILDREN><"+TAG+" /></CHILDREN>", "children", [CLASS])
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<CHILDREN><"+TAG+" /><"+TAG+" /></CHILDREN>", "children", [CLASS, CLASS])
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "", "children", [])
-
-if __name__ == '__main__':
-    unittest.main()

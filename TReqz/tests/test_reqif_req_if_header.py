@@ -28,6 +28,3 @@ class TestReqifReqIfHeader(unittest.TestCase):
         TE.utils.testEncodeElementText(self, self.obj,'<REQ-IF-TOOL-ID>text</REQ-IF-TOOL-ID><REQ-IF-VERSION>1.0</REQ-IF-VERSION>', 'req_if_tool_id', 'text')
         TE.utils.testEncodeElementText(self, self.obj,'<REQ-IF-VERSION>1.0</REQ-IF-VERSION><SOURCE-TOOL-ID>text</SOURCE-TOOL-ID>', 'source_tool_id', 'text')
         TE.utils.testEncodeElementText(self, self.obj,'<REQ-IF-VERSION>1.0</REQ-IF-VERSION><TITLE>text</TITLE>', 'title', 'text')
-
-if __name__ == '__main__':
-    unittest.main()

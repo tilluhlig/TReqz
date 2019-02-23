@@ -22,6 +22,3 @@ class TestReqifSpecObjectType(unittest.TestCase):
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<SPEC-ATTRIBUTES><"+TAG+" /></SPEC-ATTRIBUTES>", "spec_attributes", [CLASS])
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "<SPEC-ATTRIBUTES><"+TAG+" /><"+TAG+" /></SPEC-ATTRIBUTES>", "spec_attributes", [CLASS, CLASS])
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "", "spec_attributes", [])
-
-if __name__ == '__main__':
-    unittest.main()

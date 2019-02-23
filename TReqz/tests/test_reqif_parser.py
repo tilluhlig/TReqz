@@ -33,7 +33,3 @@ class TestReqifParser(unittest.TestCase):
         elem = parser.parseFile(self.localPath+"/../examples/exampleB/exampleB.reqif")
         parser.dumpToFile(elem, self.localPath+"/../examples/exampleB/exampleB_2.reqif")
         TE.utils.testIfFilesAreEqual(self, self.localPath+"/../examples/exampleB/exampleB.reqif", self.localPath+"/../examples/exampleB/exampleB_2.reqif")
-
-
-if __name__ == '__main__':
-    unittest.main()

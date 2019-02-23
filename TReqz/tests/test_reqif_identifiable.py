@@ -25,6 +25,3 @@ class TestReqifIdentifiable(unittest.TestCase):
         self.assertEqual(self.obj, self.id_dict.get(newid))
         self.assertEqual(self.obj, self.id_dict.get(newid2))
         self.assertEqual(self.obj, self.id_dict.get(newid3))
-
-if __name__ == '__main__':
-    unittest.main()

@@ -14,6 +14,3 @@ class TestReqifAttributeDefinition(unittest.TestCase):
 
     def test_encode(self):
         TE.utils.testEncodeAttribute(self, self.obj, 'is_editable', 'IS-EDITABLE')
-
-if __name__ == '__main__':
-    unittest.main()

@@ -39,7 +39,3 @@ class TestReqifSpecObject(unittest.TestCase):
             else:
                 self.assertEqual("<"+self.obj.name+"><VALUES><"+TAG+" THE-VALUE=\"a\" /></VALUES></"+self.obj.name+">", xmlContent)
             self.obj.fill(**{'values':None})
-
-
-if __name__ == '__main__':
-    unittest.main()

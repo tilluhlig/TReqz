@@ -14,6 +14,3 @@ class TestReqifDatatypeDefinitionDate(unittest.TestCase):
 
     def test_encode(self):
         TE.utils.testEncodeIdentifiableAttributes(self, self.obj)
-
-if __name__ == '__main__':
-    unittest.main()

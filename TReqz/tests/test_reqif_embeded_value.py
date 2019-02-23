@@ -16,6 +16,3 @@ class TestReqifEmbeddedValue(unittest.TestCase):
     def test_encode(self):
         TE.utils.testEncodeAttribute(self, self.obj, 'key', 'KEY')
         TE.utils.testEncodeAttribute(self, self.obj, 'other_content', 'OTHER-CONTENT')
-
-if __name__ == '__main__':
-    unittest.main()

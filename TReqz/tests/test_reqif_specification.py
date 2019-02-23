@@ -43,6 +43,3 @@ class TestReqifSpecification(unittest.TestCase):
             TE.utils.testEncodeObjectListByElementClass(self, self.obj, "", "children", [])
 
         TE.utils.testEncodeLocalRefFromElementText(self, self.obj, "<TYPE><SPECIFICATION-TYPE-REF>1</SPECIFICATION-TYPE-REF></TYPE>", "type", "1")
-
-if __name__ == '__main__':
-    unittest.main()

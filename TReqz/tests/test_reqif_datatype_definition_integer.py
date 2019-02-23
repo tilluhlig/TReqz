@@ -18,6 +18,3 @@ class TestReqifDatatypeDefinitionInteger(unittest.TestCase):
         TE.utils.testEncodeIdentifiableAttributes(self, self.obj)
         TE.utils.testEncodeAttribute(self, self.obj, 'max', 'MAX')
         TE.utils.testEncodeAttribute(self, self.obj, 'min', 'MIN')
-
-if __name__ == '__main__':
-    unittest.main()

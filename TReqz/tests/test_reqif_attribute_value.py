@@ -32,6 +32,3 @@ class TestReqifAttributeValue(unittest.TestCase):
         self.assertTrue(self.obj.isEmpty())
         self.obj.setValue('aa', None)
         self.assertFalse(self.obj.isEmpty())
-
-if __name__ == '__main__':
-    unittest.main()

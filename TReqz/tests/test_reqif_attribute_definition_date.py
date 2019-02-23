@@ -18,6 +18,3 @@ class TestReqifAttributeDefinitionDate(unittest.TestCase):
         TE.utils.testEncodeLocalRefFromElementText(self, self.obj, "<TYPE><DATATYPE-DEFINITION-DATE-REF>1</DATATYPE-DEFINITION-DATE-REF></TYPE>", "type", "1")
         TE.utils.testEncodeObjectByElementClass(self, self.obj, "<DEFAULT-VALUE><ATTRIBUTE-VALUE-DATE /></DEFAULT-VALUE>", "default_value", TE.TReqz.reqif_attribute_value_date())
         TE.utils.testEncodeAttribute(self, self.obj, 'is_editable', 'IS-EDITABLE')
-
-if __name__ == '__main__':
-    unittest.main()

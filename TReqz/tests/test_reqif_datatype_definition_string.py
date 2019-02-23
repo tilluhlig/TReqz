@@ -16,6 +16,3 @@ class TestReqifDatatypeDefinitionString(unittest.TestCase):
     def test_encode(self):
         TE.utils.testEncodeIdentifiableAttributes(self, self.obj)
         TE.utils.testEncodeAttribute(self, self.obj, 'max_length', 'MAX-LENGTH')
-
-if __name__ == '__main__':
-    unittest.main()

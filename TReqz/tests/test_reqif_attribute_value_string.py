@@ -16,6 +16,3 @@ class TestReqifAttributeValueString(unittest.TestCase):
     def test_encode(self):
         TE.utils.testEncodeLocalRefFromElementText(self, self.obj, "<DEFINITION><ATTRIBUTE-DEFINITION-STRING-REF>1</ATTRIBUTE-DEFINITION-STRING-REF></DEFINITION>", "definition", "1")
         TE.utils.testEncodeAttribute(self, self.obj, 'the_value', 'THE-VALUE')
-
-if __name__ == '__main__':
-    unittest.main()

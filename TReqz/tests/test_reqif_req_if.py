@@ -23,6 +23,3 @@ class TestReqifReqIf(unittest.TestCase):
 
         self.assertEqual('<REQ-IF xmlns="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" xmlns:reqif="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd" xmlns:reqif-xhtml="http://www.w3.org/1999/xhtml" xmlns:rm-reqif="http://www.ibm.com/rm/reqif" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/ReqIF/20110401/reqif.xsd reqif.xsd"><THE-HEADER /><CORE-CONTENT><REQ-IF-CONTENT /></CORE-CONTENT></REQ-IF>', TE.utils.encodeObj(self.obj,{'req_if_content':TE.TReqz.reqif_req_if_content()}))
         self.obj.fill(**{'req_if_content':None})
-
-if __name__ == '__main__':
-    unittest.main()
