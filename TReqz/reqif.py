@@ -1052,7 +1052,18 @@ class reqif:
         Returns:
             {bool} -- whether the attribute is an Integer or not (true = yes, false = no)
         """
-        raise NotImplementedError
+
+        if attributeId == None:
+            raise RuntimeError("invalid attributeId")
+
+        attribute = self.getObject(attributeId)
+
+        if attribute == None:
+            raise RuntimeError("invalid attribute")
+
+        if "INTEGER" in attribute.name:
+            return True
+        return False
 
     def checkAttributeIsIntegerByLongName(self, specObjectTypeId: str, attributeLongName: str):
         """ checks if an attribute has the type Integer
@@ -1082,7 +1093,18 @@ class reqif:
         Returns:
             {bool} -- whether the attribute is a String or not (true = yes, false = no)
         """
-        raise NotImplementedError
+
+        if attributeId == None:
+            raise RuntimeError("invalid attributeId")
+
+        attribute = self.getObject(attributeId)
+
+        if attribute == None:
+            raise RuntimeError("invalid attribute")
+
+        if "STRING" in attribute.name:
+            return True
+        return False
 
     def checkAttributeIsStringByLongName(self, specObjectTypeId: str, attributeLongName: str):
         """ checks if an attribute has the type String
@@ -1112,7 +1134,18 @@ class reqif:
         Returns:
             {bool} -- whether the attribute is a Real or not (true = yes, false = no)
         """
-        raise NotImplementedError
+
+        if attributeId == None:
+            raise RuntimeError("invalid attributeId")
+
+        attribute = self.getObject(attributeId)
+
+        if attribute == None:
+            raise RuntimeError("invalid attribute")
+
+        if "REAL" in attribute.name:
+            return True
+        return False
 
     def checkAttributeIsRealByLongName(self, specObjectTypeId: str, attributeLongName: str):
         """ checks if an attribute has the type Real
@@ -1142,7 +1175,18 @@ class reqif:
         Returns:
             {bool} -- whether the attribute is a Boolean or not (true = yes, false = no)
         """
-        raise NotImplementedError
+
+        if attributeId == None:
+            raise RuntimeError("invalid attributeId")
+
+        attribute = self.getObject(attributeId)
+
+        if attribute == None:
+            raise RuntimeError("invalid attribute")
+
+        if "BOOLEAN" in attribute.name:
+            return True
+        return False
 
     def checkAttributeIsBooleanByLongName(self, specObjectTypeId: str, attributeLongName: str):
         """ checks if an attribute has the type Boolean
@@ -1172,7 +1216,18 @@ class reqif:
         Returns:
             {bool} -- whether the attribute is a Date or not (true = yes, false = no)
         """
-        raise NotImplementedError
+
+        if attributeId == None:
+            raise RuntimeError("invalid attributeId")
+
+        attribute = self.getObject(attributeId)
+
+        if attribute == None:
+            raise RuntimeError("invalid attribute")
+
+        if "DATE" in attribute.name:
+            return True
+        return False
 
     def checkAttributeIsDateByLongName(self, specObjectTypeId: str, attributeLongName: str):
         """ checks if an attribute has the type Date

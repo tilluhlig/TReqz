@@ -28,7 +28,7 @@ class reqif_specification(TReqz.reqif_identifiable):
         elem = super().encode()
         elem.tag = self.name
 
-        if len(self.values) > 0:
+        if self.values!= None and len(self.values) > 0:
             valuesElement = TReqz.xml_utils.addRequiredSubElement(
                 elem, "VALUES")
             for value in self.values:

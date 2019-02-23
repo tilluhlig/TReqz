@@ -14,7 +14,7 @@ class reqif_attribute_definition_string(TReqz.reqif_attribute_definition):
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
         self.default_value = TReqz.reqif_utils.generate_object_by_element_class(
-            content, id_dict, "./{0}DEFAULT-VALUE".format(namespace), "reqif_attribute_value_string")
+            content, id_dict, "./{0}DEFAULT-VALUE/{0}ATTRIBUTE-VALUE-STRING".format(namespace), "reqif_attribute_value_string")
 
         self.type = TReqz.reqif_utils.get_local_ref_from_element_text(
             content, id_dict, "./{0}TYPE/{0}DATATYPE-DEFINITION-STRING-REF".format(namespace))

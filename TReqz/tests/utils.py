@@ -7,6 +7,11 @@ class utils:
     
     @staticmethod
     def getIdentifiableAttributes()->dict:
+        """ returns the reqif names and their internal (class) names of attributes that corresponds to the identifiable property
+        
+        Returns:
+            dict -- a dict with the reqif names and the TReqz names
+        """
         return {"DESC":"desc", "IDENTIFIER":"identifier", "LAST-CHANGE":"last_change", "LONG-NAME":"long_name"}
     
     @staticmethod
@@ -28,10 +33,20 @@ class utils:
         obj.fill(**{reqifAttributeName:None})
         
     @staticmethod
-    def testDecodeObjectByElementClass(self, obj, xmlContent:str, reqifAttributeName:str, objectClassName:str):
+    def testDecodeObjectByElementClass(self, obj, xmlContent:str, reqifAttributeName:str, objectClassName):
         id_dict = TReqz.reqif_id_dict()
         utils.decodeObj(obj, "<"+obj.name+">"+xmlContent+"</"+obj.name+">", id_dict)
-        self.assertEqual(objectClassName, obj.get(reqifAttributeName).name)
+        if isinstance(objectClassName,str):
+            self.assertEqual(objectClassName, obj.get(reqifAttributeName).name)
+        elif isinstance(objectClassName, list):
+            elements = obj.get(reqifAttributeName)
+            self.assertEqual(len(elements), len(objectClassName))
+
+            for i in range(len(objectClassName)):
+                self.assertEqual(objectClassName[i], elements[i].name)
+                i+=1
+        else:
+            raise RuntimeError("unknown type")
         obj.fill(**{reqifAttributeName:None})
 
     @staticmethod
@@ -170,3 +185,21 @@ class utils:
     def testEncodeIdentifiableAttributes(self, obj):
         for xmlAttributeName, reqifAttributeName in utils.getIdentifiableAttributes().items():
             utils.testEncodeAttribute(self, obj, reqifAttributeName, xmlAttributeName, xmlAttributeName+"1")
+
+    @staticmethod
+    def testIfFilesAreEqual(self, firstFile:str, secondFile:str):
+        """ compares the contents of two files via assertEqual 
+        
+        Arguments:
+            firstFile {str} -- the first file path
+            secondFile {str} -- the second file path
+        """
+        firstFileHandle = open(firstFile, 'r')
+        firstFileContent = firstFileHandle.readlines()
+        firstFileHandle.close()
+
+        secondFileHandle = open(secondFile, 'r')
+        secondFileContent = secondFileHandle.readlines()
+        secondFileHandle.close()
+
+        self.assertEqual(firstFileContent, secondFileContent)

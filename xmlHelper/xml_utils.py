@@ -283,17 +283,17 @@ class xml_utils:
 
         if content != None:
             all_descendants = list(content.iter())
-            all_descendants = all_descendants[1:]
+            #all_descendants = all_descendants[1:]
             oldTag = content.tag
-            content.tag = None
+            #content.tag = None
             for element in all_descendants:
                 element.tag = re.sub(
                     r"{[\S]*}([\S]*)",
                     "\\1",
                     element.tag
                 )
-            content.tag = oldTag
-            value = ET.tostring(content, encoding='utf-8', method='xml')
+            #content.tag = oldTag
+            value = ET.tostring(content, encoding='utf-8')
             value = value.decode("utf-8")
             return value
         return ""
@@ -318,7 +318,7 @@ class xml_utils:
 
         all_descendants = list(result.iter())
         for element in all_descendants:
-            element.tag = "{http://www.w3.org/1999/xhtml}"+element.tag
+            element.tag = "xhtml:"+element.tag
         return result
 
     @staticmethod

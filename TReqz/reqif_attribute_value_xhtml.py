@@ -20,15 +20,19 @@ class reqif_attribute_value_xhtml(TReqz.reqif_attribute_value):
             content, "./{0}THE-VALUE".format(namespace))
 
         # check whether there are more than one subelement
-        children = elem.getchildren()
-        if len(children)==0:
+        children=None
+        if elem != None:
+            children = elem.getchildren()
+        if children != None and len(children)==0:
             elem=None
-        elif len(children)==1:
+        elif children != None and len(children)==1:
             elem = elem[0]
         else:
-            # more than one (not allowed but possible)
-            elem.tag = 'div'
-            elem.attrib = dict()
+            # more than one (not allowed but possible) or empty value
+            if children != None:
+                elem = Element('div')
+            else:
+                elem = None
 
         self.the_value = TReqz.xml_utils.decodeXhtml(elem)
 

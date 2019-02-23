@@ -25,9 +25,8 @@ class reqif_parser(TReqz.xml_parser):
 
         xml: Element = content.encode()
         xmlData = ET.tostring(xml)
-        #xmlResult = xmlData.decode("utf-8")
         root = etree.fromstring(xmlData)
-        xmlData = etree.tostring(root, pretty_print=True, xml_declaration=True)
+        xmlData = etree.tostring(root, pretty_print=True, xml_declaration=True, method='xml')
         xmlData = xmlData.decode("utf-8")
         return xmlData
 
