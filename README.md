@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.com/tilluhlig/TReqz.svg?branch=master)](https://travis-ci.com/tilluhlig/TReqz)
 [![Coverage Status](https://coveralls.io/repos/github/tilluhlig/TReqz/badge.svg?branch=master)](https://coveralls.io/github/tilluhlig/TReqz?branch=master)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=tilluhlig_TReqz&metric=ncloc)](https://sonarcloud.io/dashboard?id=tilluhlig_TReqz)
 
 #### How to use it
 ``` python
