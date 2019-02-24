@@ -41,7 +41,7 @@ class xml_utils:
         if tag == None:
             return ""
 
-        name = re.split("\{.*\}", tag)
+        name = re.split("{.*}", tag)
         if len(name)>=2:
             return name[1]
         return tag
@@ -60,7 +60,7 @@ class xml_utils:
         if tag==None:
             tag = ""
 
-        namespace = re.match("\{.*\}", tag)
+        namespace = re.match("{.*}", tag)
         if namespace != None:
             return namespace.group(0)
         return ""
