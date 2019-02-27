@@ -245,6 +245,21 @@ class xml_utils:
         return m.hexdigest()
 
     @staticmethod
+    def generateSha1(content: str):
+        """ generates a sha1 hash for the given <content>
+
+        Arguments:
+            content {str} -- the content
+
+        Returns:
+            {str} -- a hex representation of the sha1 hash
+        """
+
+        m = hashlib.sha1()
+        m.update(content.encode('utf-8'))
+        return m.hexdigest()
+
+    @staticmethod
     def validateXmlFile(filePath:str, schemaPath:str)->bool:
         """ validates a xml-file <filePath> with a given xml-Schema (schemaPath)
         
