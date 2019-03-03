@@ -1247,3 +1247,36 @@ class reqif:
             return False
 
         return self.checkAttributeIsDate(attributeId)
+
+    def findFirstRequirementIdByFieldValue(self, field: str = None, value: str = None):
+        """ seeks to find a requirement-id by a field-value combination.
+            only the given/"not None" parameters (field, value) influencing the result.
+
+        Keyword Arguments:
+            field {str} -- an optional field-name. (default: {None})
+            value {str} -- an optional value (default: {None})
+
+        Returns:
+            {str/None} -- the requirement id or None
+        """
+
+        requirementIds = list()
+        for specObject in self.__reqif_object.req_if_content.spec_objects:
+            for specObjectValue in specObject.values:
+                fieldName = specObjectValue.definition.long_name
+                if (fieldName != None and fieldName != field):
+                    continue
+
+                if value != None:
+                    concreteValues = specObjectValue.getValue()
+                    if isinstance(concreteValues, list):
+                        for concreteValue in concreteValues:
+                            if concreteValue == value:
+                                return specObject.identifier
+                    else:
+                        if concreteValues == value:
+                            return specObject.identifier
+                else:
+                    return specObject.identifier
+
+        return None
