@@ -22,7 +22,7 @@ class reqif_req_if(TReqz.reqif_object):
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
 
-        self.lang = content.get("{http://www.w3.org/XML/1998/namespace}lang")
+        self.lang = TReqz.reqif_utils.unescapeAttribute(content.get("{http://www.w3.org/XML/1998/namespace}lang"))
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
         self.req_if_header = TReqz.reqif_utils.generate_object_by_element_class(
             content, id_dict, "./{0}THE-HEADER/{0}REQ-IF-HEADER".format(namespace), "reqif_req_if_header")
@@ -48,7 +48,7 @@ class reqif_req_if(TReqz.reqif_object):
             elem, "xmlns:xhtml", "http://www.w3.org/1999/xhtml")
 
         TReqz.xml_utils.setElementAttribute(
-            elem, "{http://www.w3.org/XML/1998/namespace}lang", self.lang)
+            elem, "{http://www.w3.org/XML/1998/namespace}lang", TReqz.reqif_utils.escapeAttribute(self.lang))
         headerElement = TReqz.xml_utils.addRequiredSubElement(
             elem, "THE-HEADER")
         TReqz.xml_utils.addEncodedSubElement(

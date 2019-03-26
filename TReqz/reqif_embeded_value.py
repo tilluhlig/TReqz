@@ -12,13 +12,13 @@ class reqif_embeded_value(TReqz.reqif_object):
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
-        self.key = content.get("KEY")
-        self.other_content = content.get("OTHER-CONTENT")
+        self.key = TReqz.reqif_utils.unescapeAttribute(content.get("KEY"))
+        self.other_content = TReqz.reqif_utils.unescapeAttribute(content.get("OTHER-CONTENT"))
 
     def encode(self):
         elem = super().encode()
         elem.tag = self.name
-        TReqz.xml_utils.setElementAttribute(elem, "KEY", self.key)
+        TReqz.xml_utils.setElementAttribute(elem, "KEY", TReqz.reqif_utils.escapeAttribute(self.key))
         TReqz.xml_utils.setElementAttribute(
-            elem, "OTHER-CONTENT", self.other_content)
+            elem, "OTHER-CONTENT", TReqz.reqif_utils.escapeAttribute(self.other_content))
         return elem

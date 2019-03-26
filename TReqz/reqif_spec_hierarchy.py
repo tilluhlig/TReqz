@@ -52,7 +52,7 @@ class reqif_spec_hierarchy(TReqz.reqif_identifiable):
                 objectElement, "SPEC-OBJECT-REF", self.req_object.identifier)
 
         TReqz.xml_utils.setElementAttribute(
-            elem, "IS-EDITABLE", self.is_editable)
+            elem, "IS-EDITABLE", TReqz.reqif_utils.escapeAttribute(self.is_editable))
         TReqz.xml_utils.setElementAttribute(
-            elem, "IS-TABLE-INTERNAL", self.is_table_internal)
+            elem, "IS-TABLE-INTERNAL", TReqz.reqif_utils.escapeAttribute(self.is_table_internal))
         return elem

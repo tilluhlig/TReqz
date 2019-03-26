@@ -20,7 +20,7 @@ class reqif_req_if_header(TReqz.reqif_object):
         super().decode(content, id_dict)
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
-        self.identifier = content.get("IDENTIFIER")
+        self.identifier = TReqz.reqif_utils.unescapeAttribute(content.get("IDENTIFIER"))
         if id_dict != None and self.identifier != None:
             id_dict.add(self)
         self.comment = content.findtext("./{0}COMMENT".format(namespace))
@@ -40,7 +40,7 @@ class reqif_req_if_header(TReqz.reqif_object):
         elem = super().encode()
         elem.tag = self.name
         TReqz.xml_utils.setElementAttribute(
-            elem, "IDENTIFIER", self.identifier)
+            elem, "IDENTIFIER", TReqz.reqif_utils.escapeAttribute(self.identifier))
         TReqz.xml_utils.addOptionalSubElement(elem, "COMMENT", self.comment)
         TReqz.xml_utils.addOptionalSubElement(
             elem, "CREATION-TIME", self.creation_time)

@@ -41,7 +41,7 @@ class reqif_attribute_value_xhtml(TReqz.reqif_attribute_value):
         if elem != None:
             self.the_original_value = ET.tostring(
                 elem, encoding='utf-8', method='text')
-        self.is_simplified = content.get("IS-SIMPLIFIED")
+        self.is_simplified = TReqz.reqif_utils.unescapeAttribute(content.get("IS-SIMPLIFIED"))
         self.definition = TReqz.reqif_utils.get_local_ref_from_element_text(
             content, id_dict, "./{0}DEFINITION/{0}ATTRIBUTE-DEFINITION-XHTML-REF".format(namespace))
 
@@ -49,7 +49,7 @@ class reqif_attribute_value_xhtml(TReqz.reqif_attribute_value):
         elem = super().encode()
         elem.tag = self.name
         TReqz.xml_utils.setElementAttribute(
-            elem, "IS-SIMPLIFIED", self.is_simplified)
+            elem, "IS-SIMPLIFIED", TReqz.reqif_utils.escapeAttribute(self.is_simplified))
 
         TReqz.xml_utils.addOptionalSubElement(
             elem, "THE-ORIGINAL-VALUE", self.the_original_value)

@@ -14,11 +14,11 @@ class reqif_attribute_definition(TReqz.reqif_identifiable):
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
 
-        self.is_editable = content.get("IS-EDITABLE")
+        self.is_editable = TReqz.reqif_utils.unescapeAttribute(content.get("IS-EDITABLE"))
 
     def encode(self):
         elem = super().encode()
         elem.tag = self.name
         TReqz.xml_utils.setElementAttribute(
-            elem, "IS-EDITABLE", self.is_editable)
+            elem, "IS-EDITABLE", TReqz.reqif_utils.escapeAttribute(self.is_editable))
         return elem

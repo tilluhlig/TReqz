@@ -27,27 +27,27 @@ class reqif_identifiable(TReqz.reqif_object):
         super().decode(content, id_dict)
         namespace = TReqz.xml_utils.get_tag_namespace(content.tag)
 
-        self.desc = content.get("DESC")
-        self.identifier = content.get("IDENTIFIER")
+        self.desc = TReqz.reqif_utils.unescapeAttribute(content.get("DESC"))
+        self.identifier = TReqz.reqif_utils.unescapeAttribute(content.get("IDENTIFIER"))
         if self.identifier != None and id_dict != None:
             id_dict.add(self)
-        self.last_change = content.get("LAST-CHANGE")
-        self.long_name = content.get("LONG-NAME")
+        self.last_change = TReqz.reqif_utils.unescapeAttribute(content.get("LAST-CHANGE"))
+        self.long_name = TReqz.reqif_utils.unescapeAttribute(content.get("LONG-NAME"))
 
         alternativeidElement = TReqz.xml_utils.get_element(
             content, "./{0}ALTERNATIVE-ID/{0}ALTERNATIVE-ID".format(namespace))
         if alternativeidElement != None:
-            self.alternative_id = alternativeidElement.get("IDENTIFIER")
+            self.alternative_id = TReqz.reqif_utils.unescapeAttribute(alternativeidElement.get("IDENTIFIER"))
 
     def encode(self):
         elem = super().encode()
-        TReqz.xml_utils.setElementAttribute(elem, "DESC", self.desc)
+        TReqz.xml_utils.setElementAttribute(elem, "DESC", TReqz.reqif_utils.escapeAttribute(self.desc))
         TReqz.xml_utils.setElementAttribute(
-            elem, "IDENTIFIER", self.identifier)
+            elem, "IDENTIFIER", TReqz.reqif_utils.escapeAttribute(self.identifier))
         TReqz.xml_utils.setElementAttribute(
-            elem, "LAST-CHANGE", self.last_change)
+            elem, "LAST-CHANGE", TReqz.reqif_utils.escapeAttribute(self.last_change))
         TReqz.xml_utils.setElementAttribute(
-            elem, "LONG-NAME", self.long_name)
+            elem, "LONG-NAME", TReqz.reqif_utils.escapeAttribute(self.long_name))
 
         if self.alternative_id != None:
             alternativeidElement = TReqz.xml_utils.addRequiredSubElement(
@@ -55,6 +55,6 @@ class reqif_identifiable(TReqz.reqif_object):
             alternativeidElementWithAttribute = TReqz.xml_utils.addRequiredSubElement(
                 alternativeidElement, "ALTERNATIVE-ID")
             TReqz.xml_utils.setElementAttribute(
-                alternativeidElementWithAttribute, "IDENTIFIER", self.alternative_id)
+                alternativeidElementWithAttribute, "IDENTIFIER", TReqz.reqif_utils.escapeAttribute(self.alternative_id))
 
         return elem

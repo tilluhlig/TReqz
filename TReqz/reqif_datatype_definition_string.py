@@ -12,11 +12,11 @@ class reqif_datatype_definition_string(TReqz.reqif_datatype_definition):
 
     def decode(self, content: Element, id_dict: TReqz.reqif_id_dict = None):
         super().decode(content, id_dict)
-        self.max_length = content.get("MAX-LENGTH")
+        self.max_length = TReqz.reqif_utils.unescapeAttribute(content.get("MAX-LENGTH"))
 
     def encode(self):
         elem = super().encode()
         elem.tag = self.name
         TReqz.xml_utils.setElementAttribute(
-            elem, "MAX-LENGTH", self.max_length)
+            elem, "MAX-LENGTH", TReqz.reqif_utils.escapeAttribute(self.max_length))
         return elem

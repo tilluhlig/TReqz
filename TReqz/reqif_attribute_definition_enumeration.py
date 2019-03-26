@@ -39,7 +39,7 @@ class reqif_attribute_definition_enumeration(TReqz.reqif_attribute_definition):
         self.default_value = TReqz.reqif_utils.generate_object_list_by_element_class(
             content, id_dict, "./{0}DEFAULT-VALUE".format(namespace), typeList)
 
-        self.multi_valued = content.get("MULTI-VALUED")
+        self.multi_valued = TReqz.reqif_utils.unescapeAttribute(content.get("MULTI-VALUED"))
         self.type = TReqz.reqif_utils.get_local_ref_from_element_text(
             content, id_dict, "./{0}TYPE/{0}DATATYPE-DEFINITION-ENUMERATION-REF".format(namespace))
 
@@ -47,7 +47,7 @@ class reqif_attribute_definition_enumeration(TReqz.reqif_attribute_definition):
         elem = super().encode()
         elem.tag = self.name
         TReqz.xml_utils.setElementAttribute(
-            elem, "MULTI-VALUED", self.multi_valued)
+            elem, "MULTI-VALUED", TReqz.reqif_utils.escapeAttribute(self.multi_valued))
 
         if self.default_value != None:
             defaultElement = TReqz.xml_utils.addRequiredSubElement(
