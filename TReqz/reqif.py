@@ -233,6 +233,9 @@ class reqif:
 
         specType = self.getObject(specObjectTypeId)
 
+        if specType==None:
+            return None
+
         for attributeType in specType.spec_attributes:
             if attributeType.long_name == longName:
                 return attributeType.identifier
@@ -1260,7 +1263,6 @@ class reqif:
             {str/None} -- the requirement id or None
         """
 
-        requirementIds = list()
         for specObject in self.__reqif_object.req_if_content.spec_objects:
             for specObjectValue in specObject.values:
                 fieldName = specObjectValue.definition.long_name
