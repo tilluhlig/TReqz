@@ -90,6 +90,9 @@ class TestReqif(unittest.TestCase):
         id = self.reqif.findSpecObjectTypeIdByAttributetTypeId("_b74bcd4e-b697-40b6-9310-b348fdf1f02a")
         self.assertEqual("_63d2eb9d-0ed5-42ad-af40-7564803bdf4e", id)
 
+        id = self.reqif.findSpecObjectTypeIdByAttributetTypeId("unknown")
+        self.assertEqual(None, id)
+
     def test_getAllSpecObjectTypeLongNames(self):
         self.loadExampleA()
         longNames = self.reqif.getAllSpecObjectTypeLongNames()
@@ -104,6 +107,9 @@ class TestReqif(unittest.TestCase):
         self.loadExampleA()
         id = self.reqif.findDatatypeIdByLongName("Text")
         self.assertEqual("_160c05f1-56bc-49a8-b098-a5aa79bafa8f", id)
+
+        id = self.reqif.findDatatypeIdByLongName("unknown")
+        self.assertEqual(None, id)
 
     def test_findDatatypeByLongName(self):
         self.loadExampleA()
@@ -143,11 +149,18 @@ class TestReqif(unittest.TestCase):
         self.assertFalse(self.reqif.checkAttributeIsEnumeration("_4acbb303-ae69-44b4-b8fb-1750b1b26e8a"))
         self.assertTrue(self.reqif.checkAttributeIsEnumeration("_80b51c6b-9152-47a2-b697-b4da03d34cd1"))
 
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsEnumeration(None)
+
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsEnumeration("unknown")
+
     def test_checkAttributeIsEnumerationByLongName(self):
         self.loadExampleA()
         specObjectTypeIds = self.reqif.getAllSpecObjectTypeIds()
         self.assertFalse(self.reqif.checkAttributeIsEnumerationByLongName(specObjectTypeIds[0], "ReqIF.Text"))
         self.assertTrue(self.reqif.checkAttributeIsEnumerationByLongName(specObjectTypeIds[0], "REQIF_type"))
+        self.assertFalse(self.reqif.checkAttributeIsEnumerationByLongName(specObjectTypeIds[0], "unknown"))
 
     def test_convertEnumerationValues(self):
         self.loadExampleA()
@@ -171,6 +184,7 @@ class TestReqif(unittest.TestCase):
         ids = self.reqif.getAllDocumentIds()
         specHierarchyId = self.reqif.findSpecHierarchyByRequirementId(ids[0], "_0f807d36-241f-4079-9e8a-ae6666c35931")
         self.assertEqual("_e8f9de75-ac3b-4257-b3a8-9f9131ce0a0f", specHierarchyId)
+        self.assertEqual(None, self.reqif.findSpecHierarchyByRequirementId(ids[0], "unknown"))
 
     def test_addRequirement(self):
         self.loadExampleA()
@@ -187,6 +201,7 @@ class TestReqif(unittest.TestCase):
     def test_findRequirementIdByLongName(self):
         self.loadExampleA()
         self.assertEqual("_0f807d36-241f-4079-9e8a-ae6666c35931", self.reqif.findRequirementIdByLongName("REQIF-17"))
+        self.assertEqual(None, self.reqif.findRequirementIdByLongName("unknown"))
 
     def test_findRequirementIdsByFieldValue(self):
         self.loadExampleA()
@@ -301,6 +316,9 @@ class TestReqif(unittest.TestCase):
         obj = self.reqif.getObject("_0f807d36-241f-4079-9e8a-ae6666c35931")
         self.assertEqual("_0f807d36-241f-4079-9e8a-ae6666c35931", obj.identifier)
 
+        with self.assertRaises(TypeError):
+            self.reqif.getObject("_0f807d36-241f-4079-9e8a-ae6666c35931", TReqz.reqif_req_if)
+
     def test_getAllDocumentRootRequirements(self):
         self.loadExampleB()
         rootRequirementIds = self.reqif.getAllDocumentRootRequirements(self.reqif.getAllDocumentIds()[0])
@@ -313,12 +331,19 @@ class TestReqif(unittest.TestCase):
         self.assertEqual([self.elemE, self.elemI], self.reqif.getRequirementChilds(documentId, self.elemD))
         self.assertEqual([self.elemG], self.reqif.getRequirementChilds(documentId, self.elemF))
         self.assertEqual([], self.reqif.getRequirementChilds(documentId, self.elemK))
+        self.assertEqual(None, self.reqif.getRequirementChilds(documentId, "unknown"))
 
     def test_getAttributeDefaultValue(self):
         print("TODO: the function getAttributeDefaultValue is currently not tested")
+        self.loadExampleB()
+        with self.assertRaises(RuntimeError):
+            self.reqif.getAttributeDefaultValue("unknownAttribute")
 
     def test_getAttributeDefaultValueByLongName(self):
         print("TODO: the function getAttributeDefaultValueByLongName is currently not tested")
+        self.loadExampleB()
+        with self.assertRaises(RuntimeError):
+            self.reqif.getAttributeDefaultValueByLongName("unknownSpecId","unknownAttribute")
 
     def test_checkAttributeIsInteger(self):
         self.loadExampleB()
@@ -327,6 +352,8 @@ class TestReqif(unittest.TestCase):
         self.assertTrue(self.reqif.checkAttributeIsInteger(self.reqif.findAttributeTypeIdByLongName(typeId, "integer_column")))
         with self.assertRaises(RuntimeError):
             self.reqif.checkAttributeIsInteger(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsInteger("unknown")
 
     def test_checkAttributeIsIntegerByLongName(self):
         self.loadExampleB()
@@ -342,6 +369,8 @@ class TestReqif(unittest.TestCase):
         self.assertTrue(self.reqif.checkAttributeIsString(self.reqif.findAttributeTypeIdByLongName(typeId, "string_column")))
         with self.assertRaises(RuntimeError):
             self.reqif.checkAttributeIsString(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsString("unknown_column")
 
     def test_checkAttributeIsStringByLongName(self):
         self.loadExampleB()
@@ -357,6 +386,8 @@ class TestReqif(unittest.TestCase):
         self.assertTrue(self.reqif.checkAttributeIsReal(self.reqif.findAttributeTypeIdByLongName(typeId, "real_column")))
         with self.assertRaises(RuntimeError):
             self.reqif.checkAttributeIsReal(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsReal("unknown_column")
 
     def test_checkAttributeIsRealByLongName(self):
         self.loadExampleB()
@@ -372,6 +403,8 @@ class TestReqif(unittest.TestCase):
         self.assertTrue(self.reqif.checkAttributeIsBoolean(self.reqif.findAttributeTypeIdByLongName(typeId, "bool_column")))
         with self.assertRaises(RuntimeError):
             self.reqif.checkAttributeIsBoolean(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsBoolean("unknown_column")
 
     def test_checkAttributeIsBooleanByLongName(self):
         self.loadExampleB()
@@ -387,6 +420,8 @@ class TestReqif(unittest.TestCase):
         self.assertTrue(self.reqif.checkAttributeIsDate(self.reqif.findAttributeTypeIdByLongName(typeId, "date_column")))
         with self.assertRaises(RuntimeError):
             self.reqif.checkAttributeIsDate(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsDate("unknown_column")
 
     def test_checkAttributeIsDateByLongName(self):
         self.loadExampleB()
@@ -409,3 +444,6 @@ class TestReqif(unittest.TestCase):
         self.assertTrue(self.reqif.checkAttributeIsXhtml(self.reqif.findAttributeTypeIdByLongName(typeId, "xhtml_column")))
         with self.assertRaises(RuntimeError):
             self.reqif.checkAttributeIsXhtml(self.reqif.findAttributeTypeIdByLongName(typeId, "unknown_column"))
+
+        with self.assertRaises(RuntimeError):
+            self.reqif.checkAttributeIsXhtml(self.reqif.findAttributeTypeIdByLongName(typeId, None))
