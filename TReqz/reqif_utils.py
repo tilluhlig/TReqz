@@ -5,7 +5,8 @@ from .. import TReqz
 import datetime
 import pytz
 import os
-
+from xml.sax.saxutils import quoteattr
+from xml.sax.saxutils import unescape
 
 class reqif_utils:
 
@@ -221,3 +222,15 @@ class reqif_utils:
             bool -- true = is valid, false = is not valid
         """
         return TReqz.xml_utils.validateXmlFile(filePath, os.path.dirname(__file__)+"/reqif.xsd")
+    
+    @staticmethod
+    def escapeAttribute(content:str)->str:
+        if content==None:
+            return None
+        return quoteattr(content).strip("\"")
+
+    @staticmethod
+    def unescapeAttribute(content:str)->str:
+        if content==None:
+            return None
+        return unescape(content)
