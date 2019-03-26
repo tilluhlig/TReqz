@@ -225,12 +225,28 @@ class reqif_utils:
     
     @staticmethod
     def escapeAttribute(content:str)->str:
+        """ escapes an attributes content
+        
+        Arguments:
+            content {str} -- the content that should be escaped
+        
+        Returns:
+            str -- the escaped content
+        """
         if content==None:
             return None
         return quoteattr(content).strip("\"")
 
     @staticmethod
     def unescapeAttribute(content:str)->str:
+        """ unescapes an attributes content
+        
+        Arguments:
+            content {str} -- the content that should be unescaped
+        
+        Returns:
+            str -- the unescaped content
+        """
         if content==None:
             return None
         return unescape(content)
