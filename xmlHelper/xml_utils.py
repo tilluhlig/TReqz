@@ -4,7 +4,6 @@ import xml.etree.ElementTree as ET
 import re
 import io
 import hashlib
-from .. import xmlHelper
 import datetime
 import pytz
 from lxml import etree
