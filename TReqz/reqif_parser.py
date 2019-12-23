@@ -9,7 +9,7 @@ class reqif_parser(TReqz.xml_parser):
         pass
 
     def parseFile(self, contentFile: str):
-        file = open(contentFile, "r")
+        file = open(contentFile, "r", encoding='utf-8')
         res = self.parse(file.read())
         file.close()
         return res
