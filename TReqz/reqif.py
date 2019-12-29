@@ -732,7 +732,7 @@ class reqif:
         return requirements
 
     def __checkIfRequirementValueExists(self, requirementId: str, attributeId: str):
-        """ check if the requireent value of <requirementId> exists, so it can be written
+        """ check if the requirement value of <requirementId> exists, so it can be written
 
         Arguments:
             requirementId {str} -- the requirement-id
