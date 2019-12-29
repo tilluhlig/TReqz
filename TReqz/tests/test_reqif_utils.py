@@ -42,6 +42,9 @@ class TestReqifUtils(unittest.TestCase):
 
         with self.assertRaises(Exception):
             TE.TReqz.reqif_utils.create_object_by_element_class('unknow_class', self.id_dict, '4')
+            
+        res = TE.TReqz.reqif_utils.create_object_by_element_class(None)
+        self.assertEqual(res, None)
 
     def test_generate_object_by_element_class(self):
         res = TE.TReqz.reqif_utils.generate_object_by_element_class(TE.ET.fromstring("<a></a>"), self.id_dict, '.', 'reqif_identifiable')
