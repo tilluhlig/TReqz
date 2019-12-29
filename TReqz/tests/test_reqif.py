@@ -258,12 +258,19 @@ class TestReqif(unittest.TestCase):
         self.reqif.setRequirementValues("_0f807d36-241f-4079-9e8a-ae6666c35931", {'REQIF_object_id': "newValue"})
         value = self.reqif.getRequirementValue("_0f807d36-241f-4079-9e8a-ae6666c35931", '_b5709b50-04fe-45be-9354-9246f6979a91')
         self.assertEqual("newValue", value)
+        
+        with self.assertRaises(RuntimeError):
+            self.reqif.setRequirementValues("_0f807d36-241f-4079-9e8a-ae6666c35931", {'unkownField': "newValue"})
 
     def test_setRequirementValue(self):
         self.loadExampleA()
         self.reqif.setRequirementValue("_0f807d36-241f-4079-9e8a-ae6666c35931", '_b5709b50-04fe-45be-9354-9246f6979a91', "newValue")
         value = self.reqif.getRequirementValue("_0f807d36-241f-4079-9e8a-ae6666c35931", '_b5709b50-04fe-45be-9354-9246f6979a91')
         self.assertEqual("newValue", value)
+        
+        self.reqif.setRequirementValue("_0f807d36-241f-4079-9e8a-ae6666c35931", '_b5709b50-04fe-45be-9354-9246f6979a91', "newValue2")
+        value = self.reqif.getRequirementValue("_0f807d36-241f-4079-9e8a-ae6666c35931", '_b5709b50-04fe-45be-9354-9246f6979a91')
+        self.assertEqual("newValue2", value)
 
     def test_setRequirementValueByAttributeLongName(self):
         self.loadExampleA()
@@ -447,3 +454,16 @@ class TestReqif(unittest.TestCase):
 
         with self.assertRaises(RuntimeError):
             self.reqif.checkAttributeIsXhtml(self.reqif.findAttributeTypeIdByLongName(typeId, None))
+            
+    def test_findFirstRequirementIdByFieldValue(self):
+        self.loadExampleA()
+        res = self.reqif.findFirstRequirementIdByFieldValue("REQIF_object_id", "REQIF-17")
+        self.assertEqual("_0f807d36-241f-4079-9e8a-ae6666c35931", res)
+        res = self.reqif.findFirstRequirementIdByFieldValue("REQIF_object_id", "unknown")
+        self.assertEqual(None, res)
+        
+    def test_checkIfRequirementValueExists(self):
+        self.loadExampleA()
+        self.assertTrue(self.reqif._reqif__checkIfRequirementValueExists("_0f807d36-241f-4079-9e8a-ae6666c35931", "_80b51c6b-9152-47a2-b697-b4da03d34cd1"))
+        self.assertFalse(self.reqif._reqif__checkIfRequirementValueExists("_0f807d36-241f-4079-9e8a-ae6666c35931", "unkownAttribute"))
+        
