@@ -183,7 +183,3 @@ class TestXmlUtils(unittest.TestCase):
                   ["AA A", "AA A"]]
         for value in values:
             self.assertEqual(xml_utils.normalizeXhtml(value[0]), value[1])
-
-
-if __name__ == '__main__':
-    unittest.main()

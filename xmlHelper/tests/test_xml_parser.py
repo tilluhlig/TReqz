@@ -28,6 +28,3 @@ class TestXmlParser(unittest.TestCase):
     def test_dumpToFile(self):
         with self.assertRaises(NotImplementedError):
             self.parser.dumpToFile("", "")
-
-if __name__ == '__main__':
-    unittest.main()

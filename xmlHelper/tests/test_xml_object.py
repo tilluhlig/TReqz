@@ -34,6 +34,3 @@ class TestXmlObject(unittest.TestCase):
     def test_encode(self):
         elem = self.xmlObject.encode()
         self.assertIsInstance(elem,Element)
-
-if __name__ == '__main__':
-    unittest.main()
