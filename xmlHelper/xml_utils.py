@@ -40,10 +40,10 @@ class xml_utils:
         if tag == None:
             return ""
 
-        name = re.split("{.*}", tag)
-        if len(name)>=2:
-            return name[1]
-        return tag
+        name = tag.split("}")
+        if len(name)<2:
+            return tag
+        return name[1]
 
     @staticmethod
     def get_tag_namespace(tag: str):
@@ -59,10 +59,10 @@ class xml_utils:
         if tag==None:
             tag = ""
 
-        namespace = re.match("{.*}", tag)
-        if namespace != None:
-            return namespace.group(0)
-        return ""
+        namespace = tag.split("}")
+        if namespace[0][0:1] != "{":
+            return ""
+        return namespace[0]+"}"
 
     @staticmethod
     def get_text_from_element(content: Element, element_path: str):
