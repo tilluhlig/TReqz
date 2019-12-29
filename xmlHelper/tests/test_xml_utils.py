@@ -66,6 +66,21 @@ class TestXmlUtils(unittest.TestCase):
 
         res = xml_utils.get_element(ET.fromstring("<a>abc<b>text</b></a>"), "./b/c")
         self.assertEqual(None, res)
+        
+    def test_get_elements(self):
+        res = xml_utils.get_elements(ET.fromstring("<a><b>text</b>abc</a>"), "./b")
+        self.assertEqual("b", res[0].tag)
+
+        res = xml_utils.get_elements(ET.fromstring("<a><b>text</b></a>"), ".")
+        self.assertEqual("a", res[0].tag)
+
+        res = xml_utils.get_elements(ET.fromstring("<a>abc<b>text</b></a>"), "./b/c")
+        self.assertEqual([], res)
+        
+        res = xml_utils.get_elements(ET.fromstring("<a><b>text</b><b>text2</b></a>"), "./b")
+        self.assertEqual("text", res[0].text)
+        self.assertEqual("text2", res[1].text)
+        self.assertEqual(2, len(res))
 
     def test_current_timestamp(self):
         firstTimestamp = xml_utils.current_timestamp()
