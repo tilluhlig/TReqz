@@ -97,6 +97,21 @@ class xml_utils:
         return elem
 
     @staticmethod
+    def get_elements(content: Element, element_path: str):
+        """ returns an element which is located on element_path (all matching elements)
+
+        Arguments:
+            content {Element} -- the root element
+            element_path {str} -- the requested path
+
+        Returns:
+            {Element[]} -- the elements
+        """
+
+        elements = content.findall(element_path)
+        return elements
+
+    @staticmethod
     def current_timestamp():
         """ returns the current timestamp
 
