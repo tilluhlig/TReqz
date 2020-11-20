@@ -1282,3 +1282,21 @@ class reqif:
                     return specObject.identifier
 
         return None
+    
+    def getDocumentSpecObjectTypeId(self, documentId:str)->str:
+        """ returns the specObjectType-Id of a specific document
+        
+        Arguments:
+            documentId {str} -- the document id
+        
+        Returns:
+            str -- the type ID
+        """
+        
+        specificationObject: TReqz.reqif_specification = self.getObject(documentId, TReqz.reqif_specification)
+        
+        if specificationObject == None:
+            return None
+        
+        typeId = specificationObject.type.identifier
+        return typeId
