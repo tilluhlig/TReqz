@@ -1348,3 +1348,46 @@ class reqif:
         for relation in self.__reqif_object.req_if_content.spec_relations:
             linksIds.append(relation.identifier)
         return linksIds
+
+    def getDocumentRequirementLevels(self, documentId):
+        def collectIds(specHierarchy: TReqz.reqif_spec_hierarchy, currentLevel:int):
+            requirements = dict()
+            currentSpecHierarchies = specHierarchy.children
+            for currentSpecHierarchie in currentSpecHierarchies:
+                requirements[currentSpecHierarchie.req_object.identifier] = currentLevel
+                
+                currentLevel=currentLevel+1
+                childs = collectIds(currentSpecHierarchie, currentLevel)
+                for key,value in childs.items():
+                    requirements[key] = value
+            return requirements
+
+        requirements = dict()
+        document = self.getObject(documentId)
+        for specification in document.children:
+            requirements[specification.req_object.identifier] = 1
+            childs = collectIds(specification, 1)
+            for key,value in childs.items():
+                requirements[key] = value
+        return requirements
+    
+    def getDocumentRequirementHierarchies(self, documentId):
+        def collectIds(specHierarchy: TReqz.reqif_spec_hierarchy):
+            requirements = dict()
+            currentSpecHierarchies = specHierarchy.children
+            for currentSpecHierarchie in currentSpecHierarchies:
+                requirements[currentSpecHierarchie.req_object.identifier] = currentSpecHierarchie
+                
+                childs = collectIds(currentSpecHierarchie)
+                for key,value in childs.items():
+                    requirements[key] = value
+            return requirements
+
+        requirements = dict()
+        document = self.getObject(documentId)
+        for specification in document.children:
+            requirements[specification.req_object.identifier] = specification
+            childs = collectIds(specification)
+            for key,value in childs.items():
+                requirements[key] = value
+        return requirements
