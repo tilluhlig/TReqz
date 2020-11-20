@@ -474,7 +474,7 @@ class TestReqif(unittest.TestCase):
         self.loadExampleA()
         ids = self.reqif.getAllDocumentIds()
         typeId = self.reqif.getDocumentSpecObjectTypeId(ids[0])
-        self.assertEqual("_d1c29c9a-ff71-4936-beac-14c5e4b2986a", typeId)
+        self.assertEqual("_63d2eb9d-0ed5-42ad-af40-7564803bdf4e", typeId)
         
     def test_getLinkIds(self):
         self.loadExampleA()
