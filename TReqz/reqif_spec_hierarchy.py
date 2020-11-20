@@ -26,8 +26,8 @@ class reqif_spec_hierarchy(TReqz.reqif_identifiable):
         self.editable_atts = TReqz.reqif_utils.generate_local_ref_list_from_elements_text(
             content, id_dict, "./{0}EDITABLE-ATTS".format(namespace))
 
-        self.is_editable = content.get("IS-EDITABLE")
-        self.is_table_internal = content.get("IS-TABLE-INTERNAL")
+        self.is_editable = content.get("IS-EDITABLE", "false")
+        self.is_table_internal = content.get("IS-TABLE-INTERNAL", "false")
 
     def encode(self):
         elem = super().encode()
