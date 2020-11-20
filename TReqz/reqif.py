@@ -424,7 +424,7 @@ class reqif:
         """ creates a new specHierachy-object
 
         Arguments:
-            documentId {str} -- the highe level document-id
+            documentId {str} -- the high level document-id
             requirementId {str} -- the requirement which should be arranged in the hierarchy
 
         Keyword Arguments:
