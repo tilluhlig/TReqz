@@ -922,7 +922,7 @@ class reqif:
             specObjectTypeId, attributeLongName)
         return self.getRequirementValue(requirementId, attributeTypeId, defaultValue)
 
-    def getRequirementValues(self, requirementId: str):
+    def getRequirementValues(self, requirementId: str, convertEnums: bool = False):
         """ returns all existing fields+values for a requirement
 
         Arguments:
@@ -941,7 +941,18 @@ class reqif:
         reqValues = dict()
         values = element.values
         for value in values:
-            reqValues[value.definition.long_name] = value.getValue()
+            val = value.getValue()
+            
+            if convertEnums == True:
+                if self.checkAttributeIsEnumeration(value.definition.identifier):
+                    valueMap = value.definition.getValueMap()
+                    newValue = []
+                    for v in val:
+                        if v != [] and v != None:
+                            newValue.append(valueMap.get(v))
+                    val = newValue
+            
+            reqValues[value.definition.long_name] = val
         return reqValues
 
     def getRequirementValuesByLongName(self, requirementLongName: str):
