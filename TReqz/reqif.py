@@ -1331,7 +1331,9 @@ class reqif:
         if specificationObject == None:
             return None
         
-        typeId = specificationObject.type.identifier
+        if len(specificationObject.children)==0:
+            return None
+        typeId = specificationObject.children[0].req_object.type.identifier
         return typeId
     
     def getLinkIds(self)->list:
