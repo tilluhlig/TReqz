@@ -979,6 +979,28 @@ class reqif:
             raise TypeError("reqif_spec_object is required")
 
         return element
+    
+    def getObjects(self, objectIds: list, requiredType=None)->list:
+        """ converts a list of object-ids into a list of reqif objects
+
+        Arguments:
+            objectIds {list} -- the object-id's
+
+        Keyword Arguments:
+            requiredType {__class__} -- an optional required result type (default: {None})
+
+        Raises:
+            TypeError -- raises an error if the objectId doesn't belongs to the requiredType
+
+        Returns:
+            {list} -- a list that contains the objects/None
+        """
+        resolvedObjects = list()
+        
+        for identifier in objectIds:
+            resolvedObjects.append(self.getObject(identifier, requiredType))
+        
+        return resolvedObjects
 
     def getAllDocumentRootRequirements(self, documentId:str)->list:
         """ returns all root requirements of a specific document
@@ -1300,3 +1322,16 @@ class reqif:
         
         typeId = specificationObject.type.identifier
         return typeId
+    
+    def getLinkIds(self)->list:
+        """ returns all available links/relations
+        
+        Returns:
+            list -- the object id's of the links
+        """
+        
+        linksIds = list()
+        
+        for relation in self.__reqif_object.req_if_content.spec_relations:
+            linksIds.append(relation.identifier)
+        return linksIds

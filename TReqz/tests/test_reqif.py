@@ -27,6 +27,9 @@ class TestReqif(unittest.TestCase):
         self.elemJ = self.reqif.findRequirementsByFieldValue("name", "J")[0].identifier
         self.elemK = self.reqif.findRequirementsByFieldValue("name", "K")[0].identifier
 
+    def loadExampleC(self):
+        self.reqif.parseFile(self.localPath+"/../examples/exampleC/exampleC.reqif")
+
     def test_getHeader(self):
         self.loadExampleA()
         header = self.reqif.getHeader()
@@ -471,5 +474,19 @@ class TestReqif(unittest.TestCase):
         self.loadExampleA()
         ids = self.reqif.getAllDocumentIds()
         typeId = self.reqif.getDocumentSpecObjectTypeId(ids[0])
-        print(typeId)
         self.assertEqual("_d1c29c9a-ff71-4936-beac-14c5e4b2986a", typeId)
+        
+    def test_getLinkIds(self):
+        self.loadExampleA()
+        linkIds = self.reqif.getLinkIds()
+        self.assertEqual([], linkIds)
+        
+        self.loadExampleC()
+        linkIds = self.reqif.getLinkIds()
+        self.assertEqual(["_vttR8CspEeujw8WgJ8uMvQ"], linkIds)
+
+    def test_getObjects(self):
+        self.loadExampleA()
+        obj = self.reqif.getObjects(["_0f807d36-241f-4079-9e8a-ae6666c35931", "_80b51c6b-9152-47a2-b697-b4da03d34cd1"])
+        self.assertEqual("_0f807d36-241f-4079-9e8a-ae6666c35931", obj[0].identifier)
+        self.assertEqual("_80b51c6b-9152-47a2-b697-b4da03d34cd1", obj[1].identifier)
