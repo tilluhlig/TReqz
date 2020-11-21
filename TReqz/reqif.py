@@ -1391,3 +1391,27 @@ class reqif:
             for key,value in childs.items():
                 requirements[key] = value
         return requirements
+    
+    def addAttributeString(self, longName:str, defaultValue:str=None, maxLength:int = None)->str:
+        pass
+    
+    def addAttributeInteger(self, longName:str, defaultValue:str=None, min:str=None, max:str=None)->str:
+        pass
+    
+    def addAttributeReal(self, longName:str, defaultValue:str=None, min:str=None, max:str=None, accuracy:str=None)->str:
+        pass
+    
+    def addAttributeDate(self, longName:str, defaultValue:str=None)->str:
+        pass
+    
+    def addAttributeBool(self, longName:str, defaultValue:str=None)->str:
+        pass
+    
+    def addAttributeEnumeration(self, longName:str, values:dict, defaultValue:list=None)->str:
+        pass
+    
+    def addAttributeXhtml(self, longName:str, defaultValue:str=None)->str:
+        pass
+    
+    def addLink(self, fromReqId:str, toReqId:str):
+        pass
