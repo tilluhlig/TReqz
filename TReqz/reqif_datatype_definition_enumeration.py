@@ -16,10 +16,28 @@ class reqif_datatype_definition_enumeration(TReqz.reqif_datatype_definition):
 
         elem: Element = content.find("./{0}SPECIFIED-VALUES".format(namespace))
         self.specified_values: list = list()
+        
+        existingKeys = set()
+        
         if elem != None:
             valueElements = list(elem)
             for elem in valueElements:
                 newElem = TReqz.reqif_enum_value(elem, id_dict)
+                
+                currentKey = None
+                if newElem != None and newElem.embedded_value != None:
+                    currentKey = int(newElem.embedded_value.key)
+                
+                if currentKey in existingKeys:
+                    # this key still exists... shall be unique in the enumeration
+                    currentKey = max(existingKeys)+1
+                    
+                    if newElem != None and newElem.embedded_value != None:
+                        newElem.embedded_value.key = str(currentKey)
+                    
+                if currentKey != None:
+                    existingKeys.add(currentKey)
+                
                 self.specified_values.append(newElem)
 
     def encode(self):
