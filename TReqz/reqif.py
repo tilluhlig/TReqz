@@ -695,12 +695,7 @@ class reqif:
         requirements = dict()
         document = self.getObject(documentId)
         for specification in document.children:
-            #currentSpecHierarchies = list()+specification.children
             requirements[specification.req_object.identifier] = collectIds(specification)
-
-            #for currentSpecHierarchie in currentSpecHierarchies:
-            #    requirements[currentSpecHierarchie.req_object.identifier] = collectIds(
-            #        currentSpecHierarchie)
         return requirements
 
     def getHierarchicalRequirementIds(self):
@@ -721,14 +716,8 @@ class reqif:
         requirements = dict()
         specifications = self.__reqif_object.req_if_content.specifications
         for specification in specifications:
-            #currentSpecHierarchies = list()+specification.children
-            #requirements+=[specification.req_object.identifier]
             first = specification.children[0] #### is this correct? looks very creepy
             requirements[first.req_object.identifier] = collectIds(first)
-
-            #for currentSpecHierarchie in currentSpecHierarchies:
-            #    requirements[currentSpecHierarchie.req_object.identifier] = collectIds(
-            #        currentSpecHierarchie)
         return requirements
 
     def __checkIfRequirementValueExists(self, requirementId: str, attributeId: str):
@@ -1353,10 +1342,12 @@ class reqif:
         def collectIds(specHierarchy: TReqz.reqif_spec_hierarchy, currentLevel:int):
             requirements = dict()
             currentSpecHierarchies = specHierarchy.children
+            requirements[specHierarchy.req_object.identifier] = currentLevel
+            currentLevel=currentLevel+1
+                
             for currentSpecHierarchie in currentSpecHierarchies:
                 requirements[currentSpecHierarchie.req_object.identifier] = currentLevel
                 
-                currentLevel=currentLevel+1
                 childs = collectIds(currentSpecHierarchie, currentLevel)
                 for key,value in childs.items():
                     requirements[key] = value
@@ -1366,7 +1357,7 @@ class reqif:
         document = self.getObject(documentId)
         for specification in document.children:
             requirements[specification.req_object.identifier] = 1
-            childs = collectIds(specification, 1)
+            childs = collectIds(specification, 2)
             for key,value in childs.items():
                 requirements[key] = value
         return requirements
