@@ -1345,9 +1345,7 @@ class reqif:
             requirements[specHierarchy.req_object.identifier] = currentLevel
             currentLevel=currentLevel+1
                 
-            for currentSpecHierarchie in currentSpecHierarchies:
-                requirements[currentSpecHierarchie.req_object.identifier] = currentLevel
-                
+            for currentSpecHierarchie in currentSpecHierarchies:                
                 childs = collectIds(currentSpecHierarchie, currentLevel)
                 for key,value in childs.items():
                     requirements[key] = value
