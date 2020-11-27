@@ -619,6 +619,7 @@ class reqif:
 
     def getAllDocumentRequirementIds(self, documentId):
         """ returns a list which contains all existing requirement-id's of a document <documentId>
+        (not related to the hierarchical order in the document)
 
         Returns:
             {list<str>} -- the requirement-id's
@@ -641,6 +642,7 @@ class reqif:
 
     def getAllRequirementIds(self):
         """ returns a list which contains all existing requirement-id's
+        (not related to the hierarchical order in the document)
 
         Returns:
             {list<str>} -- the requirement-id's
@@ -1338,7 +1340,15 @@ class reqif:
             linksIds.append(relation.identifier)
         return linksIds
 
-    def getDocumentRequirementLevels(self, documentId):
+    def getDocumentRequirementLevels(self, documentId:str)->dict:
+        """ generates a dict, that contains the identifier of the document reqs and their level information
+
+        Args:
+            documentId (str): a document id
+        
+        Returns:
+            dict<str, int> -- the level map
+        """        
         def collectIds(specHierarchy: TReqz.reqif_spec_hierarchy, currentLevel:int):
             requirements = dict()
             currentSpecHierarchies = specHierarchy.children
@@ -1360,7 +1370,15 @@ class reqif:
                 requirements[key] = value
         return requirements
     
-    def getDocumentRequirementHierarchies(self, documentId):
+    def getDocumentRequirementHierarchies(self, documentId:str)->dict:
+        """ generates a dict, that contains the identifier of the document reqs and their related hierarchy-objects
+
+        Args:
+            documentId (str): a document id
+        
+        Returns:
+            dict<str, specHierarchy> -- the hierarchy map
+        """        
         def collectIds(specHierarchy: TReqz.reqif_spec_hierarchy):
             requirements = dict()
             currentSpecHierarchies = specHierarchy.children
