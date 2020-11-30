@@ -1364,8 +1364,7 @@ class reqif:
         requirements = dict()
         document = self.getObject(documentId)
         for specification in document.children:
-            requirements[specification.req_object.identifier] = 1
-            childs = collectIds(specification, 2)
+            childs = collectIds(specification, 0)
             for key,value in childs.items():
                 requirements[key] = value
         return requirements
