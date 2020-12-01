@@ -121,3 +121,6 @@ class TestReqifUtils(unittest.TestCase):
     def test_validateReqifFile(self):
         self.assertTrue(TE.TReqz.reqif_utils.validateReqifFile(os.path.dirname(__file__)+'/../examples/exampleA/Test_000977e1.reqif'))
         self.assertFalse(TE.TReqz.reqif_utils.validateReqifFile(os.path.dirname(__file__)+'/../examples/exampleA/unknownFile.reqif'))
+        
+    def test_get_create_local_ref_from_element_text(self):
+        self.fail()
