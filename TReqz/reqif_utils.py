@@ -136,6 +136,37 @@ class reqif_utils:
         return id
 
     @staticmethod
+    def get_create_local_ref_from_element_text(content: Element, id_dict: TReqz.reqif_id_dict, element_path: str):
+        """ returns the referenced object of an element (element_path) and creates an anonymous object
+            if the element doesn't exist
+
+        Arguments:
+            content {Element} -- the root element
+            id_dict {TReqz.reqif_id_dict} -- the id dict
+            element_path {str} -- the relative element path
+
+        Returns:
+            {reqif_identifiable} -- the object or None
+        """
+        elem: Element = content.find(element_path)
+
+        if elem == None:
+            print("can't find the parent: "+element_path)
+            return None
+
+        object = id_dict.get(elem.text)
+
+        if object == None:
+            # create element
+            newObject = TReqz.reqif_identifiable()
+            newObject.identifier = elem.text
+
+            id_dict.add(newObject)
+            return newObject
+
+        return object
+        
+    @staticmethod
     def generate_object_list_by_element_class(content: Element, id_dict: TReqz.reqif_id_dict, elements_parent_path: str, typeList: dict):
         """ generates a bulk of objects by a list of possible object classes (the keys are the tags which are mapped to classes)
 

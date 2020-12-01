@@ -19,9 +19,9 @@ class reqif_spec_relation(TReqz.reqif_identifiable):
         self.values = TReqz.reqif_utils.generate_object_list_by_element_class(
             content, id_dict, "./{0}VALUES".format(namespace), TReqz.reqif_config.ATTRIBUTE_VALUE_TAG_TO_CLASS)
 
-        self.source = TReqz.reqif_utils.get_local_ref_from_element_text(
+        self.source = TReqz.reqif_utils.get_create_local_ref_from_element_text(
             content, id_dict, "./{0}SOURCE/{0}SPEC-OBJECT-REF".format(namespace))
-        self.target = TReqz.reqif_utils.get_local_ref_from_element_text(
+        self.target = TReqz.reqif_utils.get_create_local_ref_from_element_text(
             content, id_dict, "./{0}TARGET/{0}SPEC-OBJECT-REF".format(namespace))
         self.type = TReqz.reqif_utils.get_local_ref_from_element_text(
             content, id_dict, "./{0}TYPE/{0}SPEC-RELATION-TYPE-REF".format(namespace))
