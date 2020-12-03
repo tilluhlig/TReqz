@@ -1341,7 +1341,7 @@ class reqif:
         return linksIds
 
     def getDocumentRequirementLevels(self, documentId:str)->dict:
-        """ generates a dict, that contains the identifier of the document reqs and their level information
+        """ generates a dict, that contains the identifier of the document reqs and their level information (zero based)
 
         Args:
             documentId (str): a document id
