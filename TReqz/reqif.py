@@ -1420,22 +1420,92 @@ class reqif:
         return newAttribute.identifier
     
     def addAttributeInteger(self, specObjectTypeId:str, longName:str, defaultValue:str=None, min:str=None, max:str=None, datatypeId:str = None, attributeId:str = None)->str:
-        pass
+        # create datatype
+        datatypes = self.__reqif_object.req_if_content.datatypes
+
+        idDict = self.__reqif_object.getIdDict()
+        newDatatype = reqif_utils.create_object_by_element_class(type="reqif_datatype_definition_integer", id_dict=idDict, identifier=datatypeId)
+        newDatatype.fill(long_name=longName, min=min, max=max)
+        datatypes.append(newDatatype)
+        
+        # create attribute
+        newAttribute = reqif_utils.create_object_by_element_class(type="reqif_attribute_definition_integer", id_dict=idDict, identifier=attributeId)
+        newAttribute.fill(long_name=longName, default_value=defaultValue, type=newDatatype)
+        
+        specObjectType = self.getObject(specObjectTypeId)
+        specObjectType.spec_attributes.append(newAttribute)
+        return newAttribute.identifier
     
     def addAttributeReal(self, specObjectTypeId:str, longName:str, defaultValue:str=None, min:str=None, max:str=None, accuracy:str=None, datatypeId:str = None, attributeId:str = None)->str:
-        pass
+          # create datatype
+        datatypes = self.__reqif_object.req_if_content.datatypes
+
+        idDict = self.__reqif_object.getIdDict()
+        newDatatype = reqif_utils.create_object_by_element_class(type="reqif_datatype_definition_real", id_dict=idDict, identifier=datatypeId)
+        newDatatype.fill(long_name=longName, min=min, max=max, accuracy=accuracy)
+        datatypes.append(newDatatype)
+        
+        # create attribute
+        newAttribute = reqif_utils.create_object_by_element_class(type="reqif_attribute_definition_real", id_dict=idDict, identifier=attributeId)
+        newAttribute.fill(long_name=longName, default_value=defaultValue, type=newDatatype)
+        
+        specObjectType = self.getObject(specObjectTypeId)
+        specObjectType.spec_attributes.append(newAttribute)
+        return newAttribute.identifier
     
     def addAttributeDate(self, specObjectTypeId:str, longName:str, defaultValue:str=None, datatypeId:str = None, attributeId:str = None)->str:
-        pass
+        # create datatype
+        datatypes = self.__reqif_object.req_if_content.datatypes
+
+        idDict = self.__reqif_object.getIdDict()
+        newDatatype = reqif_utils.create_object_by_element_class(type="reqif_datatype_definition_date", id_dict=idDict, identifier=datatypeId)
+        newDatatype.fill(long_name=longName)
+        datatypes.append(newDatatype)
+        
+        # create attribute
+        newAttribute = reqif_utils.create_object_by_element_class(type="reqif_attribute_definition_date", id_dict=idDict, identifier=attributeId)
+        newAttribute.fill(long_name=longName, default_value=defaultValue, type=newDatatype)
+        
+        specObjectType = self.getObject(specObjectTypeId)
+        specObjectType.spec_attributes.append(newAttribute)
+        return newAttribute.identifier
     
     def addAttributeBool(self, specObjectTypeId:str, longName:str, defaultValue:str=None, datatypeId:str = None, attributeId:str = None)->str:
-        pass
+        # create datatype
+        datatypes = self.__reqif_object.req_if_content.datatypes
+
+        idDict = self.__reqif_object.getIdDict()
+        newDatatype = reqif_utils.create_object_by_element_class(type="reqif_datatype_definition_boolean", id_dict=idDict, identifier=datatypeId)
+        newDatatype.fill(long_name=longName)
+        datatypes.append(newDatatype)
+        
+        # create attribute
+        newAttribute = reqif_utils.create_object_by_element_class(type="reqif_attribute_definition_boolean", id_dict=idDict, identifier=attributeId)
+        newAttribute.fill(long_name=longName, default_value=defaultValue, type=newDatatype)
+        
+        specObjectType = self.getObject(specObjectTypeId)
+        specObjectType.spec_attributes.append(newAttribute)
+        return newAttribute.identifier
     
     def addAttributeEnumeration(self, specObjectTypeId:str, longName:str, values:dict, defaultValue:list=None, datatypeId:str = None, attributeId:str = None)->str:
         pass
     
     def addAttributeXhtml(self, specObjectTypeId:str, longName:str, defaultValue:str=None, datatypeId:str = None, attributeId:str = None)->str:
-        pass
+        # create datatype
+        datatypes = self.__reqif_object.req_if_content.datatypes
+
+        idDict = self.__reqif_object.getIdDict()
+        newDatatype = reqif_utils.create_object_by_element_class(type="reqif_datatype_definition_xhtml", id_dict=idDict, identifier=datatypeId)
+        newDatatype.fill(long_name=longName)
+        datatypes.append(newDatatype)
+        
+        # create attribute
+        newAttribute = reqif_utils.create_object_by_element_class(type="reqif_attribute_definition_xhtml", id_dict=idDict, identifier=attributeId)
+        newAttribute.fill(long_name=longName, default_value=defaultValue, type=newDatatype)
+        
+        specObjectType = self.getObject(specObjectTypeId)
+        specObjectType.spec_attributes.append(newAttribute)
+        return newAttribute.identifier
     
     def addLink(self, specObjectTypeId:str, fromReqId:str, toReqId:str):
         pass
