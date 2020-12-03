@@ -1402,7 +1402,7 @@ class reqif:
                 requirements[key] = value
         return requirements
     
-    def addAttributeString(self, specObjectTypeId: str, longName:str, defaultValue:str=None, maxLength:int = None, datatypeId:str = None, attributeId:str = None)->str:
+    def addAttributeString(self, specObjectTypeId: str, longName:str, defaultValue:str=None, maxLength:str = None, datatypeId:str = None, attributeId:str = None)->str:
         # create datatype
         datatypes = self.__reqif_object.req_if_content.datatypes
 

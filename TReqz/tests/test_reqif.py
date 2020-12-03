@@ -497,7 +497,7 @@ class TestReqif(unittest.TestCase):
         self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["data"])
         self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), "unknownValue")
         
-        newStringColumn = self.reqif.addAttributeString(typeId,"newColumn", "myDefaultValue", 999)
+        newStringColumn = self.reqif.addAttributeString(typeId,"newColumn", "myDefaultValue", "999")
         self.assertNotEqual(newStringColumn, None)
         
         self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["data"])
