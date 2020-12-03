@@ -798,6 +798,10 @@ class reqif:
         Raises:
             TypeError -- raises an error if the requirement-id doesn't belongs to an requirement-object
         """
+        
+        if attributeId == None:
+            # invalid/unknown attribute
+            return
 
         valueAlreadyExists: bool = self.__checkIfRequirementValueExists(
             requirementId, attributeId)
@@ -1398,26 +1402,40 @@ class reqif:
                 requirements[key] = value
         return requirements
     
-    def addAttributeString(self, longName:str, defaultValue:str=None, maxLength:int = None)->str:
+    def addAttributeString(self, specObjectTypeId: str, longName:str, defaultValue:str=None, maxLength:int = None)->str:
+        # create datatype
+        datatypes = self.__reqif_object.req_if_content.datatypes
+
+        idDict = self.__reqif_object.getIdDict()
+        newDatatype = reqif_utils.create_object_by_element_class(type="reqif_datatype_definition_string", id_dict=idDict, identifier=None)
+        newDatatype.fill(long_name=longName, max_length=maxLength)
+        datatypes.append(newDatatype)
+        
+        # create attribute
+        newAttribute = reqif_utils.create_object_by_element_class(type="reqif_attribute_definition_string", id_dict=idDict, identifier=None)
+        newAttribute.fill(long_name=longName, default_value=defaultValue, type=newDatatype)
+        
+        specObjectType = self.getObject(specObjectTypeId)
+        specObjectType.spec_attributes.append(newAttribute)
+        return newAttribute.identifier
+    
+    def addAttributeInteger(self, specObjectTypeId:str, longName:str, defaultValue:str=None, min:str=None, max:str=None)->str:
         pass
     
-    def addAttributeInteger(self, longName:str, defaultValue:str=None, min:str=None, max:str=None)->str:
+    def addAttributeReal(self, specObjectTypeId:str, longName:str, defaultValue:str=None, min:str=None, max:str=None, accuracy:str=None)->str:
         pass
     
-    def addAttributeReal(self, longName:str, defaultValue:str=None, min:str=None, max:str=None, accuracy:str=None)->str:
+    def addAttributeDate(self, specObjectTypeId:str, longName:str, defaultValue:str=None)->str:
         pass
     
-    def addAttributeDate(self, longName:str, defaultValue:str=None)->str:
+    def addAttributeBool(self, specObjectTypeId:str, longName:str, defaultValue:str=None)->str:
         pass
     
-    def addAttributeBool(self, longName:str, defaultValue:str=None)->str:
+    def addAttributeEnumeration(self, specObjectTypeId:str, longName:str, values:dict, defaultValue:list=None)->str:
         pass
     
-    def addAttributeEnumeration(self, longName:str, values:dict, defaultValue:list=None)->str:
+    def addAttributeXhtml(self, specObjectTypeId:str, longName:str, defaultValue:str=None)->str:
         pass
     
-    def addAttributeXhtml(self, longName:str, defaultValue:str=None)->str:
-        pass
-    
-    def addLink(self, fromReqId:str, toReqId:str):
+    def addLink(self, specObjectTypeId:str, fromReqId:str, toReqId:str):
         pass

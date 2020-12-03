@@ -490,3 +490,36 @@ class TestReqif(unittest.TestCase):
         obj = self.reqif.getObjects(["_0f807d36-241f-4079-9e8a-ae6666c35931", "_80b51c6b-9152-47a2-b697-b4da03d34cd1"])
         self.assertEqual("_0f807d36-241f-4079-9e8a-ae6666c35931", obj[0].identifier)
         self.assertEqual("_80b51c6b-9152-47a2-b697-b4da03d34cd1", obj[1].identifier)
+        
+    def test_addAttributeString(self):
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["data"])
+        self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), "unknownValue")
+        
+        newStringColumn = self.reqif.addAttributeString(typeId,"newColumn", "myDefaultValue", 999)
+        self.assertNotEqual(newStringColumn, None)
+        
+        self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["data"])
+        self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), ["data"])
+        
+    def test_addAttributeInteger(self):
+        self.fail()
+        
+    def test_addAttributeReal(self):
+        self.fail()
+        
+    def test_addAttributeDate(self):
+        self.fail()
+        
+    def test_addAttributeBool(self):
+        self.fail()
+        
+    def test_addAttributeEnumeration(self):
+        self.fail()
+        
+    def test_addAttributeXhtml(self):
+        self.fail()
+        
+    def test_addLink(self):
+        self.fail()
