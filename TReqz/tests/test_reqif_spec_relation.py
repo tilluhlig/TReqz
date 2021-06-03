@@ -11,8 +11,8 @@ class TestReqifSpecRelation(unittest.TestCase):
 
     def test_decode(self):
         TE.utils.testDecodeIdentifiableAttributes(self, self.obj)
-        TE.utils.testDecodeLocalRefFromElementText(self, self.obj, "<SOURCE><SPEC-OBJECT-REF>1</SPEC-OBJECT-REF></SOURCE>", "source", "1")
-        TE.utils.testDecodeLocalRefFromElementText(self, self.obj, "<TARGET><SPEC-OBJECT-REF>1</SPEC-OBJECT-REF></TARGET>", "target", "1")
+        TE.utils.testDecodeCreateLocalRefFromElementText(self, self.obj, "<SOURCE><SPEC-OBJECT-REF>1</SPEC-OBJECT-REF></SOURCE>", "source", "1")
+        TE.utils.testDecodeCreateLocalRefFromElementText(self, self.obj, "<TARGET><SPEC-OBJECT-REF>1</SPEC-OBJECT-REF></TARGET>", "target", "1")
         TE.utils.testDecodeLocalRefFromElementText(self, self.obj, "<TYPE><SPEC-RELATION-TYPE-REF>1</SPEC-RELATION-TYPE-REF></TYPE>", "type", "1")
 
         for TAG, CLASS in TE.TReqz.reqif_config.ATTRIBUTE_VALUE_TAG_TO_CLASS.items():
