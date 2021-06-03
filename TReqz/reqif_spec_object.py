@@ -23,9 +23,10 @@ class reqif_spec_object(TReqz.reqif_identifiable):
         # add missing columns that contains default values
         availableColumns = {}
         for value in self.values:
-            availableColumns[value.definition.long_name] = 1
+            if value.definition != None:
+                availableColumns[value.definition.long_name] = 1
         
-        if self.type != None:
+        if self.type != None and hasattr(self.type, 'spec_attributes') and self.type.spec_attributes != None:
             for elem in self.type.spec_attributes:
                 if availableColumns.get(elem.long_name) == None and elem.default_value != None and elem.default_value != []:
                     if isinstance(elem.default_value, list):
