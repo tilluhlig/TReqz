@@ -33,6 +33,12 @@ class utils:
         obj.fill(**{reqifAttributeName:None})
         
     @staticmethod
+    def testDecodeCreateLocalRefFromElementText(self, obj, xmlContent:str, reqifAttributeName:str, testIdentifier:str):
+        id_dict = TReqz.reqif_id_dict()
+        utils.decodeObj(obj, "<"+obj.name+">"+xmlContent+"</"+obj.name+">", id_dict)
+        self.assertEqual(testIdentifier, obj.get(reqifAttributeName).identifier)
+        
+    @staticmethod
     def testDecodeObjectByElementClass(self, obj, xmlContent:str, reqifAttributeName:str, objectClassName):
         id_dict = TReqz.reqif_id_dict()
         utils.decodeObj(obj, "<"+obj.name+">"+xmlContent+"</"+obj.name+">", id_dict)
