@@ -123,4 +123,9 @@ class TestReqifUtils(unittest.TestCase):
         self.assertFalse(TE.TReqz.reqif_utils.validateReqifFile(os.path.dirname(__file__)+'/../examples/exampleA/unknownFile.reqif'))
         
     def test_get_create_local_ref_from_element_text(self):
-        self.fail()
+        res = TE.TReqz.reqif_utils.get_create_local_ref_from_element_text(TE.ET.fromstring("<a><b>0</b></a>"), self.id_dict, './b')
+        self.assertEqual(self.id_dict.get('0'), res)
+        
+        res = TE.TReqz.reqif_utils.get_create_local_ref_from_element_text(TE.ET.fromstring("<a><b>5</b></a>"), self.id_dict, './b')
+        self.assertEqual('5', res.identifier)
+        self.assertEqual(self.id_dict.get('5'), res)
