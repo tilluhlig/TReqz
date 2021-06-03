@@ -513,22 +513,73 @@ class TestReqif(unittest.TestCase):
         self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), ["data"])
         
     def test_addAttributeInteger(self):
-        self.skipTest("not implemented")
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["data"])
+        self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), "unknownValue")
+        
+        newIntegerColumn = self.reqif.addAttributeInteger(typeId,"newColumn", "666")
+        self.assertNotEqual(newIntegerColumn, None)
+        
+        self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["777"])
+        self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), ["777"])
         
     def test_addAttributeReal(self):
-        self.skipTest("not implemented")
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["data"])
+        self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), "unknownValue")
+        
+        newRealColumn = self.reqif.addAttributeReal(typeId,"newColumn", "666")
+        self.assertNotEqual(newRealColumn, None)
+        
+        self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["777"])
+        self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), ["777"])
         
     def test_addAttributeDate(self):
-        self.skipTest("not implemented")
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["data"])
+        self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), "unknownValue")
+        
+        newDateColumn = self.reqif.addAttributeDate(typeId,"newColumn", "666")
+        self.assertNotEqual(newDateColumn, None)
+        
+        self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["777"])
+        self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), ["777"])
         
     def test_addAttributeBool(self):
-        self.skipTest("not implemented")
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["data"])
+        self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), "unknownValue")
+        
+        newBoolColumn = self.reqif.addAttributeBool(typeId,"newColumn", True)
+        self.assertNotEqual(newBoolColumn, None)
+        
+        self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", [False])
+        self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), [False])
         
     def test_addAttributeEnumeration(self):
         self.skipTest("not implemented")
         
     def test_addAttributeXhtml(self):
-        self.skipTest("not implemented")
+        self.loadExampleB()
+        typeId = self.reqif.getAllSpecObjectTypeIds()[0]
+        self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["data"])
+        self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), "unknownValue")
+        
+        newXhtmlColumn = self.reqif.addAttributeXhtml(typeId,"newColumn", "myDefaultValue", "999")
+        self.assertNotEqual(newXhtmlColumn, None)
+        
+        self.reqif.setRequirementValueByAttributeLongName(self.elemA, "newColumn", ["data"])
+        self.assertEqual(self.reqif.getRequirementValueByAttributeLongName(self.elemA, "newColumn", "unknownValue"), ["data"])
         
     def test_addLink(self):
+        self.skipTest("not implemented")
+        
+    def test_getDocumentRequirementLevels(self):
+        self.skipTest("not implemented")
+
+    def test_getDocumentRequirementHierarchies(self):
         self.skipTest("not implemented")
