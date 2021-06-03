@@ -25,12 +25,13 @@ class reqif_spec_object(TReqz.reqif_identifiable):
         for value in self.values:
             availableColumns[value.definition.long_name] = 1
         
-        for elem in self.type.spec_attributes:
-            if availableColumns.get(elem.long_name) == None and elem.default_value != None and elem.default_value != []:
-                if isinstance(elem.default_value, list):
-                    self.values.append(elem.default_value[0])
-                else:
-                    self.values.append(elem.default_value)
+        if self.type != None:
+            for elem in self.type.spec_attributes:
+                if availableColumns.get(elem.long_name) == None and elem.default_value != None and elem.default_value != []:
+                    if isinstance(elem.default_value, list):
+                        self.values.append(elem.default_value[0])
+                    else:
+                        self.values.append(elem.default_value)
 
     def encode(self):
         elem = super().encode()
