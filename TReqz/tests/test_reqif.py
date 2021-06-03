@@ -579,7 +579,13 @@ class TestReqif(unittest.TestCase):
         self.skipTest("not implemented")
         
     def test_getDocumentRequirementLevels(self):
-        self.skipTest("not implemented")
+        self.loadExampleB()
+        ids = self.reqif.getAllDocumentIds()
+        levels = self.reqif.getDocumentRequirementLevels(ids[0])
+        self.assertEqual(levels, {'_apqEkDdVEemgD_0_pe4g2g': 0, '_sLYskDduEemqJOD1V983aw': 0, '_to5zcDduEemqJOD1V983aw': 0, '_t6AxkDduEemqJOD1V983aw': 0, '_8DZuIDduEemqJOD1V983aw': 1, '_-Ev60DduEemqJOD1V983aw': 2, '_-_GqQDduEemqJOD1V983aw': 3, '_-c8_cDduEemqJOD1V983aw': 2, '_8uFC0DduEemqJOD1V983aw': 1, '_9rQcwDduEemqJOD1V983aw': 2, '_LLFe8DdvEemqJOD1V983aw': 0})
 
     def test_getDocumentRequirementHierarchies(self):
-        self.skipTest("not implemented")
+        self.loadExampleB()
+        ids = self.reqif.getAllDocumentIds()
+        hierarchie = self.reqif.getDocumentRequirementHierarchies(ids[0])
+        self.assertEqual(list(hierarchie.keys()), ['_apqEkDdVEemgD_0_pe4g2g', '_sLYskDduEemqJOD1V983aw', '_to5zcDduEemqJOD1V983aw', '_t6AxkDduEemqJOD1V983aw', '_8DZuIDduEemqJOD1V983aw', '_-Ev60DduEemqJOD1V983aw', '_-_GqQDduEemqJOD1V983aw', '_-c8_cDduEemqJOD1V983aw', '_8uFC0DduEemqJOD1V983aw', '_9rQcwDduEemqJOD1V983aw', '_LLFe8DdvEemqJOD1V983aw'])
