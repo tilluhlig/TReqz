@@ -42,6 +42,9 @@ class TestReqif(unittest.TestCase):
     def test_parseFile(self):
         self.loadExampleA()
         self.assertIsNotNone(self.reqif.getReqifContainer())
+        
+        self.reqif2 = TReqz.reqif(self.localPath+"/../examples/exampleA/Test_000977e1.reqif")
+        self.assertIsNotNone(self.reqif2.getReqifContainer())
 
     def test_dumpToFile(self):
         self.loadExampleB()
@@ -58,6 +61,9 @@ class TestReqif(unittest.TestCase):
         self.assertEqual("b", newSpecificationType.long_name)
         self.assertEqual("c", newSpecificationType.alternative_id)
         self.assertEqual("d", newSpecificationType.desc)
+        
+        newSpecificationTypeIdentifier = self.reqif.addSpecificationType(last_change=None, long_name="b", alternative_id="c", desc="d")
+        self.assertNotEqual(None, newSpecificationType.last_change)
 
     def test_addDocument(self):
         self.loadExampleA()
@@ -200,6 +206,9 @@ class TestReqif(unittest.TestCase):
         self.assertEqual("b", newReq.long_name)
         self.assertEqual("c", newReq.alternative_id)
         self.assertEqual("d", newReq.desc)
+        
+        newReqIdentifier = self.reqif.addRequirement( documentId='_f230a28b-e124-4612-b2f8-3a94e0da19fb', specObjectTypeId=specObjectTypeId, parentRequirementId= None, last_change=None, long_name="b", alternative_id="c", desc="d", is_table_internal="false", is_editable="true", identifier=None)
+        self.assertNotEqual(None, newReq.last_change)
 
     def test_findRequirementIdByLongName(self):
         self.loadExampleA()
