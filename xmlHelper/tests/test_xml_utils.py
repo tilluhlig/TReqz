@@ -123,8 +123,8 @@ class TestXmlUtils(unittest.TestCase):
         xml_utils.addRequiredSubElement(elem, "B", "content")
         self.assertEqual(elem.tag, 'A')
         self.assertEqual(elem.text, None)
-        self.assertEqual(len(elem.getchildren()), 1)
-        childs = elem.getchildren()
+        self.assertEqual(len(list(elem)), 1) #.getchildren() removed
+        childs = list(elem) # .getchildren() removed
         self.assertEqual(childs[0].tag, 'B')
         self.assertEqual(childs[0].text, "content")
 
@@ -140,8 +140,8 @@ class TestXmlUtils(unittest.TestCase):
         xml_utils.addEncodedSubElement(elem, elem2)
         self.assertEqual(elem.tag, 'A')
         self.assertEqual(elem.text, None)
-        self.assertEqual(len(elem.getchildren()), 1)
-        childs = elem.getchildren()
+        self.assertEqual(len(list(elem)), 1) # .getchildren() removed
+        childs = list(elem) # .getchildren() removed
         self.assertEqual(childs[0].tag, "B")
 
     def test_generateMd5(self):

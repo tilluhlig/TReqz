@@ -22,7 +22,7 @@ class reqif_attribute_value_xhtml(TReqz.reqif_attribute_value):
         # check whether there are more than one subelement
         children=None
         if elem != None:
-            children = elem.getchildren()
+            children = list(elem) # .getchildren() removed
         if children != None and len(children)==0:
             elem=None
         elif children != None and len(children)==1:
