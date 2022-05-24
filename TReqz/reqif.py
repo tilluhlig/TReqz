@@ -947,7 +947,11 @@ class reqif:
                             newValue.append(valueMap.get(v))
                     val = newValue
             
-            reqValues[value.definition.long_name] = val
+            attributeName:string = value.definition.long_name
+            if attributeName == None:
+                attributeName = value.definition.identifier
+                    
+            reqValues[attributeName] = val
         return reqValues
 
     def getRequirementValuesByLongName(self, requirementLongName: str):
