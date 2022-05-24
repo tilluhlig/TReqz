@@ -6,8 +6,8 @@ class reqif_datatype_definition_real(TReqz.reqif_datatype_definition):
 
     def __init__(self, content: Element = None, id_dict=None):
         self.accuracy: int = None  # attribute, required
-        self.max: int = None  # attribute, required
-        self.min: int = None  # attribute, required
+        self.max: float = None  # attribute, required
+        self.min: float = None  # attribute, required
         super(reqif_datatype_definition_real, self).__init__(content, id_dict)
         self.name = "DATATYPE-DEFINITION-REAL"
 
